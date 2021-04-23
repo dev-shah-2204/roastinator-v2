@@ -53,7 +53,12 @@ class ErrorHandling(commands.Cog):
 
             em = discord.Embed(title = 'Error', color = hex_colors.m_red)
             em.add_field(name = "I don't have the permission", value = f":x: | That command should have worked but I don't have the {mp} permission.")
-            await ctx.send(embed = em)
+            
+            try:
+                await ctx.send(embed = em)
+            except:
+                await ctx.send(f"I don't have the {mp} permission. F")
+
 
         if isinstance(error, commands.CommandOnCooldown):
             mode = "second(s)"
