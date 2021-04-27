@@ -32,7 +32,7 @@ else:                                    ##
 
 owner_id = client.owner_id
 
-#Loading cogs (extensions)
+#Loading cogs (extensions/modules)
 error_handling = True
 event_cog_list = [
             'cogs.events.on_message',
@@ -43,7 +43,6 @@ command_cog_list = [
                 'cogs.commands.help',
                 'cogs.commands.bot_stats',
                 'cogs.commands.moderation',
-                'cogs.commands.snipe',
                 'cogs.commands.utility',
                 'cogs.commands.developer_commands'
 ]
