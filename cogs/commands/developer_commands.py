@@ -92,7 +92,7 @@ class DeveloperCommands(commands.Cog):
             return
 
         else:
-            eval(code)
+            await eval(code)
 
 
 
