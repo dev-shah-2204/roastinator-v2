@@ -36,7 +36,9 @@ Bug fixes:
     @commands.command(name = 'invite', help = 'Invite the bot to your server')
     @commands.cooldown(1, 10,  BucketType.guild)
     async def invite(self, ctx):
-        InviteEmbed = discord.Embed(title = 'Thank you for inviting me', description = f"[Click here](https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=268823638&scope=bot)")
+        InviteEmbed = discord.Embed(
+            title = 'Thank you for inviting me', 
+            description = f"[Click here](https://discord.com/api/oauth2/authorize?client_id={self.client.user.id}&permissions=268823638&scope=bot)")
 
         await ctx.send(embed = InviteEmbed)
 
