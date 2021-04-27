@@ -29,9 +29,19 @@ class Help(commands.Cog):
         self.client = client
 
     async def cmd_help(self, ctx, command): #Makes the embed
+
+        
+        _aliases = ', '.join([*command.aliases])
+        if _aliases == '':
+            _aliases = "Command has no aliases"
+
+        _help = command.help
+        if _help is None:
+            _help = 'No help text provided by developer'
+
         em = discord.Embed(title = str(command).capitalize(), description = command.help, color = pfpG)
         em.add_field(name = 'Usage:', value = decorate(command), inline = False)
-        em.add_field(name = 'Aliases:', value = ', '.join([*command.aliases]), inline = False)
+        em.add_field(name = 'Aliases:', value = _aliases, inline = False)
 
         await ctx.send(embed = em)
 
