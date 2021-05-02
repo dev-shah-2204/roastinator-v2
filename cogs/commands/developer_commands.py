@@ -88,11 +88,14 @@ class DeveloperCommands(commands.Cog):
     #Run a python code, but in the bot's terminal. How this is different from the `python` command? You can access files and data of the bot
     @commands.command(name = 'eval', help = "Run a python code line, but it's different")
     async def eval_command(self, ctx, *, code):
-        if ctx.author.id != owner_id or ctx.author.id != butcher_id:
+        if ctx.author.id != owner_id:
             await ctx.send("That is a developer command, you can't use that")
             return
 
-        else:
+        elif ctx.author.id == owner_id:
+            await eval(code)
+
+        elif ctx.author.id == butcher_id:
             await eval(code)
 
 
