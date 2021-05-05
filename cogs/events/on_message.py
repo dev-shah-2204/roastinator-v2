@@ -63,8 +63,6 @@ class OnMessage(commands.Cog, name = 'OnMessage'):
                 else:
                     await msg.channel.send("It appears that you're either on a cooldown or banned from mod-mail because you spammed (maybe)")
 
-        if msg.guild.id == 736104882959941693: #Ignore this part, cool private feature for my server
-            await msg.add_reaction("<:seen:838651742203805716>")
 
 #Setup           
 def setup(client):
