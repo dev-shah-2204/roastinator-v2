@@ -10,7 +10,7 @@ def bool_str(variable): #Function to convert boolean values to string: Yes/No
     if variable == False:
         return 'No'
 
-class roleInfo(commands.Cog):
+class RoleInfo(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -54,5 +54,5 @@ class roleInfo(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(roleInfo(client))
-    print('roleInfo')
+    client.add_cog(RoleInfo(client))
+    print('RoleInfo')

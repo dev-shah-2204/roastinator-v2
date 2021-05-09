@@ -7,7 +7,7 @@ import hex_colors
 from discord.ext import commands
 from discord.ext.commands import cooldown, CommandOnCooldown, BucketType
 
-class userInfo(commands.Cog):
+class UserInfo(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -42,5 +42,5 @@ class userInfo(commands.Cog):
         await ctx.send(embed = em)
 
 def setup(client):
-    client.add_cog(userInfo(client))
-    print('userInfo')
+    client.add_cog(UserInfo(client))
+    print('UserInfo')
