@@ -1,7 +1,8 @@
 import discord
+import os
 
 from discord.ext import commands
-from events.on_message import people_on_cooldown #people_on_cooldown is a list, it gets reset every 12 hours on heroku. you need to setup a database to store the banned people's id
+from cogs.events.on_message import people_on_cooldown #people_on_cooldown is a list, it gets reset every 12 hours on heroku. you need to setup a database to store the banned people's id
 
 owner_id = 416979084099321866 #Replace with your ID
 butcher_id = 414992506665828364 #This is my friend's ID you don't need to copy

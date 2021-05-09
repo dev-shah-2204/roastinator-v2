@@ -3,3 +3,5 @@ __pycache__
 bot_token.py
 cogs.commands.utility.code_run_by_users.txt
 .git
+settings.json
+test.py

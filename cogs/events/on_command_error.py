@@ -1,7 +1,7 @@
 import discord
 import random
 
-from .. import hex_colors
+import hex_colors
 from discord.ext import commands
 
 

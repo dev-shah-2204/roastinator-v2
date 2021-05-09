@@ -16,7 +16,7 @@ class onReady(commands.Cog):
         print('--------------')
         print('All cogs loaded')
         #Since I host the bot on heroku, I'd like to know in the logs when the bot started/restarted in my own timezone
-        print("Date:", datetime.now(timezone('Asia/Kolkata')).strftime('%d = %m - %Y'))
+        print("Date:", datetime.now(timezone('Asia/Kolkata')).strftime('%d - %m - %Y'))
         print("Time:", datetime.now(timezone('Asia/Kolkata')).strftime('%H:%M'))
 
 def setup(client):
