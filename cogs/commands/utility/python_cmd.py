@@ -4,14 +4,14 @@ Having trouble figuring out cogs? Check the on_message.py file
 import discord, re, sys, os
 
 from discord.ext import commands
-from discord.ext.commands import CommandOnCooldown, BucketType
+from discord.ext.commands import cooldown, CommandOnCooldown, BucketType
 
 class Python(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command(name = 'python', aliases = ['py'], help = 'Run a python code line in discord', usage = '<code>')
-    @commands.cooldown(1, 10, BucketType.user)
+    @cooldown(1, 10, BucketType.user)
     async def python_code(self, ctx, *, code):
         if 'import' in code:
             await ctx.send("Hey hey! You cannot import libraries yet.")
