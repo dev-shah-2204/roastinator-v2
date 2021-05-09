@@ -2,9 +2,13 @@ import discord
 
 from discord.ext import commands
 
+owner_id = 416979084099321866 #Paste your ID here
+
 class Cogs(commands.Cog):
     def __init__(self, client):
         self.client = client
+
+
 
     @commands.command(name = 'reload', help = 'Reloads a cog')
     async def reload_cog(self, ctx, cog):
