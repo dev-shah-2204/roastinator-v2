@@ -5,14 +5,14 @@ import discord, random, datetime
 import hex_colors
 
 from discord.ext import commands
-from discord.ext.commands import CommandOnCooldown, BucketType
+from discord.ext.commands import cooldown, CommandOnCooldown, BucketType
 
 class userInfo(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command(name = 'userinfo', aliases = ['whois'], help = 'Shows the details of a member', usage = '[member]')
-    @commands.cooldown(1, 10, BucketType.user)
+    @cooldown(1, 10, BucketType.user)
     async def whois(self, ctx, member:discord.Member = None):
         if member == None:
             member = ctx.author

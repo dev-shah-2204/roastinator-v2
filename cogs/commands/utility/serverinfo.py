@@ -2,7 +2,7 @@ import discord, random
 import hex_colors
 
 from discord.ext import commands
-from discord.ext.commands import CommandOnCooldown, BucketType
+from discord.ext.commands import cooldown, CommandOnCooldown, BucketType
 
 def bool_str(variable): #Function to convert boolean values to string: Yes/No
     if variable == True:
@@ -15,7 +15,7 @@ class serverInfo(commands.Cog):
         self.client = client
 
     @commands.command(name = 'serverinfo', help = 'Information about the server', usage = '')
-    @commands.cooldown(1, 10, BucketType.guild)
+    @cooldown(1, 10, BucketType.guild)
     async def serverinfo(self, ctx):
         guild = server = ctx.guild
 

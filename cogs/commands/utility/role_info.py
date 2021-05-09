@@ -2,6 +2,7 @@ import discord, random
 import hex_colors
 
 from discord.ext import commands
+from discord.ext.commands import cooldown, BucketType, CommandOnCooldown
 
 def bool_str(variable): #Function to convert boolean values to string: Yes/No
     if variable == True:
@@ -14,6 +15,7 @@ class roleInfo(commands.Cog):
         self.client = client
 
     @commands.command(name = 'roleinfo', aliases = ['ri'], help = 'Shows information about a role', usage = '<role>')
+    @cooldown(1, 10, BucketType.user)
     async def role_info(self, ctx, role:discord.Role):
         if role not in ctx.guild.roles:
             await ctx.send("I can't find that role in this server..")
