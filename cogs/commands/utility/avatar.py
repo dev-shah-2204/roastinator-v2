@@ -2,14 +2,14 @@ import discord, random
 import hex_colors
 
 from discord.ext import commands
-from discord.ext.commands import CommandOnCooldown, BucketType
+from discord.ext.commands import cooldown, CommandOnCooldown, BucketType
 
 class Avatar(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command(name = 'avatar', aliases = ['av'], help = "Show a user's avatar in full size")
-    @commands.cooldown(1, 5,  BucketType.user)
+    @cooldown(1, 5,  BucketType.user)
     async def avatar(self, ctx, member:discord.Member = None):
         if member == None: #If no argument is passed
             member = ctx.author
