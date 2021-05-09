@@ -13,12 +13,13 @@ class Bot():
     token = os.environ.get('token')
 
 #Defining our bot (client)
-client = commands.Bot(command_prefix = Bot.t_prefix, intents = discord.Intents.all(), case_insensitive = True)
+client = commands.Bot(command_prefix = Bot.prefix, intents = discord.Intents.all(), case_insensitive = True)
 client.remove_command('help')
 
 
 #Cogs list
 event_cog_list = [
+    'on_command_error',
     'on_message',
     'on_ready'
 ]
@@ -40,7 +41,8 @@ cmd_cog_list = [
     'utility.role_info',
     'utility.serverinfo',
     'utility.snipe',
-    'utility.user_info'
+    'utility.user_info',
+    'utility.urban'
 ]
 
 #Loading cogs
