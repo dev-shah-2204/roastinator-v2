@@ -9,7 +9,7 @@ from discord.ext import commands
 
 class Bot():
     prefix = commands.when_mentioned_or('-')
-    t_prefix = '>'
+    t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs. The 't' stands for test
     token = os.environ.get('token')
 
 #Defining our bot (client)
@@ -28,6 +28,8 @@ cmd_cog_list = [
     'botStats.ping',
     'developer.cogs',
     'developer.modmail',
+    'games.cointoss',
+    'games.rockpaperscissors',
     'help',
     'moderation.ban',
     'moderation.clean',
