@@ -17,4 +17,5 @@ There are tons of YouTube videos that show in detail how to make your own Discor
 
 ## Some important pointers:
 } For understanding how cogs work, refer to the first cog i.e. `cogs/events/on_message` <br />
+} For understanding how to take input after a command is run, refer to the first game cog i.e. `cogs/commands/games/cointoss`<br />
 } More notes will be coming in future <br />
