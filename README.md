@@ -16,5 +16,5 @@ There are tons of YouTube videos that show in detail how to make your own Discor
 
 
 ## Some important pointers:
-} For understanding how cogs work, refer to the first cog i.e. `cogs/events/on_message`
-} More notes will be coming in future
+} For understanding how cogs work, refer to the first cog i.e. `cogs/events/on_message` <br />
+} More notes will be coming in future <br />
