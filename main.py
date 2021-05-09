@@ -10,7 +10,7 @@ from discord.ext import commands
 class Bot():
     prefix = commands.when_mentioned_or('-')
     t_prefix = '>'
-    token = 'ODIyNzk1NDQ0MDg5NzgyMjkz.YFXd-A.4xsBXJoP-_1wtzLyQqLT4M4izKs'
+    token = os.environ.get('token')
 
 #Defining our bot (client)
 client = commands.Bot(command_prefix = Bot.t_prefix, intents = discord.Intents.all(), case_insensitive = True)
