@@ -50,7 +50,12 @@ class Help(commands.Cog):
         if cmd is None: #Sends the default help message
 
             em = discord.Embed(title = 'Help is here', color = pfpG)
-            em.add_field(name = 'Categories:', value = "BotStats\nModeration\nUtility")
+            em.add_field(name = 'Categories:', value = """
+BotStats
+Moderation
+Utility
+Games
+""")
             em.set_footer(text = "Use `-help <category>` for mor info")
 
             await ctx.send(embed = em)
@@ -63,10 +68,16 @@ class Help(commands.Cog):
             for alias in com.aliases:
                 aliases[com.name].append(alias)
 
+        if cmd.lower() == 'games':
+            em = discord.Embed(
+                title = "Games Commands",
+                value = '`cointoss`\n`rockpaperscissors`'
+            )
+
         if cmd.lower() == 'moderation' or cmd.lower() == 'mod':
             em = discord.Embed(
                 title = "Moderation Commands:",
-                description = '`clear`\n`kick`, `ban`\n`mute` , `unmute`\n`lock`, `unlock`',
+                description = '`clear` , `clean`\n`kick`, `ban`\n`mute` , `unmute`\n`lock`, `unlock`',
                 color = pfpG)
             em.set_footer(text = 'Use -help <command> for more info')
 
@@ -76,7 +87,7 @@ class Help(commands.Cog):
         if cmd.lower() == 'utility' or cmd.lower() == 'util':
             em = discord.Embed(
                 title = "Utility Commands:",
-                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`python`\n`snipe` , `editsnipe`',
+                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`python`\n`snipe` , `editsnipe`\n`urban`',
                 color = pfpG)
             em.set_footer(text = 'Use -help <command> for more info')
 
@@ -86,7 +97,7 @@ class Help(commands.Cog):
         if cmd.lower() == 'botstats' or cmd.lower() == 'bot':
             em = discord.Embed(
                 title = "Bot Stats Commands:",
-                description = "`invite` , `ping` , `updates`",
+                description = "`invite` , `ping`",
                 color = pfpG)
             em.set_footer(text = 'Use -help <command> for more info')
 
