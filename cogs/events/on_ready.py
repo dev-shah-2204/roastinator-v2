@@ -1,23 +1,24 @@
-import os
+"""
+Having trouble figuring out cogs? Check the on_message.py file
+"""
 import discord
 
-from discord.ext import commands, tasks
+from discord.ext import commands
 from pytz import timezone
 from datetime import datetime
 
-class OnReady(commands.Cog, name = 'OnReady'):
+class onReady(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('--------------------')
-        print(f"Up and running!\nSigned in as {self.client.user}\nID: {self.client.user.id}")
-        print("Date:", datetime.now(timezone('Asia/Kolkata')).strftime('%d - %m - %Y'))
-        print("Time:", datetime.now(timezone('Asia/Kolkata')).strftime('%H:%M')) #I put Asia/Kolkata, you can put UTC or your own timezone
-
-
+        print('--------------')
+        print('All cogs loaded')
+        #Since I host the bot on heroku, I'd like to know in the logs when the bot started/restarted in my own timezone
+        print("Date:", datetime.now(timezone('Asia/Kolkata')).strftime('%d = %m - %Y'))
+        print("Time:", datetime.now(timezone('Asia/Kolkata')).strftime('%H:%M'))
 
 def setup(client):
-    client.add_cog(OnReady(client))
-    print('OnReady Event cog loaded')
+    client.add_cog(onReady(client))
+    print('onReady')

@@ -1,10 +1,5 @@
-myToken.py
 __pycache__
-cogs/__pycache__
-cogs/events/__pycache__
-cogs/commands/__pycache__
-cogs/commands/code_run_by_users.txt
+*.__pycache__
+bot_token.py
+cogs.commands.utility.code_run_by_users.txt
 .git
-test.py
-.vscode
-settings.json

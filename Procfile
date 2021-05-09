@@ -1,1 +1,1 @@
-worker: python main.py
+worker: python heroku_launcher.py

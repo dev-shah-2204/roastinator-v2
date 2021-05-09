@@ -1,65 +1,41 @@
 """
-If you want to know more about discord.py, I recommend https://discordpy.readthedocs.io/en/latest
+To know more about the discord library in python, I recommend https://discordpy.readthedocs.io/en/latest
 """
-import os
-import random
+#Imports
 import discord
-import hex_colors
+import os
 
-from discord.ext import commands, tasks
-from discord.ext.commands import BucketType, CommandOnCooldown
+from discord.ext import commands
 
+class Bot():
+    prefix = commands.when_mentioned_or('-')
+    t_prefix = '>'
 
-prefix = commands.when_mentioned_or('-') #Dont copy this stuff
-tprefix = '>' #Dont copy this stuff
-
-
-#Defining our client
-client = commands.Bot(command_prefix = prefix, intents = discord.Intents.all(), case_insensitive = True)
+#Defining our bot (client)
+client = commands.Bot(command_prefix = Bot.t_prefix, intents = discord.Intents.all(), case_insensitive = True)
 client.remove_command('help')
 
-#You don't need to copy this stuff#########
-                                         ##
-heroku = True                            ##
-if heroku == True:                       ##
-    token = os.environ.get('token')      ##
-else:                                    ##
-    import myToken                       ## 
-    token = myToken.token                ##
-                                         ##
-###########################################
-
-
-owner_id = client.owner_id
-
-#Loading cogs (extensions/modules)
-error_handling = True
+#Cogs list
 event_cog_list = [
-            'cogs.events.on_message',
-            'cogs.events.on_ready'
+    'on_message',
+    'on_ready'
 ]
 
-command_cog_list = [
-                'cogs.commands.help',
-                'cogs.commands.bot_stats',
-                'cogs.commands.moderation',
-                'cogs.commands.utility',
-                'cogs.commands.developer_commands'
+cmd_cog_list = [
+    'utility.avatar',
+    'utility.editsnipe',
+    'utility.python_cmd',
+    'utility.role_info',
+    'utility.serverinfo',
+    'utility.snipe',
+    'utility.user_info'
 ]
 
-for event_cog in event_cog_list: #Running a loop for all event cogs
+#Loading cogs
+for event_cog in event_cog_list:
     if __name__ == '__main__':
-        client.load_extension(event_cog)
+        client.load_extension(f"cogs.events.{event_cog}")
 
-for command_cog in command_cog_list: #Running a loop for all command cogs
+for cmd_cog in cmd_cog_list:
     if __name__ == '__main__':
-        client.load_extension(command_cog)
-
-if error_handling == True:
-    client.load_extension('cogs.events.on_command_error')
-
-
-    
-
-#RUN
-client.run(token) #Enter your token here
+        client.load_extension(f"cogs.commands.{cmd_cog}")
