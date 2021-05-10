@@ -25,7 +25,7 @@ event_cog_list = [
 ]
 
 cmd_cog_list = [
-    'botStats.invite'
+    'botStats.invite',
     'botStats.ping',
     'developer.cogs',
     'developer.modmail',
