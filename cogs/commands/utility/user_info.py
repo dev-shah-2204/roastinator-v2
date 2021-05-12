@@ -5,9 +5,9 @@ import discord, random, datetime
 import hex_colors
 
 from discord.ext import commands
-from discord.ext.commands import cooldown, CommandOnCooldown, BucketType
+from discord.ext.commands import cooldown, BucketType, Cog
 
-class UserInfo(commands.Cog):
+class UserInfo(Cog):
     def __init__(self, client):
         self.client = client
 

@@ -2,9 +2,7 @@ import discord, random, os
 import requests, json, urbandict
 import hex_colors
 
-
 from discord.ext import commands
-from aiohttp import ClientSession
 
 class UrbanDictionary(commands.Cog):
     def __init__(self, client):

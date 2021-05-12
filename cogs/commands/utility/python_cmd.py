@@ -4,9 +4,9 @@ Having trouble figuring out cogs? Check the on_message.py file
 import discord, re, sys, os
 
 from discord.ext import commands
-from discord.ext.commands import cooldown, CommandOnCooldown, BucketType
+from discord.ext.commands import cooldown, BucketType, Cog
 
-class Python(commands.Cog):
+class Python(Cog):
     def __init__(self, client):
         self.client = client
 
