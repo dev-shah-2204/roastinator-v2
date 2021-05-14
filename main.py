@@ -29,7 +29,7 @@ cmd_cog_list = [
     'botStats.ping',
     'developer.cogs',
     'developer.modmail',
-    'fun.meme'
+    'fun.meme',
     'games.cointoss',
     'games.rockpaperscissors',
     'help',
