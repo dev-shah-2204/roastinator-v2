@@ -41,6 +41,7 @@ cmd_cog_list = [
     'moderation.mute_unmute',
     'utility.avatar',
     'utility.editsnipe',
+    'utility.embed',
     'utility.python_cmd',
     'utility.role_info',
     'utility.serverinfo',
