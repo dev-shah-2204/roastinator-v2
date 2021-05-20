@@ -11,7 +11,7 @@ class Embed(commands.Cog):
     @commands.has_permissions(manage_guild = True)
     async def embed(self, ctx):
         def check(message: discord.Message) -> bool:
-            return message.author == ctx.author and message.channel = ctx.channel
+            return message.author == ctx.author and message.channel == ctx.channel
 
         await ctx.send("Note: If you're not sure what an embed is or you don't know about the terminology of an embed, run the command `embedhelp` to get an example embed\n\nAlso, for now, the embed only supports a title, a description and the color. Fields and attachments will be added later when my developer is less lazy")
 
