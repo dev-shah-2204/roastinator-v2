@@ -24,6 +24,10 @@ event_cog_list = [
     'on_ready'
 ]
 
+passive_cog_list = [
+    'nqn.py'
+]
+
 cmd_cog_list = [
     'botStats.invite',
     'botStats.ping',
@@ -59,5 +63,9 @@ for event_cog in event_cog_list:
 for cmd_cog in cmd_cog_list:
     if __name__ == '__main__':
         client.load_extension(f"cogs.commands.{cmd_cog}")
+
+for psv_cog in passive_cog_list:
+    if __name__ == '__main__':
+        client.load_extension(f"cogs.passive.{psv_cog}")
 
 client.run(Bot.token)
