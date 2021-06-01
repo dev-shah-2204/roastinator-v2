@@ -80,6 +80,9 @@ class ErrorHandling(commands.Cog):
             await ctx.send(embed = em)
             ctx.command.reset_cooldown(ctx)
 
+        else:
+            print(error)
+
 def setup(client):
     client.add_cog(ErrorHandling(client))
     print("ErrorHandling")
