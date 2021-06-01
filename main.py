@@ -25,7 +25,7 @@ event_cog_list = [
 ]
 
 passive_cog_list = [
-    'nqn.py'
+    'nqn'
 ]
 
 cmd_cog_list = [
