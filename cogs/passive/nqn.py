@@ -105,4 +105,4 @@ class NQN(commands.Cog):
 
 def setup(client):
 	client.add_cog(NQN(client))
-    print('NQN')
+	print('NQN')

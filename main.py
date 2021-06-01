@@ -11,7 +11,6 @@ class Bot():
     prefix = commands.when_mentioned_or('-')
     t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs. The 't' stands for test
     token = os.environ.get('token')
-
 #Defining our bot (client)
 client = commands.Bot(command_prefix = Bot.prefix, intents = discord.Intents.all(), case_insensitive = True)
 client.remove_command('help')
