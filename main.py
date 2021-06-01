@@ -19,9 +19,12 @@ client.remove_command('help')
 
 #Cogs list
 event_cog_list = [
-    'on_command_error',
+    #'on_command_error',
     'on_message',
-    'on_ready'
+    'on_ready',
+    'on_vote'
+]
+
 ]
 
 cmd_cog_list = [
@@ -30,6 +33,7 @@ cmd_cog_list = [
     'developer.cogs',
     'developer.modmail',
     'fun.meme',
+    'fun.say',
     'games.cointoss',
     'games.rockpaperscissors',
     'help',
