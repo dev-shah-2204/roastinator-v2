@@ -1,108 +1,108 @@
+from discord.ext import commands
+from discord import utils
+import discord
+
 """
+Sorry there aren't many comments here, truth be told I don't understand this properly.
 Credits: https://github.com/animeforreal
 """
-import discord, re
-
-from discord.ext import commands
 
 class NQN(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+	def __init__(self, client):
+		self.client = client
 
-    async def find_emoji(self, string):
-        emoji = discord.utils.get(self.client.emojis, name = string.strip(":"))
-        if emoji is not None:
-            if emoji.animated:
-                add = ''
-            else:
-                add = ''
-            return f"<{add}:{emoji.name}:{emoji.id}>"
-        else:
-            return None
+	async def getemote(self, arg):
+		emoji = utils.get(self.client.emojis, name = arg.strip(":"))
 
-    async def get_emoji_name(self, content):
-        return_lst = [] #The list that the function will return in the end
+		if emoji is not None:
+			if emoji.animated:
+				add = "a"
+			else:
+				add = ""
+			return f"<{add}:{emoji.name}:{emoji.id}>"
+		else:
+			return None
 
-        words_of_content = content.split(' ') #List will have n number of items, n being the number of words
-        seperate_emoji_name = content.split(':') #List wil have 3 items, content before the emoji name, and content after the emoji name
+	async def getinstr(self, content):
+		ret = []
 
-        if len(seperate_emoji_name) > 1: #This will most likely happen
-            for word in words_of_content:
-                if word.count(':') > 1: #If there are more than 1 colons in the message
-                    temp_var = ''
-                    if word.startswith('<') and word.endswith('>'): #The emoji
-                        return_lst.append(word)
-                    else:
-                        seperate_emoji_name = 0
-                        for i in word:
-                            if seperate_emoji_name == 2:
-                                temp_var_2 = temp_var.replace(' ','')
-                                return_lst.append(temp_var_2)
-                                temp_var = ''
-                                seperate_emoji_name = 0
+		spc = content.split(" ")
+		cnt = content.split(":")
 
-                            if i != ':':
-                                temp_var += i
-                            else:
-                                if temp_var == '' or seperate_emoji_name == 1:
-                                    temp_var += ' : '
-                                    seperate_emoji_name += 1
-                                else:
-                                    temp_var_2 = temp_var.replace(' ','')
-                                    return_lst.append(temp_var_2)
-                                    temp_var = ':'
-                                    seperate_emoji_name = 1
+		if len(cnt) > 1:
+			for item in spc:
+				if item.count(":") > 1:
+					wr = ""
+					if item.startswith("<") and item.endswith(">"):
+						ret.append(item)
+					else:
+						cnt = 0
+						for i in item:
+							if cnt == 2:
+								aaa = wr.replace(" ", "")
+								ret.append(aaa)
+								wr = ""
+								cnt = 0
 
+							if i != ":":
+								wr += i
+							else:
+								if wr == "" or cnt == 1:
+									wr += " : "
+									cnt += 1
+								else:
+									aaa = wr.replace(" ", "")
+									ret.append(aaa)
+									wr = ":"
+									cnt = 1
 
-                        temp_var_2 = temp_var.replace(' ','') #remove blank spaces
-                        return_lst.append(temp_var_2)
+						aaa = wr.replace(" ", "")
+						ret.append(aaa)
+				else:
+					ret.append(item)
+		else:
+			return content
 
-                else:
-                    return_lst.append(word)
-        else:
-            return content
-
-        return return_lst
-
-    @commands.Cog.listener()
-    async def on_message(self, msg):
-        if msg.author.bot:
-            return
-
-        if ':' in msg.content:
-            message = await self.get_emoji_name(msg.content)
-            return_string = '' #final message that the bot will send
-
-            needs_nitro = False
-
-            list_ = msg.content.split(':')
-            if len(list_) > 1:
-                for word in message:
-                    if word.startswith(':') and word.endswith(':') and len(word) > 1:
-                        emoji = await self.find_emoji(word)
-
-                        if emoji is not None:
-                            if not '<a:': #Check if emoji is animated
-                                needs_nitro = False #Anyone can send a non-animated emoji from the server.
-                                return
-                            else:
-                                needs_nitro = True
-                                return_string += f" {emoji}"
-
-                        else:
-                            return_string += f" {word}"
-
-                    else:
-                        return_string += f" {word}"
-            else:
-                ret += message
-
-            if needs_nitro == True:
-                await msg.channel.send(return_string)
+		return ret
 
 
+	# i added extra indent by mistake -_-
 
+	@commands.Cog.listener()
+	async def on_message(self, message):
+		if message.author.bot:
+			return
+
+		if ":" in message.content:
+			msg = await self.getinstr(message.content)
+			ret = ""
+			em = False
+			smth = message.content.split(":")
+			if len(smth) > 1:
+				for word in msg:
+					if word.startswith(":") and word.endswith(":") and len(word) > 1:
+						emoji = await self.getemote(word)
+						if emoji is not None:
+							em = True
+							ret += f" {emoji}"
+						else:
+							ret += f" {word}"
+					else:
+						ret += f" {word}"
+
+			else:
+				ret += msg
+
+
+			if em:
+				webhooks = await message.channel.webhooks()
+				webhook = utils.get(webhooks, name = "Imposter NQN")
+				if webhook is None:
+					webhook = await message.channel.create_webhook(name = "unique-username") #Bot needs manage webhook permissions
+
+				await webhook.send(ret, username = message.author.name, avatar_url = message.author.avatar_url)
+				await message.delete()
 
 def setup(client):
-    client.add_cog(NQN(client))
+	client.add_cog(NQN(client))
     print('NQN')
