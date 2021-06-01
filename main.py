@@ -25,8 +25,6 @@ event_cog_list = [
     'on_vote'
 ]
 
-]
-
 cmd_cog_list = [
     'botStats.invite',
     'botStats.ping',
