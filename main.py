@@ -21,8 +21,7 @@ client.remove_command('help')
 event_cog_list = [
     #'on_command_error',
     'on_message',
-    'on_ready',
-    'on_vote'
+    'on_ready'
 ]
 
 cmd_cog_list = [
