@@ -18,7 +18,7 @@ client.remove_command('help')
 
 #Cogs list
 event_cog_list = [
-    #'on_command_error',
+    'on_command_error',
     'on_message',
     'on_ready'
 ]
