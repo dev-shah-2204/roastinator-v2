@@ -15,7 +15,7 @@ class Ping(commands.Cog):
         em = discord.Embed(
             title = 'Pong!',
             description = f"{round(self.client.latency*1000)}ms", #*1000 to convert to milliseconds
-            color = random.choice
+            color = random.choice(hex_colors.colors)
             ) #Don't know what embeds are? They're really cool.
 
         await ctx.send(embed = em) #ctx stands for context. 'embed = ' to let the bot know that em is an embed. else it would just send the 'em' object as a string
