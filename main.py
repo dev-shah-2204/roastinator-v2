@@ -1,7 +1,7 @@
 """
-To know more about the discord library in python, I recommend https://discordpy.readthedocs.io/en/latest
+https://discordpy.readthedocs.io/en/latest
+will help you out with most of your problems
 """
-#Imports
 import discord
 import os
 

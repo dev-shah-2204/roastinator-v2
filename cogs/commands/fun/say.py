@@ -1,5 +1,5 @@
 """
-Got help on this one from Black Tooth
+Got help on this one from Black Tooth's dev
 https://blacktooth-bot.com
 """
 import discord
