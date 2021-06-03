@@ -5,3 +5,5 @@ cogs.commands.utility.code_run_by_users.txt
 .git
 settings.json
 test.py
+db/secret.txt
+test.py
