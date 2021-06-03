@@ -3,7 +3,6 @@ from discord import utils
 import discord
 
 """
-Sorry there aren't many comments here, truth be told I don't understand this properly.
 Credits: https://github.com/animeforreal
 """
 
