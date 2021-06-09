@@ -1,1 +1,0 @@
-All passive bot features such as NQN, auto-mod, etc. .
