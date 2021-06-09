@@ -21,7 +21,7 @@ def get_prefix(client, message):
 class Bot():
     prefix = commands.when_mentioned_or(get_prefix)
     t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
-    os.environ.get('token')
+    token = os.environ.get('token')
 
 
 #Defining our bot (client)
