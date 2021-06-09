@@ -7,3 +7,4 @@ settings.json
 test.py
 db/secret.txt
 test.py
+cleardb_db_p.py
