@@ -45,3 +45,7 @@ class TempMute(commands.Cog):
 
         await sleep(time*multiplier)
         await member.remove_roles(role, reasaon = f"Temporary mute is over. Responsible moderator: {ctx.author}")
+
+def setup(client):
+    client.add_cog(TempMute(client))
+    print("TempMute")
