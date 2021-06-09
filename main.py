@@ -5,29 +5,43 @@ will help you out with most of your problems
 import discord
 import os
 
+from database_functions import *
+from cleardb_db import database
 from discord.ext import commands
 
+db = database.cursor()
+
+def get_prefix(client, message):
+    db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{str(message.guild.id)}'")
+    for row in db:
+        final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
+        return final
+
+
 class Bot():
-    prefix = commands.when_mentioned_or('-')
-    t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs. The 't' stands for test
-    token = os.environ.get('token')
+    prefix = commands.when_mentioned_or(get_prefix)
+    t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
+    os.environ.get('token')
+
+
 #Defining our bot (client)
 client = commands.Bot(command_prefix = Bot.prefix, intents = discord.Intents.all(), case_insensitive = True)
 client.remove_command('help')
 
 
 #Cogs list
-event_cog_list = [
+event_cog_list = (
     'on_command_error',
+    'on_guild_join',
     'on_message',
     'on_ready'
-]
+)
 
-passive_cog_list = [
+passive_cog_list = (
     'nqn'
-]
+)
 
-cmd_cog_list = [
+cmd_cog_list = (
     'botStats.invite',
     'botStats.ping',
     'developer.cogs',
@@ -43,16 +57,19 @@ cmd_cog_list = [
     'moderation.kick',
     'moderation.lock_unlock',
     'moderation.mute_unmute',
+    'moderation.nuke',
+    'moderation.temp_mute',
     'utility.avatar',
     'utility.editsnipe',
     'utility.embed',
+    'utility.prefix',
     'utility.python_cmd',
     'utility.role_info',
     'utility.serverinfo',
     'utility.snipe',
     'utility.user_info',
     'utility.urban'
-]
+)
 
 #Loading cogs
 for event_cog in event_cog_list:
