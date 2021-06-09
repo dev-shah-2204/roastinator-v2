@@ -1,11 +1,13 @@
-import discord, json, random
+import discord
+import json
+import random
 import hex_colors
 
 from discord.ext import commands
-from discord.ext.commands import cooldown, BucketType, Cog
+from discord.ext.commands import cooldown, BucketType
 from aiohttp import ClientSession
 
-class Meme(Cog):
+class Meme(commands.Cog):
     def __init__(self, client):
         self.client = client
 

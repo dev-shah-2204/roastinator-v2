@@ -1,5 +1,9 @@
-import discord, random, os
-import requests, json, urbandict
+import discord
+import random
+import os
+import requests
+import json
+import urbandict
 import hex_colors
 
 from discord.ext import commands

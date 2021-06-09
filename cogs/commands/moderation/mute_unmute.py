@@ -1,8 +1,9 @@
-import discord, random
+import discord
+import hex_colors
 
 from discord.ext import commands
 from discord.ext.commands import CommandOnCooldown, BucketType
-import hex_colors
+
 
 colors = hex_colors.colors
 

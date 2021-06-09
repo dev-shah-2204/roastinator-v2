@@ -1,10 +1,10 @@
-import discord, random
+import discord
+import hex_colors
 
 from discord.ext import commands
 from discord.ext.commands import CommandOnCooldown, BucketType
-import hex_colors
 
-colors = hex_colors.colors
+
 
 class Kick(commands.Cog):
     def __init__(self, client):
@@ -37,7 +37,7 @@ class Kick(commands.Cog):
             return
 
 
-        em = discord.Embed(color = random.choice(colors))
+        em = discord.Embed(color = hex_colors.m_red)
         em.set_author(name = f"{ctx.author} kicked {member}", icon_url = ctx.author.avatar_url)
         em.set_thumbnail(url = member.avatar_url)
         em.add_field(name = 'Reason:', value = reason)

@@ -1,10 +1,8 @@
-import discord, random
+import discord
 
 from discord.ext import commands
 from discord.ext.commands import CommandOnCooldown, BucketType
-import hex_colors
 
-colors = hex_colors.colors
 
 class LockUnlock(commands.Cog):
     def __init__(self, client):

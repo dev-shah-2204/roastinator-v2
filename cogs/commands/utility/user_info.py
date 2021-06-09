@@ -1,7 +1,9 @@
 """
 Having trouble figuring out cogs? Check the on_message.py file
 """
-import discord, random, datetime
+import discord
+import random
+import datetime
 import hex_colors
 
 from discord.ext import commands

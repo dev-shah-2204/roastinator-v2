@@ -1,4 +1,6 @@
-import discord, random, asyncio
+import discord
+import random
+import asyncio
 import hex_colors
 
 from discord.ext import commands

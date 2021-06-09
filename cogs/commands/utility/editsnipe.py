@@ -1,4 +1,6 @@
-import discord, random, pytz
+import discord
+import random
+import pytz
 import hex_colors
 
 from datetime import datetime

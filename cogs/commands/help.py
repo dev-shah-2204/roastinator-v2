@@ -1,4 +1,5 @@
-import discord, random
+import discord
+import random
 import hex_colors
 
 from typing import Optional

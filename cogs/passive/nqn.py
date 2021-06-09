@@ -1,9 +1,9 @@
+import discord
 from discord.ext import commands
 from discord import utils
-import discord
 
 """
-Credits: https://github.com/animeforreal
+Code taken from https://github.com/animeforreal
 """
 
 class NQN(commands.Cog):

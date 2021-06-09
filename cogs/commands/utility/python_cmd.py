@@ -1,8 +1,10 @@
 """
 Having trouble figuring out cogs? Check the on_message.py file
 """
-import discord, re, sys, os
-
+import discord
+import re
+import sys
+import os
 from discord.ext import commands
 from discord.ext.commands import cooldown, BucketType, Cog
 
