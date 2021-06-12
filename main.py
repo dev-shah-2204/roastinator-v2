@@ -55,7 +55,7 @@ cmd_cog_list = (
     'utility.role_info',
     'utility.serverinfo',
     'utility.snipe',
-    'utility.steal_emoji'
+    'utility.steal_emoji',
     'utility.urban',
     'utility.user_info'
 )
