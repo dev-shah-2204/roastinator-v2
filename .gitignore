@@ -1,12 +1,14 @@
 __pycache__
 *.__pycache__
 bot_token.py
-cogs.commands.utility.code_run_by_users.txt
-cogs.commands.utility.stealemoji.py
+cogs/commands/utility/code_run_by_users.txt
+cogs/commands/utility/stealemoji.py
+cogs/commands/utility/prefix.py
 .git
 settings.json
 test.py
 cleardb_db_p.py
 cleardb_db.py
-cogs.events.on_guild_join.py
+cogs/events/on_guild_join.py
+cogs/events/on_vote.py
 database_functions.py
