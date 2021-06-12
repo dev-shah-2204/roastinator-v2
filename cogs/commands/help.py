@@ -78,7 +78,7 @@ Games
         if cmd.lower() == 'moderation' or cmd.lower() == 'mod':
             em = discord.Embed(
                 title = "Moderation Commands:",
-                description = '`clear` , `clean`\n`kick`, `ban`\n`mute` , `unmute`\n`lock`, `unlock`',
+                description = '`clear` , `clean` , `nuke`\n`kick`, `ban`\n`mute` , `tempmute` , `unmute`\n`lock`, `unlock`',
                 color = pfpG)
             em.set_footer(text = 'Use -help <command> for more info')
 
@@ -88,7 +88,7 @@ Games
         if cmd.lower() == 'utility' or cmd.lower() == 'util':
             em = discord.Embed(
                 title = "Utility Commands:",
-                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`python`\n`snipe` , `editsnipe`\n`urban`',
+                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`python`\n`snipe` , `editsnipe`\n`urban`\n`prefix` , `embed`',
                 color = pfpG)
             em.set_footer(text = 'Use -help <command> for more info')
 
