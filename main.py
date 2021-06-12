@@ -31,7 +31,7 @@ passive_cog_list = [
 ] #This is a list instead of a tuple because the for loop detects nqn as n, q, n when loading the cog
 
 cmd_cog_list = (
-    'botStats.invite',
+     'botStats.invite',
     'botStats.ping',
     'developer.cogs',
     'developer.modmail',
@@ -55,6 +55,7 @@ cmd_cog_list = (
     'utility.role_info',
     'utility.serverinfo',
     'utility.snipe',
+    'utility.steal_emoji'
     'utility.urban',
     'utility.user_info'
 )
