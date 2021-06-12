@@ -1,4 +1,5 @@
 import discord
+import random
 
 from hex_colors import *
 from discord.ext import commands
@@ -44,9 +45,22 @@ class onMessage(commands.Cog): #Everything in a cog needs to be in a class
                     people_on_cooldown.append(msg.author.id)
                     await sleep(60)
                     people_on_cooldown.remove(msg.author.id)
+                    return
 
                 else:
                     await msg.channel.send("It appears that you're either on a cooldown or banned from mod-mail because you spammed (maybe)")
+                    return
+
+        # if msg.content == f"<@!{self.client.user.id}>" or msg.content == f"<@{self.client.user.id}>": #When the bot is mentioned
+        #     db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{str(msg.guild.id)}'")
+        #     for row in db:
+        #         prefix = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
+        #
+        #     em = discord.Embed(title = f"My prefix for this server is: `{prefix}`", color = random.choice(colors))
+        #     await msg.channel.send(embed = em)
+        """
+        The database code isn't working on heroku, until I figure that out, this part is disabled.
+        """
 
 
 #Every cog needs this function. It's telling the main file that this is a cog/extension. It doesn't work like regular python modules
