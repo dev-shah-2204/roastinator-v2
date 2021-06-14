@@ -31,7 +31,7 @@ passive_cog_list = [
 ] #This is a list instead of a tuple because the for loop detects nqn as n, q, n when loading the cog
 
 cmd_cog_list = (
-     'botStats.invite',
+    'botStats.invite',
     'botStats.ping',
     'developer.cogs',
     'developer.modmail',
@@ -66,13 +66,33 @@ for event_cog in event_cog_list:
     if __name__ == '__main__':
         client.load_extension(f"cogs.events.{event_cog}")
 
-for cmd_cog in cmd_cog_list:
+for command_cog in cmd_cog_list:
     if __name__ == '__main__':
-        client.load_extension(f"cogs.commands.{cmd_cog}")
+        client.load_extension(f"cogs.commands.{command_cog}")
 
-for psv_cog in passive_cog_list:
+for passive_cog in passive_cog_list:
     if __name__ == '__main__':
-        client.load_extension(f"cogs.passive.{psv_cog}")
+        client.load_extension(f"cogs.passive.{passive_cog}")
+
+
+"""
+The following cog loading method is easiser since you dont have to make a big tuple, but if you don't want to load some cogs,
+it can pose as a problem. And making the cog tuple isn't difficult. Over time, it will get big, sure, but that doesn't matter.
+
+Make a cog, add to the tuple. Not that difficult.
+"""
+# for event_cog in os.listdir('./cogs/events'):
+#     if event_cog.endswith('.py'):
+#         client.load_extension(f"cogs.events.{event_cog[:-3]}")
+
+# for folder in os.listdir('./cogs/commands'):
+#     print(folder)
+#     for cmd_cog in os.listdir(f'./cogs/commands/{folder}'):
+#         if cmd_cog.endswith('.py'):
+#             client.load_extension(f"cogs.commands.{folder}.{cmd_cog[:-3]}")
+
+# client.load_extension(f"cogs.passive.nqn")
+
 
 if testing == True:
     client.load_extension("cogs.events.error_sender")
