@@ -1,5 +1,4 @@
 import discord
-import requests 
 import hex_colors
 import random
 
@@ -22,11 +21,12 @@ class Reddit(commands.Cog):
                 post = await output.json()
                 
                 #Check if the post is nsfw
-                if post['nsfw'] == True:
-                    if ctx.channel.is_nsfw:
-                        await ctx.send("The post I got from that subreddit is marked NSFW. I cannot send it here")
-                        return
-
+                if 'nsfw' in post: #Sometimes it raises KeyError
+                    if post['nsfw'] == True:
+                        if not ctx.channel.is_nsfw():
+                            await ctx.send("The post I got from that subreddit is marked NSFW. I cannot send it here")
+                            return
+               
                 image = post['url'] #the image
                 title = post['title'] #the title of the reddit post
 
