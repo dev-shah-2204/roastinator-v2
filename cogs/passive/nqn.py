@@ -65,8 +65,6 @@ class NQN(commands.Cog):
 		return ret
 
 
-	# i added extra indent by mistake -_-
-
 	@commands.Cog.listener()
 	async def on_message(self, message):
 		if message.author.bot:
@@ -80,7 +78,8 @@ class NQN(commands.Cog):
 			if len(smth) > 1:
 				for word in msg:
 					if word.startswith(":") and word.endswith(":") and len(word) > 1:
-						emoji = await self.getemote(word)
+						emoji = await self.getemote(word)       
+
 						if emoji is not None:
 							em = True
 							ret += f" {emoji}"
