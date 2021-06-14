@@ -36,6 +36,7 @@ cmd_cog_list = (
     'botStats.ping',
     'developer.cogs',
     'developer.modmail',
+    'fun.cursed',
     'fun.meme',
     'fun.say',
     'fun.wholesome',
