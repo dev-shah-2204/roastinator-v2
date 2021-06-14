@@ -52,6 +52,7 @@ cmd_cog_list = (
     'utility.editsnipe',
     'utility.embed',
     'utility.python_cmd',
+    'utility.reddit',
     'utility.role_info',
     'utility.serverinfo',
     'utility.snipe',
