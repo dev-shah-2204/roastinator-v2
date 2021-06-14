@@ -10,7 +10,7 @@ from discord.ext import commands
 testing = False #If set to true, sends error from console in discord.
 
 class Bot():
-    prefix = '-'
+    prefix = commands.when_mentioned_or('-')
     t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
     token = os.environ.get('token')
 
