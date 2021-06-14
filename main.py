@@ -38,6 +38,7 @@ cmd_cog_list = (
     'developer.modmail',
     'fun.meme',
     'fun.say',
+    'fun.wholesome',
     'games.cointoss',
     'games.rockpaperscissors',
     'help',
