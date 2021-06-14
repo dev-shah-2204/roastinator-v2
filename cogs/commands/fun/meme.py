@@ -23,9 +23,9 @@ class Meme(commands.Cog):
 
         async with ClientSession() as session:
             async with session.get(url) as output:
-                final = await output.json()
-                image = final['image'] #the meme (a reddit post)
-                title = final['title'] #the title of the reddit post
+                post = await output.json()
+                image = post['url'] #the meme (a reddit post)
+                title = post['title'] #the title of the reddit post
 
             footer_texts = [
                 'Haha!',
