@@ -30,8 +30,6 @@ class Help(commands.Cog):
         self.client = client
 
     async def cmd_help(self, ctx, command): #Makes the embed
-
-
         _aliases = ', '.join([*command.aliases])
         if _aliases == '':
             _aliases = "Command has no aliases"
@@ -56,8 +54,9 @@ BotStats
 Moderation
 Utility
 Games
+Fun
 """)
-            em.set_footer(text = "Use `-help <category>` for mor info")
+            em.set_footer(text = "Use -help <category> for mor info")
 
             await ctx.send(embed = em)
             return
@@ -69,11 +68,26 @@ Games
             for alias in com.aliases:
                 aliases[com.name].append(alias)
 
+        if cmd.lower() == 'fun':
+            em = discord.Embed(
+                title = "Fun Commands",
+                value = '`meme`\n`say`'
+                color = pfpG
+            )
+            em.set_footer(text = 'Use -help <command> for more info')
+            await ctx.send(embed = em)
+            return
+
         if cmd.lower() == 'games':
             em = discord.Embed(
                 title = "Games Commands",
-                value = '`cointoss`\n`rockpaperscissors`'
+                value = '`cointoss`\n`rockpaperscissors`',
+                color = pfpG
             )
+            em.set_footer(text = 'Use -help <command> for more info')
+
+            await ctx.send(embed = em)
+            return
 
         if cmd.lower() == 'moderation' or cmd.lower() == 'mod':
             em = discord.Embed(
@@ -88,7 +102,7 @@ Games
         if cmd.lower() == 'utility' or cmd.lower() == 'util':
             em = discord.Embed(
                 title = "Utility Commands:",
-                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`python`\n`snipe` , `editsnipe`\n`urban`\n`prefix` , `embed`',
+                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`python`\n`snipe` , `editsnipe`\n`urban` , `reddit`\n, `embed` , `stealemoji`',
                 color = pfpG)
             em.set_footer(text = 'Use -help <command> for more info')
 
