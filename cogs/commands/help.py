@@ -71,7 +71,7 @@ Fun
         if cmd.lower() == 'fun':
             em = discord.Embed(
                 title = "Fun Commands",
-                description = '`meme` , `wholesome`\n`say`',
+                description = '`meme` , `wholesome` , `cursed`\n`say`',
                 color = pfpG
             )
             em.set_footer(text = 'Use -help <command> for more info')
