@@ -11,7 +11,7 @@ Modularity and customizability. For beginners making their personal discord bot,
 There are tons of YouTube videos that show in detail how to make your own Discord Bot using python. If you have difficulty understanding how to make a bot here, well, this isn't a tutorial. This is code for you to copy and paste to add features to your bot without spending a lot of time. Check out [Carberra Tutorials](https://www.youtube.com/channel/UC13cYu7lec-oOcqQf5L-brg) and [Code With Swastik](https://www.youtube.com/channel/UC2ITRZ4_Di-KMHSIylTQbBA). They have a great series of tutorials on a python discord bot.
 
 ## Other open-sourced bots
-[Carl-Bot](https://github.com/CarlGroth/Carl-Bot) - Has great features. It is made in python.
+[Carl-Bot](https://github.com/CarlGroth/Carl-Bot) - Has great features. It is made in python. \[Outdated\]<br />
 [YAGPDP](https://github.com/jonas747/yagpdb) - Also has great features. It's not made in python.
 
 
