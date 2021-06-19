@@ -16,7 +16,10 @@ class Nuke(commands.Cog):
         
         new_channel = await existing_channel.clone(reason = f'Original was nuked by {ctx.author}') #Reason to be registered in the audit log
         await new_channel.edit(position = pos)
-        await ctx.channel.delete()
+        try:
+            await ctx.channel.delete()
+        except:
+            await ctx.send("I couldn't delete the channel, maybe this is a community updates channel?") #Channels that are set for community updates cannot be deleted without transferring the community updates to another channel
 
         em = discord.Embed(
                     title = 'This channel got nuked!',
