@@ -29,7 +29,7 @@ event_cog_list = (
 
 passive_cog_list = [
     'nqn'
-] #This is a list instead of a tuple because the for loop detects nqn as n, q, n when loading the cog
+]
 
 cmd_cog_list = (
     'botStats.invite',
