@@ -12,7 +12,11 @@ class Nuke(commands.Cog):
     @commands.bot_has_permissions(manage_channels = True)
     async def nuke(self, ctx):
         existing_channel = ctx.channel
+        pos = existing_channel.position
+        
         new_channel = await existing_channel.clone(reason = 'Old one got nuked') #Reason to be registered in the audit log
+        new_channel.move(pos)
+        
         await existing_channel.delete(reason = f'Nuked by {ctx.author}')
 
         em = discord.Embed(
