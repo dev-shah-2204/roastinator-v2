@@ -14,18 +14,14 @@ class Nuke(commands.Cog):
         existing_channel = ctx.channel
         pos = existing_channel.position
         
-        new_channel = await existing_channel.clone(reason = 'Old one got nuked') #Reason to be registered in the audit log
-        new_channel.move(pos)
-        
-        await existing_channel.delete(reason = f'Nuked by {ctx.author}')
+        new_channel = await existing_channel.clone(reason = f'Original was nuked by {ctx.author}') #Reason to be registered in the audit log
+        await new_channel.edit(position = pos)
+        await ctx.channel.delete()
 
         em = discord.Embed(
                     title = 'This channel got nuked!',
+                    description = 'Who did this? Check Audit Log',
                     color = hex_colors.m_red)
-        em.add_field(
-                name = 'Responsible moderator:',
-                value = ctx.author
-        )
 
         await new_channel.send(embed = em)
 
