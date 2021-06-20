@@ -39,7 +39,7 @@ class RoleInfo(Cog):
                     perm = perm.replace(',',' ')
 
                 perm = perm.title() #Capitalizing first letter of every word
-                perm = perm.replace('True',':ballot_box_with_check:')
+                perm = perm.replace('True','')
                 d_perms += f"{perm}\n"
 
 
