@@ -68,9 +68,9 @@ class MuteUnmute(commands.Cog):
             await member.remove_roles(role, reason = f'Unmute command ran by {ctx.author}')
 
             em = discord.Embed(
-                        title = f"{ctx.author} muted {member}",
+                        title = f"{ctx.author} unmuted {member}",
                         description = f"Reason:\n{reason}",
-                        color = hex_colors.m_red
+                        color = hex_colors.l_green
                         )
             em.set_thumbnail(url = member.avatar_url)
 
