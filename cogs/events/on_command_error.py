@@ -11,12 +11,6 @@ class ErrorHandling(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.CommandNotFound):
-            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
-            em.add_field(name = 'Command not found', value = ":x: | I searched high and low but couldn't find that command")
-
-            await ctx.send(embed = em)
-
         if isinstance(error, commands.MissingRequiredArgument):
             em = discord.Embed(title = 'Error', color = hex_colors.m_red)
             em.add_field(name = "Command incomplete", value = ":x: | The command is incomplete")
