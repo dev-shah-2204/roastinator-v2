@@ -42,6 +42,7 @@ class Kick(commands.Cog):
         em.set_thumbnail(url = member.avatar_url)
         em.add_field(name = 'Reason:', value = reason)
 
+        await ctx.message.delete()
         await ctx.send(embed = em)
 
 

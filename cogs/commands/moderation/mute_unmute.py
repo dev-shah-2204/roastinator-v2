@@ -34,6 +34,7 @@ class MuteUnmute(commands.Cog):
                         )
         em.set_thumbnail(url = member.avatar_url)
 
+        await ctx.message.delete()
         await ctx.send(embed = em)
 
         for channel in ctx.guild.channels: #Changing the permission for the Muted role in all channels
@@ -73,7 +74,8 @@ class MuteUnmute(commands.Cog):
                         color = hex_colors.l_green
                         )
             em.set_thumbnail(url = member.avatar_url)
-
+  
+            await ctx.message.delete()
             await ctx.send(embed = em)
 
 def setup(client):
