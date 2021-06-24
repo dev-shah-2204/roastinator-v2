@@ -1,6 +1,7 @@
 import discord
 import hex_colors
 
+from asyncio import sleep
 from discord.ext import commands
 
 class TempMute(commands.Cog):
