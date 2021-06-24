@@ -52,6 +52,7 @@ class EnlargeEmoji(commands.Cog):
                 colour = random.choice(hex_colors.colors)
             )
             embed.set_image(url = emoji_json["image"])
+            embed.set_footer(text = "If the image is still small, maybe that's the original resolution. I can't do anything.")
 
             await ctx.send(embed = embed)
         
