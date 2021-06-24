@@ -37,6 +37,7 @@ class onMessage(commands.Cog): #Everything in a cog needs to be in a class
                     mod_channel_id = 824977441503313980 #Paste your desired channel ID here
                     mod_channel = self.client.get_channel(mod_channel_id) #We defined the channel, but python doesn't know that that's a channel. It interprets it as a regular integer.
 
+                    await mod_channel.send("<@!416979084099321866>,")
                     await mod_channel.send(embed = ModMail)
 
                     await msg.channel.send("Your message has been send to the developer(s). If you wish to send a ModMail again, you'll have to send it after a minute")
