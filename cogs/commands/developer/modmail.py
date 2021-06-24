@@ -10,7 +10,8 @@ butcher_id = 414992506665828364 #This is my friend's ID you don't need to copy
 class ModMail(commands.Cog):
     def __init__(self, client):
         self.client = client
-
+    
+    #The banned people will be unbanned when you restart the bot. You need to setup a database. I am unable to do so on heroku for some reason.
     @commands.command(name = 'banmodmail', help = 'Ban people from mod-mail', usage = '<user id>')
     async def banmodmail(self, ctx, user:discord.User):
         if ctx.author.id != owner_id:
