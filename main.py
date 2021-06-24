@@ -51,6 +51,7 @@ cmd_cog_list = (
     'moderation.lock_unlock',
     'moderation.mute_unmute',
     'moderation.nuke',
+    'moderation.softban',
     'moderation.temp_mute',
     'utility.avatar',
     'utility.editsnipe',
