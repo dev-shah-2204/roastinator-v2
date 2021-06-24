@@ -8,7 +8,7 @@ class TempMute(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'tempmute', aliases = ['tempstfu'], help = 'Temporarily mute people')
+    @commands.command(name = 'tempmute', aliases = ['tempstfu'], help = 'Temporarily mute people (Mode is `s`, `m`, `h` or `d`)')
     @commands.has_permissions(manage_roles = True)
     @commands.bot_has_permissions(manage_roles = True)
     async def mute(self, ctx, member:discord.Member, time:int, mode = 'm', *, reason = "No reason provided"):
@@ -37,11 +37,15 @@ class TempMute(commands.Cog):
 
                 await channel.set_permissions(role, overwrite = overwrite)
 
-        if mode == 'm':
+        multiplier = 1 #If we put 0, and someone uses the command wrong, problems might occur.
+
+        if mode == 's' or mode == 'seconds' or mode == 'second':
+            multiplier = 1
+        if mode == 'm' or mode == 'minutes' or mode == 'minute':
             multiplier = 60
-        if mode == 'h':
+        if mode == 'h' or mode == 'hours' or mode == 'hour':
             multiplier = 60*60
-        if mode == 'd':
+        if mode == 'd' or mode == 'days' or mode == 'day':
             multiplier = 60*60*24
 
         await sleep(time*multiplier)
