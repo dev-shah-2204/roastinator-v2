@@ -18,7 +18,7 @@ class ErrorSender(commands.Cog):
         em.add_field(name = 'Error:', value = f"```{error}```", inline = False)
         em.add_field(name = 'Server:', value = f"{ctx.guild} ({ctx.guild.id})", inline = False)
         em.add_field(name = 'User:', value = f"{ctx.author} ({ctx.author.id})", inline = False)
-        em.add_field(name = 'Message:', value = ctx.message)
+        em.add_field(name = 'Message:', value = ctx.message.content)
 
         await owner.send(embed = em)
         
