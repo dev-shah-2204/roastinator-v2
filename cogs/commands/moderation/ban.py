@@ -37,7 +37,7 @@ class Ban(commands.Cog):
             await ctx.send(f"{member}'s role is higher than me, I cant ban them")
             return
 
-        em = discord.Embed(color = random.choice(colors))
+        em = discord.Embed(color = hex_colors.m_red)
         em.set_author(name = f"{ctx.author} banned {member}", icon_url = ctx.author.avatar_url)
         em.set_thumbnail(url = member.avatar_url)
         em.add_field(name = 'Reason:', value = reason)
