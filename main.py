@@ -7,7 +7,7 @@ import os
 
 from discord.ext import commands
 
-testing = False #If set to true, sends error from console in discord.
+testing = True #If set to true, sends error from console in discord.
 
 class Bot():
     prefix = commands.when_mentioned_or('-')
@@ -32,8 +32,9 @@ passive_cog_list = [
 ]
 
 cmd_cog_list = (
-    'botStats.invite',
-    'botStats.ping',
+    'bot.invite',
+    'bot.modmail_reply',
+    'bot.ping',
     'developer.cogs',
     'developer.modmail',
     'fun.cursed',
