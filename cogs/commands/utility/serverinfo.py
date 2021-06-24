@@ -11,7 +11,7 @@ def bool_str(variable): #Function to convert boolean values to string: Yes/No
     if variable == False:
         return 'No'
 
-class serverInfo(Cog):
+class ServerInfo(Cog):
     def __init__(self, client):
         self.client = client
 
@@ -22,7 +22,6 @@ class serverInfo(Cog):
 
         #Many of these variables aren't necessary but since the embed has many fields, I didn't want the code to be messy
         created = server.created_at.strftime("%d %B %Y at %I %p")
-        emoji_limit = server.emoji_limit
         emojis = server.emojis
         members = server.member_count
         owner = server.owner
@@ -30,17 +29,9 @@ class serverInfo(Cog):
         region = server.region
         boost_level = server.premium_tier
         large = server.large
-
-        roles = len(ctx.guild.roles)
-
         subs = server.premium_subscribers
-
-        boosters = ""
-        for person in subs:
-            boosters += f'{person.mention} '
-
-        if boosters == "":
-            boosters = 'None'
+        roles = len(ctx.guild.roles)
+                
 
         em = discord.Embed(title = f"Here's the information I found on {ctx.guild.name}", color = random.choice(hex_colors.colors))
         em.set_thumbnail(url = server.icon_url)
@@ -51,13 +42,14 @@ class serverInfo(Cog):
         em.add_field(name = 'Is this server considered a big server?', value = bool_str(large), inline = False)
         em.add_field(name = 'Member Count', value = members)
         em.add_field(name = 'Number of roles', value = roles-1, inline = False) #To ignore @everyone role
-        em.add_field(name = 'Security Level', value = level, inline = False)
-        em.add_field(name = 'Server Boosters', value = boosters, inline = False)
+        em.add_field(name = 'Emojis', value = len(emojis), inline = False)
+        em.add_field(name = 'Security Level', value = str(level).capitalize(), inline = False)
+        em.add_field(name = 'Server Boosters', value = len(subs), inline = False)
         em.add_field(name = 'Server level', value = boost_level, inline = False)
         em.set_footer(text = f'Requested by {ctx.author}', icon_url = ctx.author.avatar_url)
 
         await ctx.send(embed = em)
 
 def setup(client):
-    client.add_cog(serverInfo(client))
-    print('serverInfo')
+    client.add_cog(ServerInfo(client))
+    print('ServerInfo')
