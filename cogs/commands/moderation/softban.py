@@ -13,12 +13,10 @@ class SoftBan(commands.Cog):
     @commands.command(name = 'softban', help = 'Ban and unban a member from the server so their messages get deleted', usage = '<member> <reason>')
     @commands.has_permissions(ban_members = True)
     @commands.bot_has_permissions(ban_members = True)
-    async def soft_ban(self, ctx, member:discord.Member, *, reason = None): #Default reason is "No reason provided"
+    async def soft_ban(self, ctx, member:discord.Member, *, reason = "No reason provided"): #Default reason is "No reason provided"
         """
         It's same as the ban command, just the unban part is new
         """
-        if reason == None:
-            await ctx.send("You need to provide a reason")
 
         if member == self.client.user: #If  the 'member' is the bot
             await ctx.send("I don't know what the procedure is here, but I cannot leave like this. You'll have to remove me from the server manually. If I caused any problem, DM it to me, with details so my developer can fix me.")
