@@ -15,9 +15,12 @@ class Cogs(commands.Cog):
         if ctx.author.id != owner_id:
             await ctx.send("That is a developer command, you can't use that")
             return
-
-        self.client.unload_extension(f"cogs.{cog}")
-        self.client.load_extension(f"cogs.{cog}")
+        try:
+            self.client.unload_extension(f"cogs.{cog}")
+            self.client.load_extension(f"cogs.{cog}")
+        except commands.ExtensionNotLoaded:
+            self.client.load_extension(f"cogs.{cog}")
+        
         await ctx.send(f"Reloaded {cog} cog")
 
     @commands.command(name = 'load', help = 'Loads a cog', usage = '<cog>')
@@ -37,7 +40,7 @@ class Cogs(commands.Cog):
             await ctx.send("That is a developer command, you can't use that")
             return
 
-        self.client.unload_extension(cog)
+        self.client.unload_extension(f"cogs.{cog}")
         await ctx.send(f"Unloaded {cog} cog")
 
 
