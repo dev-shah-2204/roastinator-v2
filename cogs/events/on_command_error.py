@@ -17,6 +17,7 @@ class ErrorHandling(commands.Cog):
 
             await ctx.send(embed = em)
             ctx.command.reset_cooldown(ctx)
+            return
 
         if isinstance(error, commands.MissingPermissions):
             em = discord.Embed(title = 'Error', color = hex_colors.m_red)
@@ -30,8 +31,8 @@ class ErrorHandling(commands.Cog):
                 permission = ' and '.join(missing)
 
             em.add_field(name = "Missing Permissions", value = f":x: | You need the {permission} permission to do that")
-
             await ctx.send(embed = em)
+            return
 
         if isinstance(error, commands.MemberNotFound):
             em = discord.Embed(title = 'Error', color = hex_colors.m_red)
@@ -39,6 +40,7 @@ class ErrorHandling(commands.Cog):
 
             await ctx.send(embed = em)
             ctx.command.reset_cooldown(ctx)
+            return
 
         if isinstance(error, commands.BotMissingPermissions):
             mp = error.missing_perms[0]
@@ -50,8 +52,10 @@ class ErrorHandling(commands.Cog):
 
             try:
                 await ctx.send(embed = em)
+                return
             except:
-                await ctx.send(f"I don't have the {mp} permission. F")
+                await ctx.send(f"I don't have the {mp} permission. F") #In case the bot doesn't have embed links permission
+            return
 
 
         if isinstance(error, commands.CommandOnCooldown):
@@ -67,15 +71,29 @@ class ErrorHandling(commands.Cog):
             em = discord.Embed(title = "Error", color = hex_colors.m_red)
             em.add_field(name = "Command on Cooldown", value = f":x: | The `{ctx.command}` command is on a cooldown, try again in **{error.retry_after:,.1f} {mode}**")
             await ctx.send(embed = em)
+            return
 
         if isinstance(error, commands.BadArgument):
             em = discord.Embed(title = "Error", color = hex_colors.m_red)
             em.add_field(name = "Invalid arguments", value = ":x: I think you used the command wrong. For more info, try running: ```-help {}```".format(ctx.command))
             await ctx.send(embed = em)
             ctx.command.reset_cooldown(ctx)
+            return
 
         else:
-            print(error)
+            await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
+            await ctx.send(f"```{error}```")
+
+            owner = self.client.get_user(416979084099321866) #Enter your ID here
+            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
+            em.add_field(name = 'Command', value = ctx.command, inline = False)
+            em.add_field(name = 'Error:', value = f"```{error}```", inline = False)
+            em.add_field(name = 'Server:', value = f"{ctx.guild} ({ctx.guild.id})", inline = False)
+            em.add_field(name = 'User:', value = f"{ctx.author} ({ctx.author.id})", inline = False)
+            em.add_field(name = 'Message:', value = ctx.message.content)
+
+            await owner.send(embed = em)
+        
 
 def setup(client):
     client.add_cog(ErrorHandling(client))
