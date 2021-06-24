@@ -22,6 +22,7 @@ class ErrorSender(commands.Cog):
 
         await owner.send(embed = em)
         
+        
         #The embed is optional, I want to see it so that I can understand the problem and fix it. 
 
 def setup(client):
