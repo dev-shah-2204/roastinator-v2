@@ -1,6 +1,7 @@
 import discord
 import random
 
+from datetime import datetime
 from hex_colors import *
 from discord.ext import commands
 
@@ -21,7 +22,7 @@ class onMessage(commands.Cog): #Everything in a cog needs to be in a class
         if isinstance(msg.channel, discord.DMChannel): #Checking if the message channel is a DM DM Channel
             if len(msg.content) < 40:
                 await msg.channel.send(
-                "Thank you for reaching out to the Mod-Mail syste. It appears that your message is shorter than 40 characters. The message in Mod-Mail is supposed to be detailed, so the mods of the bot can understand your problem.\n\nDid you not mean to reach out to the Mod-Mail? Well, nevermind then")
+                "Thank you for reaching out to the Mod-Mail system. It appears that your message is shorter than 40 characters. The message in Mod-Mail is supposed to be detailed, so the mods of the bot can understand your problem.\n\nDid you not mean to reach out to the Mod-Mail? Well, nevermind then")
                 return
 
             else:
