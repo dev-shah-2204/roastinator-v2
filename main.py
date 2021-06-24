@@ -7,8 +7,6 @@ import os
 
 from discord.ext import commands
 
-testing = True #If set to true, sends error from console in discord.
-
 class Bot():
     prefix = commands.when_mentioned_or('-')
     t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
@@ -98,9 +96,5 @@ Make a cog, add to the tuple. Not that difficult.
 #             client.load_extension(f"cogs.commands.{folder}.{cmd_cog[:-3]}")
 
 # client.load_extension(f"cogs.passive.nqn")
-
-
-if testing == True:
-    client.load_extension("cogs.events.error_sender")
 
 client.run(Bot.token)
