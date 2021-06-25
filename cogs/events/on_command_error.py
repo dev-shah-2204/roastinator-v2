@@ -80,6 +80,9 @@ class ErrorHandling(commands.Cog):
             ctx.command.reset_cooldown(ctx)
             return
 
+        if isinstance(error, commands.CommandNotFound):
+            return
+
         else:
             await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
             await ctx.send(f"```{error}```")
