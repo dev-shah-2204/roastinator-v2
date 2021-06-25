@@ -14,7 +14,7 @@ class Bot():
     
 #Defining our bot (client)
 client = commands.Bot(command_prefix = Bot.prefix, intents = discord.Intents.all(), case_insensitive = True) 
-
+owner_ids = [416979084099321866, 810863994985250836]
 client.remove_command('help')
 
 
