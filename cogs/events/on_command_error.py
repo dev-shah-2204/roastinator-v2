@@ -87,7 +87,7 @@ class ErrorHandling(commands.Cog):
             await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
             await ctx.send(f"```{error}```")
 
-            owner = self.client.get_user(416979084099321866) #Enter your ID here
+            channel = self.client.get_channel(857878860251136020) #Enter your channel ID here
             em = discord.Embed(title = 'Error', color = hex_colors.m_red)
             em.add_field(name = 'Command', value = ctx.command, inline = False)
             em.add_field(name = 'Error:', value = f"```{error}```", inline = False)
@@ -95,7 +95,7 @@ class ErrorHandling(commands.Cog):
             em.add_field(name = 'User:', value = f"{ctx.author} ({ctx.author.id})", inline = False)
             em.add_field(name = 'Message:', value = ctx.message.content)
 
-            await owner.send(embed = em)
+            await channel.send(embed = em)
         
 
 def setup(client):
