@@ -36,6 +36,7 @@ cmd_cog_list = (
     'developer.cogs',
     'developer.modmail',
     'fun.cursed',
+    'fun.dadjoke',
     'fun.meme',
     'fun.say',
     'fun.wholesome',
