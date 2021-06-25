@@ -23,8 +23,7 @@ class DadJoke(commands.Cog):
         os.environ.get('dad_key_6')
     ] #Each of these keys can be called 50 times a day. You can find another API or get more keys
 
-        for key in keys: 
-            print(keys.index(key))
+        for key in keys:
             try:
                 headers = {
                     'x-rapidapi-key': key,
