@@ -79,6 +79,7 @@ for passive_cog in passive_cog_list:
     if __name__ == '__main__':
         client.load_extension(f"cogs.passive.{passive_cog}")
 
+client.load_extension("jishaku")
 
 """
 The following cog loading method is easiser since you dont have to make a big tuple, but if you don't want to load some cogs,
