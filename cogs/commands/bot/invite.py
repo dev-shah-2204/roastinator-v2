@@ -10,7 +10,7 @@ class Invite(commands.Cog):
     async def invite(self, ctx):
         em = discord.Embed(
             title = "Thank you for inviting me",
-            value = "Click [here](https://discord.com/api/oauth2/authorize?client_id=822795444089782293&permissions=1879436375&scope=bot)"
+            description = "Click [here](https://discord.com/api/oauth2/authorize?client_id=822795444089782293&permissions=1879436375&scope=bot)"
         )
         em.set_thumbnail(url = self.client.user.avatar_url)
         em.set_footer(text = 'Some of the required permissions might not be required, but they are for future updates')
