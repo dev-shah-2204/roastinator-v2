@@ -8,8 +8,6 @@ class Cogs(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-
-
     @commands.command(name = 'reload', help = 'Reloads a cog')
     async def reload_cog(self, ctx, cog):
         if ctx.author.id != owner_id:
