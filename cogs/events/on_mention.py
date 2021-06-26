@@ -18,7 +18,8 @@ class OnMention(commands.Cog):
             db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{msg.guild.id}'")
             for row in db:
                 prefix = row
-
+            prefix = prefix.replace("('",'') #complex
+            prefix = prefix.replace("',)",'') #very complex mmmhm
             em = discord.Embed(
                 title = f'My prefix for this server is `{prefix}`',
                 color = random.choice(hex_colors.colors)
