@@ -22,11 +22,12 @@ class FixPrefix(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
-        check = await self.check_prefix(str(msg.guild.id))
-        if check is None:
-            db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{msg.guild.id}','-')")
-            print("Fixed prefix for a guild")
-            database.commit()
+        if not isinstance(msg.channel, discord.DMChannel):
+            check = await self.check_prefix(str(msg.guild.id))
+            if check is None:
+                db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{msg.guild.id}','-')")
+                print("Fixed prefix for a guild")
+                database.commit()
 
         
 
