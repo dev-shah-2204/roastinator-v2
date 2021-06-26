@@ -16,7 +16,7 @@ class Bonk(commands.Cog):
         if user == None:
             user = ctx.author 
 
-        image = Image.open('images\\bonk.jpg')
+        image = Image.open('./images/bonk.jpg')
         avatar = user.avatar_url_as(size = 64) #64x64 pixels
         data = BytesIO(await avatar.read())
 
@@ -24,7 +24,7 @@ class Bonk(commands.Cog):
         bonkee = bonkee.resize((80,53))
 
         image.paste(bonkee, (200,65)) #200,65 are the coordinates
-        image.save('images\\bonked.jpg')
+        image.save('./images/bonked.jpg')
 
         await ctx.send(f"{ctx.author.mention} bonked {user.mention}", file = discord.File('images\\bonked.jpg'))
 
