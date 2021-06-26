@@ -38,6 +38,7 @@ cmd_cog_list = (
     'fun.cursed',
     'fun.dadjoke',
     'fun.meme',
+    'fun.roast',
     'fun.say',
     'fun.wholesome',
     'games.cointoss',
