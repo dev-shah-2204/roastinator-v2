@@ -35,9 +35,10 @@ client.remove_command('help')
 #Cogs list
 event_cog_list = (
     'fix_prefix',
+    'modmail',
     'on_command_error',
     'on_guild_join',
-    'on_message',
+    'on_mention',
     'on_ready'
 )
 
