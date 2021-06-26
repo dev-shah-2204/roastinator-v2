@@ -27,20 +27,30 @@ class Kick(commands.Cog):
 
         #Checking if the other person has a higher role
         if member.top_role.position >= ctx.author.top_role.position:
-            await ctx.send(f"{member.mention} has a higher role than you/same role as you. You cannot kick them")
+            await ctx.send(f"{member} has a higher role than you/same role as you. You cannot kick them")
+            return
+        
+        #Checking if the other person has a higher role than the bot
+        if member.top_role.position >= ctx.guild.me.top_role.position:
+            await ctx.send(f"{member} has a higher/same role than/as me. I can't kick them")
             return
 
-        try:
-            await member.kick(reason = reason)
-        except:
-            await ctx.send(f"{member} has a higher role than me, I can't kick them")
-            return
-
-
+        #Embed to be sent in the channel
         em = discord.Embed(color = hex_colors.m_red)
         em.set_author(name = f"{ctx.author} kicked {member}", icon_url = ctx.author.avatar_url)
         em.set_thumbnail(url = member.avatar_url)
         em.add_field(name = 'Reason:', value = reason)
+
+        #Embed to be sent to the member 
+        m_em = discord.Embed(color = hex_colors.m_red)
+        m_em.set_author(name = f"{ctx.author} kicked you from {ctx.guild.name}", icon_url = ctx.author.avatar_url)
+        m_em.set_thumbnail(url = ctx.guild.icon_url)
+        m_em.add_field(name = "Reason", value = reason)
+
+        try:
+            await member.send(embed = m_em)
+        except discord.Forbidden:
+            pass 
 
         await ctx.message.delete()
         await ctx.send(embed = em)
