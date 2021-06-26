@@ -5,7 +5,16 @@ will help you out with most of your problems
 import discord
 import os
 
+from db import database
 from discord.ext import commands
+
+db = database.cursor()
+
+def get_prefix(client, message):
+    db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{str(message.guild.id)}'")
+    for row in db:
+        final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
+        return str(final)
 
 class Bot():
     prefix = commands.when_mentioned_or('-')
@@ -13,13 +22,21 @@ class Bot():
     token = os.environ.get('token')
     
 #Defining our bot (client)
-client = commands.Bot(command_prefix = Bot.prefix, intents = discord.Intents.all(), case_insensitive = True, owner_ids = [416979084099321866, 810863994985250836]) 
+client = commands.Bot(
+    command_prefix = get_prefix,
+    intents = discord.Intents.all(), 
+    case_insensitive = True, 
+    owner_ids = [416979084099321866, 810863994985250836]
+) 
+
 client.remove_command('help')
 
 
 #Cogs list
 event_cog_list = (
+    'fix_prefix',
     'on_command_error',
+    'on_guild_join',
     'on_message',
     'on_ready'
 )
@@ -57,6 +74,7 @@ cmd_cog_list = (
     'utility.editsnipe',
     'utility.embed',
     'utility.enlarge_emoji',
+    'utility.prefix',
     'utility.python_cmd',
     'utility.reddit',
     'utility.role_info',
