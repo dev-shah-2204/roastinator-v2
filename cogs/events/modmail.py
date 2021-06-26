@@ -33,6 +33,11 @@ class ModMail(commands.Cog): #Everything in a cog needs to be in a class
                 return
 
             else:
+                check = await self.check_ban(msg.author.id)
+                if check is not None:
+                    await msg.channel.send("You have been banned from ModMail. For furthur details contant my developer. You can join the support server, the link can be found here: https://discord.ly/unique-username")
+                    return
+                    
                 if not msg.author.id in people_on_cooldown: #Checking if the person is on cooldown
                     ModMail = discord.Embed(title = 'Mod-Mail is here',
                                             description = msg.content,
@@ -59,11 +64,6 @@ class ModMail(commands.Cog): #Everything in a cog needs to be in a class
                 if msg.author.id in people_on_cooldown:
                     await msg.channel.send("It appears that you're on a cooldown")
                     return
-
-                else:
-                    check = await self.check_ban(msg.author.id)
-                    if check is not None:
-                        await msg.channel.send("You have been banned from ModMail. For furthur details contant my developer. You can join the support server, the link can be found here: https://discord.ly/unique-username")
 
 
 #Every cog needs this function. It's telling the main file that this is a cog/extension. It doesn't work like regular python modules
