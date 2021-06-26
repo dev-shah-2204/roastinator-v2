@@ -102,7 +102,7 @@ Fun
         if cmd.lower() == 'utility' or cmd.lower() == 'util':
             em = discord.Embed(
                 title = "Utility Commands:",
-                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`snipe` , `editsnipe`\n`urban` , `reddit`  , `python`\n`embed` , `stealemoji` , `enlargeemoji`',
+                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`snipe` , `editsnipe`\n`urban` , `reddit`  , `python`\n`embed` , `stealemoji` , `enlargeemoji` , `prefix`',
                 color = pfpG)
             em.set_footer(text = 'Use -help <command> for more info')
 
