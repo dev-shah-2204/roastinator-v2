@@ -1,42 +1,42 @@
 import discord
 import os
 
+from db import database
 from discord.ext import commands
 from cogs.events.ModMail import people_on_cooldown #people_on_cooldown is a list, it gets reset every 12 hours on heroku. you need to setup a database to store the banned people's id
 
 owner_id = 416979084099321866 #Replace with your ID
-butcher_id = 414992506665828364 #This is my friend's ID you don't need to copy
+
+db = database.cursor()
 
 class ModMail(commands.Cog):
     def __init__(self, client):
         self.client = client
     
     #The banned people will be unbanned when you restart the bot. You need to setup a database. I am unable to do so on heroku for some reason.
-    @commands.command(name = 'banmodmail', help = 'Ban people from mod-mail', usage = '<user id>')
+    @commands.command(name = 'banmodmail', aliases = ['banmm'], help = 'Ban people from mod-mail')
     async def banmodmail(self, ctx, user:discord.User):
         if ctx.author.id != owner_id:
             await ctx.send("You can't do that")
             return
 
         else:
-            people_on_cooldown.append(user.id)
+            db.execute(f"INSERT INTO ModBan (user_id) VALUES ('{user.id}')")
+            database.commit()
             await ctx.send(f"Won't take mod-mail from {user} now")
-            owner = self.client.get_user(owner_id)
-            await owner.send(f"{user.id} has been banned from mod-mail")
             return
 
     #You might want to unban them later too
-    @commands.command(name = 'unbanmodmail', help = "Un-ban people from mod-mail", usage = '<user id>')
+    @commands.command(name = 'unbanmodmail', aliases = ['unbanmm'], help = "Un-ban people from mod-mail")
     async def unbanmodmail(self, ctx, user:discord.User):
         if ctx.author.id != owner_id:
             await ctx.send("You can't do that")
             return
 
         else:
-            people_on_cooldown.remove(user.id)
+            db.execute(f"DELETE FROM ModBan WHERE user_id = '{user.id}'")
+            database.commit()
             await ctx.send(f"Unbanned {user} from the mod-mail blacklist")
-            owner = self.client.get_user(owner_id)
-            await owner.send(f"{user.id} has been un-banned from mod-mail")
             return
 
 def setup(client):

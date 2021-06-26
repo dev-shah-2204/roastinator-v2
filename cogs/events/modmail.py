@@ -1,17 +1,23 @@
 import discord
 import random
 
+from db import database
 from datetime import datetime
 from hex_colors import *
 from discord.ext import commands
 from asyncio import sleep
 
 people_on_cooldown = []
+db = database.cursor()
 
 class ModMail(commands.Cog): #Everything in a cog needs to be in a class
     def __init__(self, client):
         self.client = client
 
+    async def check_ban(self, user):
+        db.execute(f"SELECT user_id FROM ModBan WHERE user_id = '{user}'")
+        for row in db:
+            return row
 
     @commands.Cog.listener() #Decorater for events in a cog. It's commands.Cog.listener() instead of client.event
     async def on_message(self, msg):#Every function in a class needs 'self' as its first parameter
@@ -50,20 +56,14 @@ class ModMail(commands.Cog): #Everything in a cog needs to be in a class
                     people_on_cooldown.remove(msg.author.id)
                     return
 
-                else:
-                    await msg.channel.send("It appears that you're either on a cooldown or banned from mod-mail because you spammed (maybe)")
+                if msg.author.id in people_on_cooldown:
+                    await msg.channel.send("It appears that you're on a cooldown")
                     return
 
-        # if msg.content == f"<@!{self.client.user.id}>" or msg.content == f"<@{self.client.user.id}>": #When the bot is mentioned
-        #     db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{str(msg.guild.id)}'")
-        #     for row in db:
-        #         prefix = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
-        #
-        #     em = discord.Embed(title = f"My prefix for this server is: `{prefix}`", color = random.choice(colors))
-        #     await msg.channel.send(embed = em)
-        """
-        The database code isn't working on heroku, until I figure that out, this part is disabled.
-        """
+                else:
+                    check = await self.check_ban(msg.author.id)
+                    if check is not None:
+                        await msg.channel.send("You have been banned from ModMail. For furthur details contant my developer. You can join the support server, the link can be found here: https://discord.ly/unique-username")
 
 
 #Every cog needs this function. It's telling the main file that this is a cog/extension. It doesn't work like regular python modules
