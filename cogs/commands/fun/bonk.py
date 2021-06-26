@@ -26,7 +26,7 @@ class Bonk(commands.Cog):
         image.paste(bonkee, (200,65)) #200,65 are the coordinates
         image.save('./images/bonked.jpg')
 
-        await ctx.send(f"{ctx.author.mention} bonked {user.mention}", file = discord.File('images\\bonked.jpg'))
+        await ctx.send(f"{ctx.author.mention} bonked {user.mention}", file = discord.File('./images/bonked.jpg'))
 
 
 def setup(client):
