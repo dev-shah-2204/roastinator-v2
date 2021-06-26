@@ -8,7 +8,7 @@ from asyncio import sleep
 
 people_on_cooldown = []
 
-class onMessage(commands.Cog): #Everything in a cog needs to be in a class
+class ModMail(commands.Cog): #Everything in a cog needs to be in a class
     def __init__(self, client):
         self.client = client
 
@@ -68,5 +68,5 @@ class onMessage(commands.Cog): #Everything in a cog needs to be in a class
 
 #Every cog needs this function. It's telling the main file that this is a cog/extension. It doesn't work like regular python modules
 def setup(client):
-    client.add_cog(onMessage(client))
-    print('onMessage') #So that we know when the cog is loaded when the bot starts
+    client.add_cog(ModMail(client))
+    print('ModMail') #So that we know when the cog is loaded when the bot starts
