@@ -11,9 +11,10 @@ So, when a message is sent, bot will check the database for the guild.
 If it's not there, it'll add it with the default prefix
 """
 class FixPrefix(commands.Cog):
-    def __init__(self, client, server_list):
+    def __init__(self, client):
         self.client = client
-        self.server_list = server_list 
+    
+    server_list = []
 
     async def check_prefix(self, guild):
         if guild not in self.server_list: #We don't want to call the database everytime
