@@ -48,7 +48,7 @@ class Cogs(commands.Cog):
             await ctx.send("That is a developer command, you can't use that")
             return 
 
-        eval(code)
+        await ctx.send(eval(code))
 
 
 def setup(client):
