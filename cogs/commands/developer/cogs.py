@@ -41,6 +41,15 @@ class Cogs(commands.Cog):
         self.client.unload_extension(f"cogs.{cog}")
         await ctx.send(f"Unloaded {cog} cog")
 
+    #This isn't a cog command but I didn't want to make a new file for it
+    @commands.command(name = 'eval')
+    async def eval(self, ctx, *, code):
+        if ctx.author.id != owner_id:
+            await ctx.send("That is a developer command, you can't use that")
+            return 
+
+        eval(code)
+
 
 def setup(client):
     client.add_cog(Cogs(client))
