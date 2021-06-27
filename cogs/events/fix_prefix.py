@@ -11,14 +11,19 @@ So, when a message is sent, bot will check the database for the guild.
 If it's not there, it'll add it with the default prefix
 """
 class FixPrefix(commands.Cog):
-    def __init__(self, client):
-        self.client = client 
+    def __init__(self, client, server_list):
+        self.client = client
+        self.server_list = server_list 
 
     async def check_prefix(self, guild):
-        db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{guild}'")
-        for row in db:
-            final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
-            return final
+        if guild not in self.server_list: #We don't want to call the database everytime
+            db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{guild}'")
+            for row in db:
+                final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
+                return final
+                self.server_list.append(guild)
+        if guild in self.server_list:
+            return True #If we don't return something, the bot will think that the server doesn't have a prefix and add it into the database.
 
     @commands.Cog.listener()
     async def on_message(self, msg):
