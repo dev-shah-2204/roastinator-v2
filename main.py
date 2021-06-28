@@ -25,7 +25,7 @@ def get_prefix(client, message):
             final = row[0]
             cache[guild] = str(final)
             print(type(final))
-            return row
+            return str(final)
         
 
 
