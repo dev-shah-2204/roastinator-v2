@@ -12,12 +12,12 @@ class StarboardEvent(commands.Cog):
         self.client = client 
 
     async def get_star_channel(self, guild):
-        db.execute(f"SELECT channel FROM Starboard WHERE guild = '{guild}'")
+        db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{guild}'")
         channel = await get_data(db = db)
         return channel
 
     async def get_star_guild_state(self, guild):
-        db.execute(f"SELECT status FROM Starboard WHERE guild = '{guild}'")
+        db.execute(f"SELECT _status FROM Starboard WHERE guild = '{guild}'")
         state = await get_data(db = db)
         return state
 
