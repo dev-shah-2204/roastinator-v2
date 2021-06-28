@@ -29,18 +29,8 @@ class MemberJoin(commands.Cog):
 
         status = await self.get_status(guild.id)
         if status == 'enabled':
-            try:
-                await member.add_roles(role)
-            except:
-                try:
-                    member.guild.owner.send("You setup the auto-role but either I don't have permissions to Manage Roles or my role is too low. Put my role above the role that you want me to assign to the users.")
-                except:
-                    def check(message:discord.Message) -> bool:
-                        return message.author == user and message.guild == member.guild
-
-                    message = await self.client.wait_for('message', check = check)
-                    await message.channel.send(f"<@!{user.id}>, you setup the auto-role but either I don't have permissions to Manage Roles or my role is too low. Put my role above the role that you want me to assign to the users. Since your DMs are closed, I had to reply this way")
-                    
+            await member.add_roles(role)
+            
 
 
 
