@@ -1,4 +1,5 @@
 import discord
+import inspect 
 
 from discord.ext import commands
 
@@ -43,12 +44,14 @@ class Cogs(commands.Cog):
 
     #This isn't a cog command but I didn't want to make a new file for it
     @commands.command(name = 'eval')
-    async def eval(self, ctx, *, code):
+    async def eval_command(self, ctx, *, code):
         if ctx.author.id != owner_id:
             await ctx.send("That is a developer command, you can't use that")
             return 
 
-        await ctx.send(eval(code))
+        res = eval(code)
+        if inspect.isawaitable(res):
+            await ctx.send(await res)
 
 
 def setup(client):
