@@ -73,6 +73,7 @@ cmd_cog_list = (
     'games.cointoss',
     'games.rockpaperscissors',
     'help',
+    'moderation.autorole',
     'moderation.ban',
     'moderation.clean',
     'moderation.clear',
