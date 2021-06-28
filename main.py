@@ -40,6 +40,7 @@ event_cog_list = (
     'on_guild_join',
     'on_mention',
     'on_ready'
+    'starboard'
 )
 
 passive_cog_list = [
