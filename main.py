@@ -16,6 +16,7 @@ def get_prefix(client, message):
 
     if guild in cache:
         final = cache[guild]
+        print(type(final))
         return str(final) 
 
     else:
@@ -23,6 +24,7 @@ def get_prefix(client, message):
         for row in db:
             final = row[0]
             cache[guild] = str(final)
+            print(type(final))
             return row
         
 
