@@ -1,0 +1,16 @@
+CREATE TABLE Prefix(
+    guild VARCHAR(20) PRIMARY KEY,
+    prefix VARCHAR(5)
+);
+
+
+CREATE TABLE Starboard(
+    guild VARCHAR(20) PRIMARY KEY,
+    _channel VARCHAR(20),
+    _status VARCHAR(10)
+);
+
+
+CREATE TABLE ModBan(
+    user_id VARCHAR(20)
+)
