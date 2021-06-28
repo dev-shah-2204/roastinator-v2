@@ -23,7 +23,7 @@ def get_prefix(client, message):
         for row in db:
             final = row[0]
             cache[guild] = str(final)
-            return str(final)
+            return row
         
 
 
