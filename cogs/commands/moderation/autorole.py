@@ -35,7 +35,7 @@ class AutoRole(commands.Cog):
         em = discord.Embed(
             title = 'Set auto-role',
             description = role.mention,
-            color = m_red)
+            color = hex_colors.m_red)
         em.set_footer(text = f"Action taken by {ctx.author}", icon_url = ctx.author.avatar_url)
         await ctx.send(embed = em)
     
