@@ -39,7 +39,7 @@ event_cog_list = (
     'on_command_error',
     'on_guild_join',
     'on_mention',
-    'on_ready'
+    'on_ready',
     'starboard'
 )
 
