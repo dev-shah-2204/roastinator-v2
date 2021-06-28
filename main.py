@@ -16,18 +16,14 @@ def get_prefix(client, message):
 
     if guild in cache:
         final = cache[guild] #We don't want to call the database everytime someone sends a message
-        return final 
+        return str(final) 
 
     else:
         db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{guild}'")
         for row in db:
             final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
             cache[guild] = final
-
-            with open('prefix_cache.json','w') as e:
-                json.dump(cache, e)
-
-            return final 
+            return str(final)
         
 
 class Bot():
