@@ -26,7 +26,7 @@ class StarboardCommands(commands.Cog):
     @starboard_commands.command(name = 'channel', help = "Set the starboard channel")
     async def channel(self, ctx, channel:discord.TextChannel):
         try:
-            db.execute(f"INSERT INTO Starboard(guild, _channel, _state) VALUES ('{ctx.guild.id}','{channel}','enabled')")
+            db.execute(f"INSERT INTO Starboard(guild, _channel, _status) VALUES ('{ctx.guild.id}','{channel}','enabled')")
         except:
             db.execute(f"UPDATE Starboard SET channel = '{channel}' WHERE guild = '{ctx.guild.id}'")
         database.commit()
@@ -35,7 +35,7 @@ class StarboardCommands(commands.Cog):
     @starboard_commands.command(name = 'disable', help = "Disable starboard")
     async def disable(self, ctx):
         try:
-            db.execute(f"UPDATE Starboard SET _state = 'disabled' WHERE guild = '{ctx.guild}'")
+            db.execute(f"UPDATE Starboard SET _status = 'disabled' WHERE guild = '{ctx.guild}'")
             database.commit()
             await ctx.send("Disabled starboard")
         except:
@@ -44,7 +44,7 @@ class StarboardCommands(commands.Cog):
     @starboard_commands.command(name = 'enable', help = "Enable starboard")
     async def enable(self, ctx):
         try:
-            db.execute(f"UPDATE Starboard SET _state = 'enabled' WHERE guild = '{ctx.guild}'")
+            db.execute(f"UPDATE Starboard SET _status = 'enabled' WHERE guild = '{ctx.guild}'")
             database.commit()
             await ctx.send("Enabled starboard for this server")
         except:
