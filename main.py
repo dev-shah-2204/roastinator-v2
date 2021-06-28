@@ -4,6 +4,7 @@ will help you out with most of your problems
 """
 import discord
 import os
+import json
 
 from db import database
 from discord.ext import commands
@@ -11,25 +12,40 @@ from discord.ext import commands
 db = database.cursor()
 
 def get_prefix(client, message):
-    db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{str(message.guild.id)}'")
-    for row in db:
-        final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
-        return str(final)
+    with open('prefix_cache.json','r') as f:
+        cache = json.load(f)
+
+    guild = str(message.guild.id)
+
+    if guild in cache:
+        final = cache[guild] #We don't want to call the database everytime someone sends a message
+        return final 
+
+    else:
+        db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{guild}'")
+        for row in db:
+            final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
+            cache[guild] = final
+
+            with open('prefix_cache.json','w') as e:
+                json.dump(cache, e)
+
+            return final 
+        
 
 class Bot():
-    prefix = commands.when_mentioned_or('-')
+    prefix = get_prefix,
     t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
     token = os.environ.get('token')
     
 #Defining our bot (client)
 client = commands.Bot(
-    command_prefix = get_prefix,
+    command_prefix = Bot.prefix,
     intents = discord.Intents.all(), 
-    case_insensitive = True, 
-    owner_ids = [416979084099321866, 810863994985250836]
+    case_insensitive = True
 ) 
-
 client.remove_command('help')
+
 
 
 #Cogs list
