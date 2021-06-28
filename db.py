@@ -15,4 +15,4 @@ database = mysql.connector.connect(
 
 async def get_data(db):
     for row in db:
-        return str(row).strip("(''),")
+        return row[0]
