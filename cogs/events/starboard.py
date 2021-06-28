@@ -31,7 +31,7 @@ class StarboardEvent(commands.Cog):
                 return
 
             state = await self.get_star_guild_state(payload.guild.id)
-            if state is 'enabled':
+            if state == 'enabled':
                 msg_channel = await self.client.get_channel(payload.channel_id)
                 msg = await msg_channel.fetch_message(payload.message_id)            
                 user = await self.client.get_user(payload.user_id)
@@ -53,7 +53,7 @@ class StarboardEvent(commands.Cog):
                 em.add_field(name = f"{msg.author} said:", value = msg.content)
                 
                 starcount = self.starcount
-                
+
                 #Only the first reaction should star the message
                 if str(payload.message_id) in starcount:
                     starcount[str(payload.message_id)] += 1
