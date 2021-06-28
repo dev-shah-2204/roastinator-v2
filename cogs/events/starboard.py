@@ -22,6 +22,7 @@ class StarboardEvent(commands.Cog):
         return status
 
     starcount = {}
+    error = []
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
@@ -36,8 +37,9 @@ class StarboardEvent(commands.Cog):
                 msg = await msg_channel.fetch_message(payload.message_id)            
                 user = self.client.get_user(payload.user_id)
 
-                if not payload.member.guild_permissions.manage_messages: #If the member doesn't have manage_messages permission
+                if not payload.member.guild_permissions.manage_messages and user.id not in self.error: #If the member doesn't have manage_messages permission
                     await msg_channel.send(f"{user.mention}, You need `Manage Messages` permission to star messages")
+                    self.error.append(user.id)
                     return 
 
                 em = discord.Embed(
