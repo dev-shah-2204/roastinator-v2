@@ -39,7 +39,7 @@ class StarboardEvent(commands.Cog):
 
                 if not payload.member.guild_permissions.manage_messages and user.id not in self.error: #If the member doesn't have manage_messages permission
                     await msg_channel.send(f"{user.mention}, You need `Manage Messages` permission to star messages")
-                    self.error.append(user.id)
+                    self.error.append(user.id) #So that they can't make the bot spam
                     return 
 
                 em = discord.Embed(
