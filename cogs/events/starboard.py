@@ -32,9 +32,9 @@ class StarboardEvent(commands.Cog):
 
             status = await self.get_star_guild_status(payload.guild_id)
             if status == 'enabled':
-                msg_channel = await self.client.get_channel(payload.channel_id)
+                msg_channel = self.client.get_channel(payload.channel_id)
                 msg = await msg_channel.fetch_message(payload.message_id)            
-                user = await self.client.get_user(payload.user_id)
+                user = self.client.get_user(payload.user_id)
 
                 if not payload.member.guild_permissions.manage_messages: #If the member doesn't have manage_messages permission
                     await msg_channel.send(f"{user.mention}, You need `Manage Messages` permission to star messages")
