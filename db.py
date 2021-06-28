@@ -12,3 +12,7 @@ database = mysql.connector.connect(
     password = db_password, #Enter your password
     database = db_db #Enter your database name
 )
+
+async def get_data(db):
+    for row in db:
+        return str(row).strip("(''),")
