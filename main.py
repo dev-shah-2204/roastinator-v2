@@ -12,20 +12,19 @@ from discord.ext import commands
 db = database.cursor()
 
 def get_prefix(client, message):
-    guild = str(message.guild.id)
+    # guild = str(message.guild.id)
+    # if guild in cache:
+    #     final = cache[guild]
+    #     print(type(final))
+    #     return str(final) 
 
-    if guild in cache:
-        final = cache[guild]
-        print(type(final))
-        return str(final) 
-
-    else:
-        db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{guild}'")
-        for row in db:
-            final = row[0]
-            cache[guild] = str(final)
-            print(type(final))
-            return str(final)
+    # else:
+    db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{guild}'")
+    for row in db:
+        # final = row[0]
+        # cache[guild] = str(final)
+        # print(type(final))
+        return str(final)
         
 
 
