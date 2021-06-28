@@ -46,11 +46,14 @@ class StarboardEvent(commands.Cog):
                     timestamp = msg.created_at 
                     )
                 em.set_author(name = f"{user.name} starred a message", icon_url = user.avatar_url)
-
+                
                 if len(msg.attachments) > 0:
                     em.set_image(url = msg.attachments[0].url)
 
-                em.add_field(name = f"{msg.author} said:", value = msg.content)
+                desc = msg.content
+                if msg.content == '':
+                    desc = 'This message had an embed or an image'
+                em.add_field(name = f"{msg.author} said:", value = desc)
                 
                 starcount = self.starcount
 
