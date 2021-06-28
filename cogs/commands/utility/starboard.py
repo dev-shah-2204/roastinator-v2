@@ -25,7 +25,10 @@ class StarboardCommands(commands.Cog):
 
     @starboard_commands.command(name = 'channel', help = "Set the starboard channel")
     async def channel(self, ctx, channel:discord.TextChannel):
-        db.execute(f"INSERT INTO Starboard(guild, _channel, _state) VALUES ('{ctx.guild.id}','{channel}','enabled')")
+        try:
+            db.execute(f"INSERT INTO Starboard(guild, _channel, _state) VALUES ('{ctx.guild.id}','{channel}','enabled')")
+        except:
+            db.execute(f"UPDATE Starboard SET channel = '{channel}' WHERE guild = '{ctx.guild.id}'")
         database.commit()
         await ctx.send(f"Starboard set to <#{channel.id}>")
 
