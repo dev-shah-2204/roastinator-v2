@@ -33,7 +33,7 @@ class StarboardCommands(commands.Cog):
         await ctx.send(f"Starboard set to <#{channel.id}>")
 
     @starboard_commands.command(name = 'disable', help = "Disable starboard")
-    async def disable(self, ctx):
+    async def disable_starboard(self, ctx):
         try:
             db.execute(f"UPDATE Starboard SET _status = 'disabled' WHERE guild = '{ctx.guild}'")
             database.commit()
@@ -42,7 +42,7 @@ class StarboardCommands(commands.Cog):
             await ctx.send("Starboard was never enabled for this server")
 
     @starboard_commands.command(name = 'enable', help = "Enable starboard")
-    async def enable(self, ctx):
+    async def enable_starboard(self, ctx):
         try:
             db.execute(f"UPDATE Starboard SET _status = 'enabled' WHERE guild = '{ctx.guild}'")
             database.commit()
