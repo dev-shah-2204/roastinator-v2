@@ -13,10 +13,7 @@ class Kick(commands.Cog):
     @commands.command(name = 'kick', help = 'Kick a member from the server', usage = '<member> [reason]')
     @commands.has_permissions(kick_members = True)
     @commands.bot_has_permissions(kick_members = True)
-    async def kick(self, ctx, member:discord.Member, *, reason = None): #Default reason is "No reason provided"
-        if reason == None:
-            await ctx.send("You need to provide a reason")
-
+    async def kick(self, ctx, member:discord.Member, *, reason = "No reason provided"):
         if member == self.client.user: #If  the 'member' is the bot
             await ctx.send("I don't know what the procedure is here, but I cannot leave like this. You'll have to remove me from the server manually. If I caused any problem, DM it to me, with details so my developer can fix me.")
             return
