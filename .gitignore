@@ -5,9 +5,7 @@ cogs/commands/utility/code_run_by_users.txt
 .git
 settings.json
 test.py
-cleardb_db_p.py
-cleardb_db.py
+db_p.py
 cogs/events/on_vote.py
-database_functions.py
-database.py
 images/bonked.jpg
+website
