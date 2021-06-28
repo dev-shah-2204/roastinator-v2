@@ -51,7 +51,7 @@ class SoftBan(commands.Cog):
 
         try:
             await member.send(embed = m_em)
-        except discord.Forbidden:
+        except:
             pass
         
         await member.ban(reason = reason)

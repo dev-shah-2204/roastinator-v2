@@ -49,8 +49,9 @@ class Kick(commands.Cog):
 
         try:
             await member.send(embed = m_em)
-        except discord.Forbidden:
-            pass 
+        except:
+            pass
+
         await member.kick(reason = reason)
         await ctx.message.delete()
         await ctx.send(embed = em)
