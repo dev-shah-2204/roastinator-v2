@@ -13,26 +13,27 @@ db = database.cursor()
 
 def get_prefix(client, message):
     guild = str(message.guild.id)
-    if guild in cache:
+    if guild in cache: #We don't want to call the database every single time
         prefix = cache[guild]
         return prefix 
 
     else:
-        db.execute("SELECT prefix FROM Prefix WHERE guild = $1", guild)
+        db.execute(f"SELECT prefix FROM Prefix WHERE guild = {str(message.guild.id)}")
         for row in db:
             prefix = row[0] #row is a tuple
             cache[guild] = prefix
             return prefix
-            
 
 
-prefix = get_prefix,
+
+
 t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
 token = os.environ.get('token')
-    
+
+
 #Defining our bot (client)
 client = commands.Bot(
-    command_prefix = prefix,
+    command_prefix = get_prefix,
     intents = discord.Intents.all(), 
     case_insensitive = True
 ) 
@@ -128,5 +129,6 @@ Make a cog, add to the tuple. Not that difficult.
 #             client.load_extension(f"cogs.commands.{folder}.{cmd_cog[:-3]}")
 
 # client.load_extension(f"cogs.passive.nqn")
+
 
 client.run(token)
