@@ -14,8 +14,10 @@ db = database.cursor()
 def get_prefix(client, message):
     db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{message.guild.id}'")
     for row in db:
+        print(row)
         final = str(row).strip("(''),")
-        return str(final)
+        print(final)
+        return final
     # guild = str(message.guild.id)
     # if guild in cache:
     #     final = cache[guild]
