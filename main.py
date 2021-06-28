@@ -15,25 +15,25 @@ def get_prefix(client, message):
     guild = str(message.guild.id)
 
     if guild in cache:
-        final = cache[guild] #We don't want to call the database everytime someone sends a message
+        final = cache[guild]
         return str(final) 
 
     else:
         db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{guild}'")
         for row in db:
-            final = str(row).strip("('',)") #It's a tuple in the database, with a comma after the prefix string.
-            cache[guild] = final
+            final = row[0]
+            cache[guild] = str(final)
             return str(final)
         
 
-class Bot():
-    prefix = get_prefix,
-    t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
-    token = os.environ.get('token')
+
+prefix = get_prefix,
+t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
+token = os.environ.get('token')
     
 #Defining our bot (client)
 client = commands.Bot(
-    command_prefix = Bot.prefix,
+    command_prefix = prefix,
     intents = discord.Intents.all(), 
     case_insensitive = True
 ) 
@@ -130,4 +130,4 @@ Make a cog, add to the tuple. Not that difficult.
 
 # client.load_extension(f"cogs.passive.nqn")
 
-client.run(Bot.token)
+client.run(token)
