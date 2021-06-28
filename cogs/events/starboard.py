@@ -16,10 +16,10 @@ class StarboardEvent(commands.Cog):
         channel = await get_data(db = db)
         return channel
 
-    async def get_star_guild_state(self, guild):
+    async def get_star_guild_status(self, guild):
         db.execute(f"SELECT _status FROM Starboard WHERE guild = '{guild}'")
-        state = await get_data(db = db)
-        return state
+        status = await get_data(db = db)
+        return status
 
     starcount = {}
 
@@ -30,8 +30,8 @@ class StarboardEvent(commands.Cog):
             if channel is None:
                 return
 
-            state = await self.get_star_guild_state(payload.guild_id)
-            if state == 'enabled':
+            status = await self.get_star_guild_status(payload.guild_id)
+            if status == 'enabled':
                 msg_channel = await self.client.get_channel(payload.channel_id)
                 msg = await msg_channel.fetch_message(payload.message_id)            
                 user = await self.client.get_user(payload.user_id)
