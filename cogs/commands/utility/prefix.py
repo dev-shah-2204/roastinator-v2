@@ -2,6 +2,7 @@ import discord
 import mysql.connector
 import os
 import hex_colors
+import json
 
 from db import database
 from discord.ext import commands
@@ -29,6 +30,15 @@ class Prefix(commands.Cog):
 
             em = discord.Embed(title = 'Prefix changed', description = f'New prefix: `{newPrefix}`', color = hex_colors.l_green)
             await ctx.send(embed = em)
+
+            #Fixing cache
+            with open('prefix_cache.json','r') as f:
+                cache = json.load(f)
+
+            cache[str(ctx.guild.id)] = newPrefix
+
+            with open('prefix_cache.json','w') as e:
+                json.dump(cache, e)
 
 
 def setup(client):
