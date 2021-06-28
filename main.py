@@ -47,6 +47,7 @@ event_cog_list = (
     'modmail',
     'on_command_error',
     'on_guild_join',
+    'on_member_join',
     'on_mention',
     'on_ready',
     'starboard'
