@@ -4,17 +4,14 @@ will help you out with most of your problems
 """
 import discord
 import os
-import json
 
+from prefix_cache import cache
 from db import database
 from discord.ext import commands
 
 db = database.cursor()
 
 def get_prefix(client, message):
-    with open('prefix_cache.json','r') as f:
-        cache = json.load(f)
-
     guild = str(message.guild.id)
 
     if guild in cache:
