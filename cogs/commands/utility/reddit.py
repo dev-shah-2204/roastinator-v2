@@ -27,15 +27,17 @@ class Reddit(commands.Cog):
                             await ctx.send("The post I got from that subreddit is marked NSFW. I cannot send it here")
                             return
                
-                image = post['url'] #the image
-                title = post['title'] #the title of the reddit post
+                try:
+                    image = post['url'] #the image
+                    title = post['title'] #the title of the reddit post
 
-                em = discord.Embed(title = title, color = random.choice(hex_colors.colors))
-                em.set_image(url = post['url'])
-                em.set_footer(text = f"👍 {post['ups']} | Author: u/{post['author']}") #post['ups'] is the upvotes, post['author'] is the author
+                    em = discord.Embed(title = title, color = random.choice(hex_colors.colors))
+                    em.set_image(url = post['url'])
+                    em.set_footer(text = f"👍 {post['ups']} | Author: u/{post['author']}") #post['ups'] is the upvotes, post['author'] is the author
 
-                await ctx.send(embed = em)
-
+                    await ctx.send(embed = em)
+                except KeyError:
+                    await ctx.send(f"I couldn't find a subreddit called `{subreddit}`")
 
 def setup(client):
     client.add_cog(Reddit(client))
