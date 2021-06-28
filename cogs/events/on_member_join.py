@@ -26,7 +26,7 @@ class MemberJoin(commands.Cog):
 
         if role is None: #Server hasn't setup auto role
             return
-
+        role = self.client.get_role(role)
         status = await self.get_status(guild.id)
         if status == 'enabled':
             await member.add_roles(role)
