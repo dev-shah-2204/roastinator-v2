@@ -30,7 +30,7 @@ class StarboardEvent(commands.Cog):
             if channel is None:
                 return
 
-            state = await self.get_star_guild_state(payload.guild.id)
+            state = await self.get_star_guild_state(payload.guild_id)
             if state == 'enabled':
                 msg_channel = await self.client.get_channel(payload.channel_id)
                 msg = await msg_channel.fetch_message(payload.message_id)            
