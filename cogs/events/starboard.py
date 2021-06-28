@@ -41,7 +41,6 @@ class StarboardEvent(commands.Cog):
                     return 
 
                 em = discord.Embed(
-                    description = f"[Jump to message]({msg.jump_url})", #jump_url is the message link
                     color = hex_colors.l_yellow,
                     timestamp = msg.created_at 
                     )
@@ -53,7 +52,7 @@ class StarboardEvent(commands.Cog):
                 desc = msg.content
                 if msg.content == '':
                     desc = 'This message had an embed or an image'
-                em.add_field(name = f"{msg.author} said:", value = desc)
+                em.add_field(name = f"{msg.author} said:", value = f"{desc}\n\n[Jump to message]({msg.jump_url})")
                 
                 starcount = self.starcount
 
