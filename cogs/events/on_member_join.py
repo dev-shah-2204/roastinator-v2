@@ -3,7 +3,7 @@ import discord
 from db import *
 from discord.ext import commands
 
-db = databse.cursor()
+db = database.cursor()
 
 class MemberJoin(commands.Cog):
     def __init__(self, client):
