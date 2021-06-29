@@ -24,9 +24,7 @@ def get_prefix(client, message):
             cache[guild] = prefix
             return prefix
 
-
-#token = os.environ.get('token')
-from bot_token import token
+token = os.environ.get('token')
 
 #Defining our bot (client)
 client = commands.Bot(
