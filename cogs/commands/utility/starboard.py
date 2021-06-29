@@ -28,7 +28,7 @@ class StarboardCommands(commands.Cog):
         try:
             db.execute(f"INSERT INTO Starboard(guild, _channel, _status) VALUES ('{ctx.guild.id}','{channel.id}','enabled')")
         except:
-            db.execute(f"UPDATE Starboard SET channel = '{channel.id}' WHERE guild = '{ctx.guild.id}'")
+            db.execute(f"UPDATE Starboard SET _channel = '{channel.id}' WHERE guild = '{ctx.guild.id}'")
         database.commit()
         await ctx.send(f"Starboard set to <#{channel.id}>")
 
