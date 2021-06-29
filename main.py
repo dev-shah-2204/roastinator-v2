@@ -9,7 +9,7 @@ from prefix_cache import cache
 from db import database
 from discord.ext import commands
 
-db = database.cursor()
+db = database.cursor(buffered = True)
 
 def get_prefix(client, message):
     guild = str(message.guild.id)
@@ -25,15 +25,12 @@ def get_prefix(client, message):
             return prefix
 
 
-
-
-t_prefix = '>' #Different prefix that I use when I host the bot from my PC for testing a new command or fixing bugs.
-token = os.environ.get('token')
-
+#token = os.environ.get('token')
+from bot_token import token
 
 #Defining our bot (client)
 client = commands.Bot(
-    command_prefix = get_prefix,
+    command_prefix = '>',
     intents = discord.Intents.all(), 
     case_insensitive = True
 ) 

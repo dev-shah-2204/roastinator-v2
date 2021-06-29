@@ -5,7 +5,7 @@ import hex_colors
 from db import *
 from discord.ext import commands 
 
-db = database.cursor()
+db = database.cursor(buffered = True)
 
 class StarboardEvent(commands.Cog):
     def __init__(self, client):
