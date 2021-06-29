@@ -28,7 +28,7 @@ token = os.environ.get('token')
 
 #Defining our bot (client)
 client = commands.Bot(
-    command_prefix = '>',
+    command_prefix = get_prefix,
     intents = discord.Intents.all(), 
     case_insensitive = True
 ) 
