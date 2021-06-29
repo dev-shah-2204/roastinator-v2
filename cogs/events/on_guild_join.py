@@ -4,7 +4,7 @@ import mysql.connector
 from discord.ext import commands
 from db import database
 
-db = database.cursor(buffered = True)
+db = database.cursor()
 
 class OnGuildJoin(commands.Cog):
     def __init__(self, client):

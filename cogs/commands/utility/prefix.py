@@ -7,7 +7,7 @@ from prefix_cache import cache
 from db import database
 from discord.ext import commands
 
-db = database.cursor(buffered = True)
+db = database.cursor()
 
 class Prefix(commands.Cog):
     def __init__(self, client):

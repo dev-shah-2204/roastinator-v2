@@ -8,7 +8,7 @@ from discord.ext import commands
 from asyncio import sleep
 
 people_on_cooldown = []
-db = database.cursor(buffered = True)
+db = database.cursor()
 
 class ModMail(commands.Cog): #Everything in a cog needs to be in a class
     def __init__(self, client):

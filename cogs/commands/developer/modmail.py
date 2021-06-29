@@ -7,7 +7,7 @@ from cogs.events.modmail import people_on_cooldown #people_on_cooldown is a list
 
 owner_id = 416979084099321866 #Replace with your ID
 
-db = database.cursor(buffered = True)
+db = database.cursor()
 
 class ModMail(commands.Cog):
     def __init__(self, client):

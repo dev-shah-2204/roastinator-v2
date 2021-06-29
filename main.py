@@ -9,7 +9,7 @@ from prefix_cache import cache
 from db import database
 from discord.ext import commands
 
-db = database.cursor(buffered = True)
+db = database.cursor()
 
 def get_prefix(client, message):
     guild = str(message.guild.id)
