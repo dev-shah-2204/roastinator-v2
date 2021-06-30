@@ -3,7 +3,7 @@ import mysql.connector
 import os
 import hex_colors
 
-from prefix_cache import cache
+from cache import prefix_cache
 from db import database
 from discord.ext import commands
 
@@ -16,6 +16,7 @@ class Prefix(commands.Cog):
     @commands.command(name = 'prefix', aliases = ['setprefix','changeprefix'], help = 'Change the prefix to which the bot responds')
     @commands.has_permissions(manage_guild = True)
     async def change_prefix(self, ctx, newPrefix:str = None):
+        cache = prefix_cache
         if len(newPrefix) > 5: #You can change this limit as per your wish
             await ctx.send("Prefix cannot be longer than 5 characters")
             return
