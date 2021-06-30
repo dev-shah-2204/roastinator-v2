@@ -5,13 +5,14 @@ will help you out with most of your problems
 import discord
 import os
 
-from prefix_cache import cache
+from cache import prefix_cache
 from db import database
 from discord.ext import commands
 
 db = database.cursor()
 
 def get_prefix(client, message):
+    cache = prefix_cache
     guild = str(message.guild.id)
     if guild in cache: #We don't want to call the database every single time
         prefix = cache[guild]
@@ -21,16 +22,19 @@ def get_prefix(client, message):
         db.execute(f"SELECT prefix FROM Prefix WHERE guild = {str(message.guild.id)}")
         for row in db:
             prefix = row[0] #row is a tuple
-            cache[guild] = prefix
+            cache[guild] = prefix #So that it gets stored in the cache
             return prefix
 
 token = os.environ.get('token')
+#from bot_token import token 
 
 #Defining our bot (client)
 client = commands.Bot(
     command_prefix = get_prefix,
     intents = discord.Intents.all(), 
-    case_insensitive = True
+    case_insensitive = True,
+    allowed_mentions = discord.AllowedMentions(everyone = False),
+    owner_id = 416979084099321866
 ) 
 client.remove_command('help')
 
@@ -126,6 +130,5 @@ Make a cog, add to the tuple. Not that difficult.
 #             client.load_extension(f"cogs.commands.{folder}.{cmd_cog[:-3]}")
 
 # client.load_extension(f"cogs.passive.nqn")
-
 
 client.run(token)
