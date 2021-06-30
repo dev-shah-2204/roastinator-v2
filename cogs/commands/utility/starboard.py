@@ -1,6 +1,7 @@
 import discord 
 import hex_colors 
 
+from cache import star_cache
 from db import *
 from discord.ext import commands
 
@@ -29,6 +30,8 @@ class StarboardCommands(commands.Cog):
             db.execute(f"INSERT INTO Starboard(guild, _channel, _status) VALUES ('{ctx.guild.id}','{channel.id}','enabled')")
         except:
             db.execute(f"UPDATE Starboard SET _channel = '{channel.id}' WHERE guild = '{ctx.guild.id}'")
+
+        star_cache[str(ctx.guild.id)] = channel.id
         database.commit()
         await ctx.send(f"Starboard set to <#{channel.id}>")
 

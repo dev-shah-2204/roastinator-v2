@@ -2,6 +2,7 @@ import discord
 import mysql.connector
 import hex_colors
 
+from cache import star_cache
 from db import *
 from discord.ext import commands 
 
@@ -12,9 +13,14 @@ class StarboardEvent(commands.Cog):
         self.client = client 
 
     async def get_star_channel(self, guild):
-        db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{guild}'")
-        channel = await get_data(db = db)
-        return channel
+        if str(guild) not in star_cache:
+            db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{guild}'")
+            channel = await get_data(db = db)
+            star_cache[str(guild)] = int(channel) #So it gets stored in the cache
+            return channel
+
+        else:
+            return star_cache[str(guild)]
 
     async def get_star_guild_status(self, guild):
         db.execute(f"SELECT _status FROM Starboard WHERE guild = '{guild}'")
@@ -28,10 +34,13 @@ class StarboardEvent(commands.Cog):
     async def on_raw_reaction_add(self, payload):
         if payload.emoji.name == '⭐':
             channel = await self.get_star_channel(payload.guild_id)
+
             if channel is None:
                 return
+
             channel = self.client.get_channel(int(channel))
             status = await self.get_star_guild_status(payload.guild_id)
+
             if status == 'enabled':
                 msg_channel = self.client.get_channel(payload.channel_id)
                 msg = await msg_channel.fetch_message(payload.message_id)            
@@ -39,7 +48,7 @@ class StarboardEvent(commands.Cog):
 
                 if not payload.member.guild_permissions.manage_messages: #If the member doesn't have manage_messages permission
                     if user.id not in self.error:
-                        await msg_channel.send(f"{user.mention}, You need `Manage Messages` permission to star messages")
+                        await msg_channel.send(f"{user.mention}, You need `Manage Messages` permission to star messages", delete_after=10)
                         self.error.append(user.id) #So that they can't make the bot spam
                         return 
                     return
@@ -48,15 +57,20 @@ class StarboardEvent(commands.Cog):
                     color = hex_colors.l_yellow,
                     timestamp = msg.created_at 
                     )
-                em.set_author(name = f"{user.name} starred a message", icon_url = user.avatar_url)
+                em.set_author(
+                    name = f"{user.name} starred a message", 
+                    icon_url = user.avatar_url)
                 
                 if len(msg.attachments) > 0:
                     em.set_image(url = msg.attachments[0].url)
 
                 desc = msg.content
                 if msg.content == '':
-                    desc = 'This message had an embed or an image'
-                em.add_field(name = f"{msg.author} said:", value = f"{desc}\n\n[Jump to message]({msg.jump_url})")
+                    desc = 'Attachment'
+
+                em.add_field(
+                    name = f"{msg.author} said:", 
+                    value = f"{desc}\n\n[Jump to message]({msg.jump_url})")
                 
                 starcount = self.starcount
 
