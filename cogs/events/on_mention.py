@@ -23,10 +23,10 @@ class OnMention(commands.Cog):
             prefix = prefix.replace("('",'') #complex
             prefix = prefix.replace("',)",'') #very complex mmmhm
             em = discord.Embed(
-                title = f'My prefix for this server is `{prefix}`',
-                color = random.choice(hex_colors.colors)
+                title=f'My prefix for this server is `{prefix}`',
+                color=random.choice(hex_colors.colors)
             )
-            await msg.channel.send(embed = em)
+            await msg.channel.send(embed=em)
 
 
 def setup(client):

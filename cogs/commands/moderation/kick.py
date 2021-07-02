@@ -2,18 +2,16 @@ import discord
 import hex_colors
 
 from discord.ext import commands
-from discord.ext.commands import CommandOnCooldown, BucketType
-
-
 
 class Kick(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'kick', help = 'Kick a member from the server', usage = '<member> [reason]')
-    @commands.has_permissions(kick_members = True)
-    @commands.bot_has_permissions(kick_members = True)
-    async def kick(self, ctx, member:discord.Member, *, reason = "No reason provided"):
+    @commands.command(name='kick', help='Kick a member from the server')
+    @commands.has_permissions(kick_members=True)
+    @commands.bot_has_permissions(kick_members=True)
+    async def kick(self, ctx, user:discord.Member, *, reason="No reason provided"):
+        member = user
         if member == self.client.user: #If  the 'member' is the bot
             await ctx.send("I don't know what the procedure is here, but I cannot leave like this. You'll have to remove me from the server manually. If I caused any problem, DM it to me, with details so my developer can fix me.")
             return
@@ -33,25 +31,25 @@ class Kick(commands.Cog):
             return
 
         #Embed to be sent in the channel
-        em = discord.Embed(color = hex_colors.m_red)
-        em.set_author(name = f"{ctx.author} kicked {member}", icon_url = ctx.author.avatar_url)
-        em.set_thumbnail(url = member.avatar_url)
-        em.add_field(name = 'Reason:', value = reason)
+        em = discord.Embed(color=hex_colors.m_red)
+        em.set_author(name=f"{ctx.author} kicked {member}", icon_url=ctx.author.avatar_url)
+        em.set_thumbnail(url=member.avatar_url)
+        em.add_field(name='Reason:', value=reason)
 
         #Embed to be sent to the member 
-        m_em = discord.Embed(color = hex_colors.m_red)
-        m_em.set_author(name = f"{ctx.author} kicked you from {ctx.guild.name}", icon_url = ctx.author.avatar_url)
-        m_em.set_thumbnail(url = ctx.guild.icon_url)
-        m_em.add_field(name = "Reason", value = reason)
+        m_em = discord.Embed(color=hex_colors.m_red)
+        m_em.set_author(name=f"{ctx.author} kicked you from {ctx.guild.name}", icon_url=ctx.author.avatar_url)
+        m_em.set_thumbnail(url=ctx.guild.icon_url)
+        m_em.add_field(name="Reason", value=reason)
 
         try:
-            await member.send(embed = m_em)
+            await member.send(embed=m_em)
         except:
             pass
 
-        await member.kick(reason = reason)
+        await member.kick(reason=reason)
         await ctx.message.delete()
-        await ctx.send(embed = em)
+        await ctx.send(embed=em)
 
 
 def setup(client):

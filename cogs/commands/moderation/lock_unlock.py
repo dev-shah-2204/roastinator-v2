@@ -8,10 +8,10 @@ class LockUnlock(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'lock', aliases = ['lc','lockchannel'], help = 'Locks a channel')
-    @commands.has_permissions(manage_channels = True)
-    @commands.bot_has_permissions(manage_channels = True)
-    async def lock_channel(self, ctx, channel:discord.TextChannel = None):
+    @commands.command(name='lock', aliases=['lc','lockchannel'], help='Locks a channel')
+    @commands.has_permissions(manage_channels=True)
+    @commands.bot_has_permissions(manage_channels=True)
+    async def lock_channel(self, ctx, channel:discord.TextChannel=None):
         #The code in this command is basically plain english, quite self explanatory
         if channel == None:
             channel = ctx.channel
@@ -25,14 +25,14 @@ class LockUnlock(commands.Cog):
             return
 
         await ctx.send("Locking the channel. There's a high chance that I will get muted too and won't be able to send the confirmation message")
-        await channel.set_permissions(ctx.guild.default_role, send_messages = False)
+        await channel.set_permissions(ctx.guild.default_role, send_messages=False)
         await ctx.send("Apparently I didn't get muted. Locked the channel")
 
 
-    @commands.command(name = 'unlock', aliases = ['ulc','unlockchannel'], help = 'Unlocks a channel')
-    @commands.has_permissions(manage_channels = True)
-    @commands.bot_has_permissions(manage_channels = True)
-    async def unlock_channel(self, ctx, channel:discord.TextChannel = None):
+    @commands.command(name='unlock', aliases=['ulc','unlockchannel'], help='Unlocks a channel')
+    @commands.has_permissions(manage_channels=True)
+    @commands.bot_has_permissions(manage_channels=True)
+    async def unlock_channel(self, ctx, channel:discord.TextChannel=None):
         #The code in this command is basically plain english, quite self explanatory
         if channel == None:
             channel = ctx.channel
@@ -45,7 +45,7 @@ class LockUnlock(commands.Cog):
             await ctx.send("That command only works for text channels..")
             return
 
-        await channel.set_permissions(ctx.guild.default_role, send_messages = True)
+        await channel.set_permissions(ctx.guild.default_role, send_messages=True)
         await ctx.send("Unlocked the channel")
 
 def setup(client):

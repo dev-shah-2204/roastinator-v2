@@ -14,7 +14,7 @@ class RoleInfo(Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'roleinfo', aliases = ['ri'], help = 'Shows information about a role', usage = '<role>')
+    @commands.command(name='roleinfo', aliases=['ri'], help='Shows information about a role')
     @cooldown(1, 10, BucketType.user)
     async def role_info(self, ctx, role:discord.Role):
         if role not in ctx.guild.roles:
@@ -43,13 +43,13 @@ class RoleInfo(Cog):
                 d_perms += f"{perm}\n"
 
 
-        em = discord.Embed(title = '@'+role.name, color = role.color) #I chose role.color, but that's a personal preference
-        em.add_field(name = 'ID', value = role.id, inline = False)
-        em.add_field(name = "Permissions", value = d_perms, inline = False)
-        em.add_field(name = 'Number of people that have this role', value = len(role.members), inline = False)
-        em.add_field(name = 'Can everyone mention this role?', value = bool_str(role.mentionable), inline = False)
+        em = discord.Embed(title='@'+role.name, color=role.color) #I chose role.color, but that's a personal preference
+        em.add_field(name='ID', value=role.id, inline=False)
+        em.add_field(name="Permissions", value=d_perms, inline=False)
+        em.add_field(name='Number of people that have this role', value=len(role.members), inline=False)
+        em.add_field(name='Can everyone mention this role?', value=bool_str(role.mentionable), inline=False)
 
-        await ctx.send(embed = em)
+        await ctx.send(embed=em)
 
 
 def setup(client):

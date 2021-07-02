@@ -15,16 +15,16 @@ class onReady(commands.Cog):
     async def status(self):
         while True:
             await self.client.wait_until_ready()
-            await self.client.change_presence(activity = discord.Activity(type = discord.ActivityType.listening,
-                                                                          name = '-help')
+            await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening,
+                                                                          name='-help')
                                                                           ) #listening to -help
             await sleep(5)                                                              
-            await self.client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching,
-                                                                          name = f" {len(self.client.guilds)} servers")
+            await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
+                                                                          name=f" {len(self.client.guilds)} servers")
                                                                           ) #watching x servers
             await sleep(5)
-            await self.client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching,
-                                                                          name = f" {len(self.client.users)} users")
+            await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
+                                                                          name=f" {len(self.client.users)} users")
                                                                           ) #watching x users
             await sleep(5)
 

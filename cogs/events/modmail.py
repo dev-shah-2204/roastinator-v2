@@ -35,7 +35,7 @@ class ModMail(commands.Cog): #Everything in a cog needs to be in a class
             else:
                 check = await self.check_ban(msg.author.id)
                 if check is not None:
-                    await msg.channel.send("You have been banned from ModMail. For furthur details contant my developer. You can join the support server, the link can be found here: https://discord.ly/unique-username")
+                    await msg.channel.send("You have been banned from ModMail. For furthur details contant my developer. You can join the support server, the link can be found here: https://discord.ly/roastinator")
                     return
                     
                 if not msg.author.id in people_on_cooldown: #Checking if the person is on cooldown

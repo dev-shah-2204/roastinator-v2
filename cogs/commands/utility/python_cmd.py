@@ -12,7 +12,7 @@ class Python(Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'python', aliases = ['py'], help = 'Run a python code line in discord', usage = '<code>')
+    @commands.command(name='python', aliases=['py'], help='Run a python code line in discord')
     @cooldown(1, 10, BucketType.user)
     async def python_code(self, ctx, *, code):
         if 'import' in code:

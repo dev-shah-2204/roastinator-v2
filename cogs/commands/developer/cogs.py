@@ -9,7 +9,7 @@ class Cogs(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'reload', help = 'Reloads a cog')
+    @commands.command(name='reload', help='Reloads a cog')
     async def reload_cog(self, ctx, cog):
         if ctx.author.id != owner_id:
             await ctx.send("That is a developer command, you can't use that")
@@ -22,7 +22,7 @@ class Cogs(commands.Cog):
         
         await ctx.send(f"Reloaded {cog} cog")
 
-    @commands.command(name = 'load', help = 'Loads a cog', usage = '<cog>')
+    @commands.command(name='load', help='Loads a cog', usage='<cog>')
     async def load_cog(self, ctx, cog):
         if ctx.author.id != owner_id:
             await ctx.send("That is a developer command, you can't use that")
@@ -33,7 +33,7 @@ class Cogs(commands.Cog):
 
 
     #Unload a cog that you want to temporarily disable
-    @commands.command(name = 'unload', help = 'Unloads a cog', usage = '<cog>')
+    @commands.command(name='unload', help='Unloads a cog', usage='<cog>')
     async def unload_cog(self, ctx, cog):
         if ctx.author.id != owner_id:
             await ctx.send("That is a developer command, you can't use that")
@@ -43,7 +43,7 @@ class Cogs(commands.Cog):
         await ctx.send(f"Unloaded {cog} cog")
 
     #This isn't a cog command but I didn't want to make a new file for it
-    @commands.command(name = 'eval')
+    @commands.command(name='eval')
     async def eval_command(self, ctx, *, code):
         if ctx.author.id != owner_id:
             await ctx.send("That is a developer command, you can't use that")

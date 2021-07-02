@@ -18,12 +18,12 @@ class StealEmoji(commands.Cog):
     def __init__(self, client):
         self.client = client  
 
-    @commands.command(aliases = ["stealemoji","emojiadd"], description = "Download emojis that you have access to and upload them to your own server.")
+    @commands.command(aliases=["stealemoji","emojiadd"], description="Download emojis that you have access to and upload them to your own server.")
     @commands.has_permissions(manage_emojis=True)
-    async def steal(self, ctx, emoji_name, custom_emoji_name = None):
+    async def steal(self, ctx, emoji_name, custom_emoji_name=None):
         await self.emoji_from_url(ctx, emoji_name, custom_emoji_name)
 
-    async def emoji_from_url(self, ctx, emoji_name, custom_emoji_name = None, image=None):
+    async def emoji_from_url(self, ctx, emoji_name, custom_emoji_name=None, image=None):
         if image is None:
             if len(ctx.message.attachments) == 0:
                 image = emoji_name
@@ -50,7 +50,7 @@ class StealEmoji(commands.Cog):
         await self.install_emoji(ctx, {"title": emoji_name, "image": image_url}, success_message= "E")
 
 
-    async def install_emoji(self, ctx, emoji_json, success_message: str = None, uploaded_by: discord.Member = None):
+    async def install_emoji(self, ctx, emoji_json, success_message: str=None, uploaded_by: discord.Member=None):
         response = requests.get(emoji_json["image"], stream=True)
 
         if response.status_code == 200:

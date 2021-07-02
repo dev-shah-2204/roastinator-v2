@@ -1,19 +1,16 @@
-import discord, random
+import discord
+import hex_colors 
 
 from discord.ext import commands
-from discord.ext.commands import CommandOnCooldown, BucketType
-import hex_colors
-
-colors = hex_colors.colors
 
 class SoftBan(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'softban', help = 'Ban and unban a member from the server so their messages get deleted', usage = '<member> <reason>')
-    @commands.has_permissions(ban_members = True)
-    @commands.bot_has_permissions(ban_members = True)
-    async def soft_ban(self, ctx, member:discord.Member, *, reason = "No reason provided"): #Default reason is "No reason provided"
+    @commands.command(name='softban', help='Ban and unban a member from the server so their messages get deleted')
+    @commands.has_permissions(ban_members=True)
+    @commands.bot_has_permissions(ban_members=True)
+    async def soft_ban(self, ctx, member:discord.Member, *, reason="No reason provided"): #Default reason is "No reason provided"
         """
         It's same as the ban command, just the unban part is new
         """
@@ -38,26 +35,26 @@ class SoftBan(commands.Cog):
             return
 
         #Embed to be sent to the member
-        m_em = discord.Embed(color = hex_colors.m_red)
-        m_em.set_author(name = f"{ctx.author} kicked you from {ctx.guild.name}", icon_url = ctx.author.avatar_url)
-        m_em.set_thumbnail(url = ctx.guild.icon_url)
-        m_em.add_field(name = "Reason", value = reason)
+        m_em = discord.Embed(color=hex_colors.m_red)
+        m_em.set_author(name=f"{ctx.author} kicked you from {ctx.guild.name}", icon_url=ctx.author.avatar_url)
+        m_em.set_thumbnail(url=ctx.guild.icon_url)
+        m_em.add_field(name="Reason", value=reason)
 
         #Embed to be sent in the channel
-        em = discord.Embed(color = hex_colors.m_red)
-        em.set_author(name = f"{ctx.author} kicked {member}", icon_url = ctx.author.avatar_url)
-        em.set_thumbnail(url = member.avatar_url)
-        em.add_field(name = 'Reason:', value = reason)
+        em = discord.Embed(color=hex_colors.m_red)
+        em.set_author(name=f"{ctx.author} kicked {member}", icon_url=ctx.author.avatar_url)
+        em.set_thumbnail(url=member.avatar_url)
+        em.add_field(name='Reason:', value=reason)
 
         try:
-            await member.send(embed = m_em)
+            await member.send(embed=m_em)
         except:
             pass
         
-        await member.ban(reason = reason)
+        await member.ban(reason=reason)
         await ctx.message.delete()
-        await ctx.send(embed = em)
-        await member.unban(reason = f"Soft-banned by {ctx.author}")
+        await ctx.send(embed=em)
+        await member.unban(reason=f"Soft-banned by {ctx.author}")
 
 def setup(client):
     client.add_cog(SoftBan(client))

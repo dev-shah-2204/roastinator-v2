@@ -10,7 +10,7 @@ class Cursed(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'cursed', aliases = ['cursedimage'])
+    @commands.command(name='cursed', aliases=['cursedimage'])
     @cooldown(1, 3, BucketType.user)
     async def cursed_image(self, ctx):
         url = f'https://meme-api.herokuapp.com/gimme/cursed_images' #url of the api
@@ -25,11 +25,13 @@ class Cursed(commands.Cog):
                 title = post['title'] #the title of the reddit post
 
 
-            em = discord.Embed(title = title, color = random.choice(hex_colors.colors))
-            em.set_image(url = image)
-            em.set_footer(text = f"👍 {post['ups']} | Author: u/{post['author']}")
+            em = discord.Embed(
+                title=title, 
+                color=random.choice(hex_colors.colors))
+            em.set_image(url=image)
+            em.set_footer(text=f"👍 {post['ups']} | Author: u/{post['author']}")
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
 
 
 def setup(client):

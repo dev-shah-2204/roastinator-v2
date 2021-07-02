@@ -10,7 +10,7 @@ class Reddit(commands.Cog):
     def __init__(self, client):
         self.client = client 
 
-    @commands.command(name = 'reddit', aliases = ['subreddit','getredditpost'], help = 'Gets a post from the subreddit provided')
+    @commands.command(name='reddit', aliases=['subreddit','getredditpost'], help='Gets a post from the subreddit provided')
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def get_reddit_post(self, ctx, *, subreddit):
         url = f'https://meme-api.herokuapp.com/gimme/{subreddit}' #This api only sends posts with images or gifs.
@@ -31,11 +31,11 @@ class Reddit(commands.Cog):
                     image = post['url'] #the image
                     title = post['title'] #the title of the reddit post
 
-                    em = discord.Embed(title = title, color = random.choice(hex_colors.colors))
-                    em.set_image(url = post['url'])
-                    em.set_footer(text = f"👍 {post['ups']} | Author: u/{post['author']}") #post['ups'] is the upvotes, post['author'] is the author
+                    em = discord.Embed(title=title, color=random.choice(hex_colors.colors))
+                    em.set_image(url=post['url'])
+                    em.set_footer(text=f"👍 {post['ups']} | Author: u/{post['author']}") #post['ups'] is the upvotes, post['author'] is the author
 
-                    await ctx.send(embed = em)
+                    await ctx.send(embed=em)
                 except KeyError:
                     await ctx.send(f"I couldn't find a subreddit called `{subreddit}`")
 

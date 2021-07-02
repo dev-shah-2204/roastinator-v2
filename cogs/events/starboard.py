@@ -52,24 +52,26 @@ class StarboardEvent(commands.Cog):
                         self.error.append(user.id) #So that they can't make the bot spam
                         return 
                     return
+                desc = msg.content
+                if msg.content == '':
+                    desc = 'Attachment'
 
                 em = discord.Embed(
+                    description = desc,
                     color = hex_colors.l_yellow,
                     timestamp = msg.created_at 
                     )
                 em.set_author(
-                    name = f"{user.name} starred a message", 
+                    name = f"{msg.author}", 
                     icon_url = user.avatar_url)
                 
                 if len(msg.attachments) > 0:
                     em.set_image(url = msg.attachments[0].url)
 
-                desc = msg.content
-                if msg.content == '':
-                    desc = 'Attachment'
+                
 
                 em.add_field(
-                    name = f"{msg.author} said:", 
+                    name = f"Source", 
                     value = f"{desc}\n\n[Jump to message]({msg.jump_url})")
                 
                 starcount = self.starcount

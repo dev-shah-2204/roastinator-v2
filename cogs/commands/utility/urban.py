@@ -16,7 +16,7 @@ class UrbanDictionary(commands.Cog):
     Note: Both the API and the Library have bugs. They are not always able to find the definition even if they are on the urbandictionary website
     """
 
-    @commands.command(name = 'urban', aliases = ['ud','urbandict'])
+    @commands.command(name='urban', aliases=['ud','urbandict'])
     async def urban(self, ctx, *, word):
         api = "https://mashape-community-urban-dictionary.p.rapidapi.com/define"
 
@@ -27,7 +27,7 @@ class UrbanDictionary(commands.Cog):
             'x-rapidapi-host': 'mashape-community-urban-dictionary.p.rapidapi.com'
         }
 
-        response = requests.request('GET', api, headers = headers, params = querymsg)
+        response = requests.request('GET', api, headers=headers, params=querymsg)
         response = response.json() #This will be a very big dictionary, we need to 'decorate' it
 
         try:
@@ -42,23 +42,23 @@ class UrbanDictionary(commands.Cog):
                 if other_bracket == '[' or other_bracket == ']':
                     example = example.replace(other_bracket, '')
 
-            em = discord.Embed(title = word, color = random.choice(hex_colors.colors))
-            em.add_field(name = 'Top definition:', value = definition, inline = False)
-            em.add_field(name = 'Example:', value = example)
+            em = discord.Embed(title=word, color=random.choice(hex_colors.colors))
+            em.add_field(name='Top definition:', value=definition, inline=False)
+            em.add_field(name='Example:', value=example)
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
         except:
             try:
                 raw_dict = urbandict.define(word) #returns a dictionary
                 defintion = raw_dict[0]['def']
                 example = raw_dict[0][str('example')]
 
-                em = discord.Embed(name = word, color = random.choice(hex_colors.colors))
-                em.add_field(name = 'Top definition:', value = defintion, inline = False)
-                em.add_field(name = 'Example:', value = example)
-                em.set_footer(text = "I couldn't find the defintion using the primary API, so this might not be very accurate")
+                em = discord.Embed(name=word, color=random.choice(hex_colors.colors))
+                em.add_field(name='Top definition:', value=defintion, inline=False)
+                em.add_field(name='Example:', value=example)
+                em.set_footer(text="I couldn't find the defintion using the primary API, so this might not be very accurate")
 
-                await ctx.send(embed = em)
+                await ctx.send(embed=em)
             except:
                 await ctx.send("I couldn't find the defintion because both the API and the library are broken")
 

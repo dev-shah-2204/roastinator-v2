@@ -5,8 +5,6 @@ from db import database
 from discord.ext import commands
 from cogs.events.modmail import people_on_cooldown #people_on_cooldown is a list, it gets reset every 12 hours on heroku. you need to setup a database to store the banned people's id
 
-owner_id = 416979084099321866 #Replace with your ID
-
 db = database.cursor()
 
 class ModMail(commands.Cog):
@@ -14,9 +12,9 @@ class ModMail(commands.Cog):
         self.client = client
     
     #The banned people will be unbanned when you restart the bot. You need to setup a database. I am unable to do so on heroku for some reason.
-    @commands.command(name = 'banmodmail', aliases = ['banmm'], help = 'Ban people from mod-mail')
+    @commands.command(name='banmodmail', aliases=['banmm'], help='Ban people from mod-mail')
     async def banmodmail(self, ctx, user:discord.User):
-        if ctx.author.id != owner_id:
+        if ctx.author.id != self.client.owner_id:
             await ctx.send("You can't do that")
             return
 
@@ -27,9 +25,9 @@ class ModMail(commands.Cog):
             return
 
     #You might want to unban them later too
-    @commands.command(name = 'unbanmodmail', aliases = ['unbanmm'], help = "Un-ban people from mod-mail")
+    @commands.command(name='unbanmodmail', aliases=['unbanmm'], help="Un-ban people from mod-mail")
     async def unbanmodmail(self, ctx, user:discord.User):
-        if ctx.author.id != owner_id:
+        if ctx.author.id != self.client.owner_id:
             await ctx.send("You can't do that")
             return
 

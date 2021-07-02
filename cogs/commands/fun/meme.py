@@ -10,7 +10,7 @@ class Meme(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'meme', aliases = ['maymay'])
+    @commands.command(name='meme', aliases=['maymay'])
     @cooldown(1, 3, BucketType.user)
     async def meme(self, ctx):
         subreddit = 'memes' #change this to whatever subreddit you want
@@ -27,11 +27,11 @@ class Meme(commands.Cog):
                 title = post['title'] #the title of the reddit post
 
 
-            em = discord.Embed(title = title, color = random.choice(hex_colors.colors))
-            em.set_image(url = image)
-            em.set_footer(text = f"👍 {post['ups']} | Author: u/{post['author']}")
+            em = discord.Embed(title=title, color=random.choice(hex_colors.colors))
+            em.set_image(url=image)
+            em.set_footer(text=f"👍 {post['ups']} | Author: u/{post['author']}")
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
 
 
 def setup(client):

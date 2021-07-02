@@ -13,9 +13,9 @@ class UserInfo(Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'userinfo', aliases = ['whois'], help = 'Shows the details of a member', usage = '[member]')
+    @commands.command(name='userinfo', aliases=['whois'], help='Shows the details of a member')
     @cooldown(1, 10, BucketType.user)
-    async def whois(self, ctx, member:discord.Member = None):
+    async def whois(self, ctx, member:discord.Member=None):
         if member == None:
             member = ctx.author
 
@@ -33,13 +33,27 @@ class UserInfo(Cog):
             roles += f"<@&{member_role}> "
 
 
-        em = discord.Embed(title = f"Found information for {member}", color = random.choice(hex_colors.colors))
-        em.set_thumbnail(url = member.avatar_url)
-        em.add_field(name = "ID", value = id, inline = False)
-        em.add_field(name = "Account Created on", value = created, inline = False)
-        em.add_field(name = "Joined Server on", value = joined, inline = False)
-        em.add_field(name = "Roles in this Server", value = roles, inline = False)
-        em.set_footer(text = f"Requested by {ctx.author.nick}", icon_url = ctx.author.avatar_url)
+        em = discord.Embed(title=f"Found information for {member}", color=random.choice(hex_colors.colors))
+        em.set_thumbnail(url=member.avatar_url)
+        em.add_field(
+            name="ID", 
+            value=id, 
+            inline=False)
+        em.add_field(
+            name="Account Created on", 
+            value=created, 
+            inline=False)
+        em.add_field(
+            name="Joined Server on", 
+            value=joined, 
+            inline=False)
+        em.add_field(
+            name="Roles in this Server", 
+            value=roles, 
+            inline=False)
+        em.set_footer(
+            text=f"Requested by {ctx.author.nick}", 
+            icon_url=ctx.author.avatar_url)
 
         await ctx.send(embed = em)
 

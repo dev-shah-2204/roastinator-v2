@@ -38,27 +38,27 @@ class Help(commands.Cog):
         if _help is None:
             _help = 'No help text provided by developer'
 
-        em = discord.Embed(title = str(command).capitalize(), description = command.help, color = pfpG)
-        em.add_field(name = 'Usage:', value = decorate(command), inline = False)
-        em.add_field(name = 'Aliases:', value = _aliases, inline = False)
+        em = discord.Embed(title=str(command).capitalize(), description=command.help, color=pfpG)
+        em.add_field(name='Usage:', value=decorate(command), inline=False)
+        em.add_field(name='Aliases:', value=_aliases, inline=False)
 
-        await ctx.send(embed = em)
+        await ctx.send(embed=em)
 
-    @command(name = 'help', help = 'Shows this message')
+    @command(name='help', help='Shows this message')
     async def help(self, ctx, cmd: Optional[str]):
         if cmd is None: #Sends the default help message
 
-            em = discord.Embed(title = 'Help is here', color = pfpG)
-            em.add_field(name = 'Categories:', value = """
+            em = discord.Embed(title='Help is here', color=pfpG)
+            em.add_field(name='Categories:', value="""
 BotStats
 Moderation
 Utility
 Games
 Fun
 """)
-            em.set_footer(text = "Use -help <category> for mor info")
+            em.set_footer(text="Use -help <category> for mor info")
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
             return
 
         aliases = {}
@@ -70,58 +70,58 @@ Fun
 
         if cmd.lower() == 'fun':
             em = discord.Embed(
-                title = "Fun Commands",
-                description = '`meme` , `dadjoke`\n`wholesome` , `cursed`\n`say` , `roast`\n`bonk`',
-                color = pfpG
+                title="Fun Commands",
+                description='`meme` , `dadjoke`\n`wholesome` , `cursed`\n`say` , `roast`\n`bonk`',
+                color=pfpG
             )
-            em.set_footer(text = 'Use -help <command> for more info')
-            await ctx.send(embed = em)
+            em.set_footer(text='Use -help <command> for more info')
+            await ctx.send(embed=em)
             return
 
         if cmd.lower() == 'games':
             em = discord.Embed(
-                title = "Games Commands",
-                description = '`cointoss` , `rockpaperscissors`',
-                color = pfpG
+                title="Games Commands",
+                description='`cointoss` , `rockpaperscissors`',
+                color=pfpG
             )
-            em.set_footer(text = 'Use -help <command> for more info')
+            em.set_footer(text='Use -help <command> for more info')
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
             return
 
         if cmd.lower() == 'moderation' or cmd.lower() == 'mod':
             em = discord.Embed(
-                title = "Moderation Commands:",
-                description = '`clear` , `clean` , `nuke`\n`kick` , `ban` , `softban`\n`mute` , `tempmute` , `unmute`\n`lock`, `unlock`',
-                color = pfpG)
-            em.set_footer(text = 'Use -help <command> for more info')
+                title="Moderation Commands:",
+                description='`clear` , `clean` , `nuke`\n`kick` , `ban` , `softban`\n`mute` , `tempmute` , `unmute`\n`lock`, `unlock`',
+                color=pfpG)
+            em.set_footer(text='Use -help <command> for more info')
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
             return
 
         if cmd.lower() == 'utility' or cmd.lower() == 'util':
             em = discord.Embed(
-                title = "Utility Commands:",
-                description = '`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`snipe` , `editsnipe`\n`urban` , `reddit`  , `python`\n`embed` , `stealemoji` , `enlargeemoji` , `prefix`',
-                color = pfpG)
-            em.set_footer(text = 'Use -help <command> for more info')
+                title="Utility Commands:",
+                description='`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`snipe` , `editsnipe`\n`urban` , `reddit`  , `python`\n`embed` , `stealemoji` , `enlargeemoji` , `prefix`',
+                color=pfpG)
+            em.set_footer(text='Use -help <command> for more info')
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
             return
 
         if cmd.lower() == 'botstats' or cmd.lower() == 'bot':
             em = discord.Embed(
-                title = "Bot Stats Commands:",
-                description = "`invite` , `ping`",
-                color = pfpG)
-            em.set_footer(text = 'Use -help <command> for more info')
+                title="Bot Stats Commands:",
+                description="`invite` , `ping`",
+                color=pfpG)
+            em.set_footer(text='Use -help <command> for more info')
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
             return
 
 
         else:
-            command = discord.utils.get(self.client.commands, name = cmd.lower()) #Trying to get the command from the command list
+            command = discord.utils.get(self.client.commands, name=cmd.lower()) #Trying to get the command from the command list
 
             if command is None: #If it cant find the command, it returns None. So now we check if the 'cmd' is an alias
                 key_list = list(aliases.keys())
@@ -138,7 +138,7 @@ Fun
                     await ctx.send("That command does not exist")
                     return
 
-                command = discord.utils.get(self.client.commands, name = cmd_name)
+                command = discord.utils.get(self.client.commands, name=cmd_name)
 
             await self.cmd_help(ctx, command)
 

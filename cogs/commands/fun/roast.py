@@ -9,8 +9,8 @@ class Roast(commands.Cog):
     def __init__(self, client):
         self.client = client 
 
-    @commands.command(name = 'roast', aliases = ['insult'])
-    async def roast(self, ctx, user:discord.Member = None):
+    @commands.command(name='roast', aliases=['insult'])
+    async def roast(self, ctx, user:discord.Member=None):
         if user == None:
             user = ctx.author 
 
@@ -19,7 +19,7 @@ class Roast(commands.Cog):
             return
 
         url = 'https://insult.mattbas.org/api/en/insult.json' #Visit [https://insult.matlabs.org/api/] for documentation
-        response = requests.get(url, params = {'who': user.mention}).json()
+        response = requests.get(url, params={'who': user.mention}).json()
         await ctx.send(user.mention+response['insult'])
 
 

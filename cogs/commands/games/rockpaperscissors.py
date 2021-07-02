@@ -31,7 +31,7 @@ class RockPaperScissors(commands.Cog):
         if user_choice == bot_choice:
             return 'draw'
 
-    @commands.command(name = 'rockpaperscissors', aliases = ['rps']) #I'm not adding a cooldown but you can
+    @commands.command(name='rockpaperscissors', aliases=['rps']) #I'm not adding a cooldown but you can
     async def rock_paper_scissors(self, ctx):
         choices = ['rock','paper','scissors']
         bot_choice = random.choice(choices)
@@ -42,7 +42,7 @@ class RockPaperScissors(commands.Cog):
             return message.author == ctx.author
 
         try:
-            message = await self.client.wait_for('message', timeout = 10, check = check)
+            message = await self.client.wait_for('message', timeout=10, check=check)
 
             if message.content.lower() == 'scissor':
                 message.content = 'scissors' #I don't wanna throw an error just because of a missing letter
@@ -65,11 +65,18 @@ class RockPaperScissors(commands.Cog):
                 title = 'Draw!'
                 color = hex_colors.l_yellow
 
-            em = discord.Embed(title = title, color = color)
-            em.add_field(name = 'Your choice:', value = message.content.capitalize(), inline = False)
-            em.add_field(name = "Bot's choice:", value = bot_choice.capitalize())
+            em = discord.Embed(
+                title=title, 
+                color=color)
+            em.add_field(
+                name='Your choice:', 
+                value=message.content.capitalize(), 
+                inline=False)
+            em.add_field(
+                name="Bot's choice:", 
+                value=bot_choice.capitalize())
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
 
         except asyncio.TimeoutError:
             await ctx.send("I can't wait forever...")

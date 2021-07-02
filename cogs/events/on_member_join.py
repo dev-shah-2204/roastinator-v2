@@ -11,12 +11,12 @@ class MemberJoin(commands.Cog):
 
     async def get_status(self, guild):
         db.execute(f"SELECT _status FROM autorole WHERE guild = '{guild}'")
-        status = await get_data(db = db)
+        status = await get_data(db=db)
         return status 
 
     async def get_role(self, guild):
         db.execute(f"SELECT _role FROM autorole WHERE guild = '{guild}'")
-        role = await get_data(db = db)
+        role = await get_data(db=db)
         return role 
 
     @commands.Cog.listener()
@@ -39,7 +39,7 @@ class MemberJoin(commands.Cog):
                     def check(message:discord.Message) -> bool:
                         return message.author == user and message.guild == member.guild
 
-                    message = await self.client.wait_for('message', check = check)
+                    message = await self.client.wait_for('message', check=check)
                     await message.channel.send(f"<@!{user.id}>, you setup the auto-role but either I don't have permissions to Manage Roles or my role is too low. Put my role above the role that you want me to assign to the users. Since your DMs are closed, I had to reply this way")
             
 

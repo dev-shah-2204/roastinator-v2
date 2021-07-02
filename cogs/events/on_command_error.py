@@ -12,15 +12,15 @@ class ErrorHandling(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
-            em.add_field(name = "Command incomplete", value = ":x: | The command is incomplete")
+            em = discord.Embed(title='Error', color=hex_colors.m_red)
+            em.add_field(name="Command incomplete", value=":x: | The command is incomplete")
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
             ctx.command.reset_cooldown(ctx)
             return
 
         if isinstance(error, commands.MissingPermissions):
-            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
+            em = discord.Embed(title='Error', color=hex_colors.m_red)
 
             #This part is copy-pasted from a different source (I don't remember where.)
             missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
@@ -30,15 +30,15 @@ class ErrorHandling(commands.Cog):
             else:
                 permission = ' and '.join(missing)
 
-            em.add_field(name = "Missing Permissions", value = f":x: | You need the {permission} permission to do that")
-            await ctx.send(embed = em)
+            em.add_field(name="Missing Permissions", value=f":x: | You need the {permission} permission to do that")
+            await ctx.send(embed=em)
             return
 
         if isinstance(error, commands.MemberNotFound):
-            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
-            em.add_field(name = "Member not found", value = f":x: | I couldn't find anyone with that name in this server")
+            em = discord.Embed(title='Error', color=hex_colors.m_red)
+            em.add_field(name="Member not found", value=f":x: | I couldn't find anyone with that name in this server")
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
             ctx.command.reset_cooldown(ctx)
             return
 
@@ -47,11 +47,11 @@ class ErrorHandling(commands.Cog):
             mp = mp.title()
             mp = mp.replace('_',' ')
 
-            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
-            em.add_field(name = "I don't have the permission", value = f":x: | That command should have worked but I don't have the {mp} permission.")
+            em = discord.Embed(title='Error', color=hex_colors.m_red)
+            em.add_field(name="I don't have the permission", value=f":x: | That command should have worked but I don't have the {mp} permission.")
 
             try:
-                await ctx.send(embed = em)
+                await ctx.send(embed=em)
                 return
             except:
                 await ctx.send(f"I don't have the {mp} permission. F") #In case the bot doesn't have embed links permission

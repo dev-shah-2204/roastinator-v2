@@ -20,17 +20,17 @@ class Snipe(commands.Cog):
         del_msg[str(message.channel.id)]['author'] = message.author
         del_msg[str(message.channel.id)]['time'] = datetime.now(pytz.utc) #This will be used for the timestamp
 
-    @commands.command(name = 'snipe', help = 'Check the last deleted message in the channel', usage = '')
+    @commands.command(name='snipe', help='Check the last deleted message in the channel')
     async def snipe(self, ctx):
         try:
             msg_content = del_msg[str(ctx.channel.id)]['content']
             if msg_content == '': #If the message had no text, it means that it had an attachment. Since the message is deleted, we can't retrieve that.
                 msg_content = "There was an image or an embed in the deleted message that couldn't be loaded"
 
-            em = discord.Embed(description = msg_content, color = random.choice(hex_colors.colors), timestamp = del_msg[str(ctx.channel.id)]['time'])
-            em.set_author(name = f"{del_msg[str(ctx.channel.id)]['author']} said:", icon_url = del_msg[str(ctx.channel.id)]['author'].avatar_url)
+            em = discord.Embed(description=msg_content, color=random.choice(hex_colors.colors), timestamp=del_msg[str(ctx.channel.id)]['time'])
+            em.set_author(name=f"{del_msg[str(ctx.channel.id)]['author']} said:", icon_url=del_msg[str(ctx.channel.id)]['author'].avatar_url)
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
         except:
             await ctx.send("There are no recently deleted messages")
 

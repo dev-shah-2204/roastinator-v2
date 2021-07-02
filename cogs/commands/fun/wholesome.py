@@ -10,7 +10,7 @@ class Wholesome(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'wholesome', aliases = ['wholesomememe'])
+    @commands.command(name='wholesome', aliases=['wholesomememe'])
     @cooldown(1, 3, BucketType.user)
     async def wholesome_meme(self, ctx):
         url = f'https://meme-api.herokuapp.com/gimme/wholesomememes' #url of the api
@@ -25,11 +25,11 @@ class Wholesome(commands.Cog):
                 title = post['title'] #the title of the reddit post
 
 
-            em = discord.Embed(title = title, color = random.choice(hex_colors.colors))
-            em.set_image(url = image)
-            em.set_footer(text = f"👍 {post['ups']} | Author: u/{post['author']}")
+            em = discord.Embed(title=title, color=random.choice(hex_colors.colors))
+            em.set_image(url=image)
+            em.set_footer(text=f"👍 {post['ups']} | Author: u/{post['author']}")
 
-            await ctx.send(embed = em)
+            await ctx.send(embed=em)
 
 
 def setup(client):

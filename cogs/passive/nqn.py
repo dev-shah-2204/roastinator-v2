@@ -96,7 +96,7 @@ class NQN(commands.Cog):
 				webhooks = await message.channel.webhooks()
 				webhook = utils.get(webhooks, name = "Imposter NQN")
 				if webhook is None:
-					webhook = await message.channel.create_webhook(name = "unique-username") #Bot needs manage webhook permissions
+					webhook = await message.channel.create_webhook(name = "roastinator") #Bot needs manage webhook permissions
 
 				await webhook.send(ret, username = message.author.name, avatar_url = message.author.avatar_url, allowed_mentions = discord.AllowedMentions(everyone = False, roles = False)) #So people can't ping roles/everyone
 				await message.delete()

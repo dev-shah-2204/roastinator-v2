@@ -16,7 +16,7 @@ class EnlargeEmoji(commands.Cog):
     def __init__(self, client):
         self.client = client  
 
-    @commands.command(name = 'enlarge', aliases = ["enlargeemoji"], description = "Enlarge emojis, you can download them too.")
+    @commands.command(name='enlarge', aliases=["enlargeemoji"], description="Enlarge emojis, you can download them too.")
     async def enlarge(self, ctx, emoji):
         await self.emoji_from_url(ctx, emoji)
 
@@ -48,13 +48,11 @@ class EnlargeEmoji(commands.Cog):
             raise Exception(f"Bad status code uploading {emoji_json['title']} received: {response.status_code}")
 
         with open(f"./emojis/{emoji_json['title']}.gif", "rb") as image:
-            embed = discord.Embed(
-                colour = random.choice(hex_colors.colors)
-            )
-            embed.set_image(url = emoji_json["image"])
-            embed.set_footer(text = "If the image is still small, maybe that's the original resolution. I can't do anything.")
+            embed = discord.Embed(colour=random.choice(hex_colors.colors))
+            embed.set_image(url=emoji_json["image"])
+            embed.set_footer(text="If the image is still small, maybe that's the original resolution. I can't do anything.")
 
-            await ctx.send(embed = embed)
+            await ctx.send(embed=embed)
         
 
 def setup(client):

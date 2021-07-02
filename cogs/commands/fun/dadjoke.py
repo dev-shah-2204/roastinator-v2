@@ -9,7 +9,7 @@ class DadJoke(commands.Cog):
     def __init__(self, client):
         self.client = client 
 
-    @commands.command(name = 'dadjoke', aliases = ['dad'], help = 'Sends a dad joke.')
+    @commands.command(name='dadjoke', aliases=['dad'], help='Sends a dad joke.')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def dad_joke(self, ctx):
         url = "https://dad-jokes.p.rapidapi.com/random/joke"
@@ -31,7 +31,7 @@ class DadJoke(commands.Cog):
                     }
 
                 async with ClientSession() as session:
-                    async with session.get(url, headers = headers) as response:
+                    async with session.get(url, headers=headers) as response:
                         result = await response.json()
                         result = result["body"][0]
 
