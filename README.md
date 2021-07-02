@@ -18,3 +18,5 @@ There are tons of YouTube videos that show in detail how to make your own Discor
 ## Some important pointers:
 • For understanding how cogs work, refer to the first cog i.e. `cogs/events/modmail` <br />
 • For understanding how to take input after a command is run, refer to the first game cog i.e. `cogs/commands/games/cointoss`
+• If you're making commands that use a database, make sure that the operation statement is correct according to your table
+• Hosting the bot isn't a difficult, heroku is fine for a bot of this level.
