@@ -13,6 +13,11 @@ database = mysql.connector.connect(
     database = db_db #Enter your database name
 )
 
+db = database.cursor()
+
 async def get_data(db):
+    """
+    Same as db.fetchone()
+    """
     for row in db:
         return row[0]
