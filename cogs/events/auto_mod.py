@@ -18,7 +18,7 @@ class AutoModEvent(commands.Cog):
     async def get_blacklist(self, guild):
         db.execute(f"SELECT * FROM am_{guild}")
         lst = db.fetchall()
-        
+
         blacklist = []
 
         for word in lst:
@@ -30,7 +30,7 @@ class AutoModEvent(commands.Cog):
         
 
 
-    @commands.Cog.listner()
+    @commands.Cog.listener()
     async def on_message(self, msg):
         status = await get_status(msg.guild.id)
         if status is None or status == 'disabled':
