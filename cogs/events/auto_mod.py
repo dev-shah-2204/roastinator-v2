@@ -15,13 +15,12 @@ class AutoModEvent(commands.Cog):
     }
 
     async def get_status(self, guild):
-        global _status
-        if guild not in _status:
+        if guild not in self._status:
             db.execute(f"SELECT _status FROM automod WHERE guild = '{guild}'")
             status = await get_data(db=db)
-            _status[str(guild)] = status #Cache
+            self._status[str(guild)] = status #Cache
         else:
-            status = _status[str(guild)] #Cache
+            status = self._status[str(guild)] #Cache
         return status
 
     async def get_blacklist(self, guild):
