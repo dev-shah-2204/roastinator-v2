@@ -20,10 +20,10 @@ class AutoRole(commands.Cog):
 `disable`""",         
             color=hex_colors.m_red
         )
-        db.execute(f"SELECT _status FROM AutoRole WHERE guild = '{ctx.guild}'")
+        db.execute(f"SELECT _status FROM AutoRole WHERE guild = '{ctx.guild.id}'")
         status = await get_data(db=db)
         if status == 'enabled':
-            db.execute(f"SELECT _role FROM AutoRole WHERE guild = '{ctx.guild}'")
+            db.execute(f"SELECT _role FROM AutoRole WHERE guild = '{ctx.guild.id}'")
             role = await get_data(db=db)
             
             em.add_field(
@@ -59,6 +59,7 @@ class AutoRole(commands.Cog):
         try:
             db.execute(f"UPDATE AutoRole SET _status = 'disabled' WHERE guild = '{ctx.guild.id}'")
             database.commit()
+            await ctx.send("Disabled autorole for your server")
         except:
             await ctx.send("You have to configure the auto-role setting first to do that")
 
@@ -69,6 +70,7 @@ class AutoRole(commands.Cog):
         try:
             db.execute(f"UPDATE AutoRole SET _status = 'enable' WHERE guild = '{ctx.guild.id}'")
             database.commit()
+            await ctx.send("Enabled autorole for your server")
         except:
             await ctx.send("You have to configure the auto-role setting first to do that")
 

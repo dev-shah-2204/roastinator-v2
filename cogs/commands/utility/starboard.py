@@ -22,10 +22,10 @@ class StarboardCommands(commands.Cog):
             """,
             color=hex_colors.l_yellow)
 
-        db.execute(f"SELECT _status FROM Starboard WHERE guild = '{ctx.guild}'")
+        db.execute(f"SELECT _status FROM Starboard WHERE guild = '{ctx.guild.id}'")
         status = await get_data(db=db)
         if status == 'enabled':
-            db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{ctx.guild}'")
+            db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{ctx.guild.id}'")
             channel = await get_data(db=db)
             
             em.add_field(
