@@ -4,10 +4,10 @@ import os
 import hex_colors
 
 from cache import prefix_cache
-from db import database
+from db import *
 from discord.ext import commands
 
-db = database.cursor()
+
 
 class Prefix(commands.Cog):
     def __init__(self, client):

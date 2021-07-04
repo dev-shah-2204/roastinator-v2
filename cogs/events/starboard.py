@@ -6,7 +6,7 @@ from cache import star_cache
 from db import *
 from discord.ext import commands 
 
-db = database.cursor()
+
 
 class StarboardEvent(commands.Cog):
     def __init__(self, client):

@@ -2,9 +2,9 @@ import discord
 import mysql.connector
 
 from discord.ext import commands
-from db import database
+from db import *
 
-db = database.cursor()
+
 
 class OnGuildJoin(commands.Cog):
     def __init__(self, client):
@@ -12,13 +12,8 @@ class OnGuildJoin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        """
-        When the bot joins a server, we want to assign the default prefix for that server.
-        """
-        try:
-            db.execute("INSERT INTO Prefix ('guild', 'prefix') VALUES (%s, %s)",(guild.id, '-')) #My table is called Prefix
-        except:
-            db.execute(f"UPDATE Prefix SET prefix = '-' WHERE guild = '{guild.id}'")#Reset prefix if bot is re-added
+        db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{guild.id}','-')")
+        db.execute(f"INSERT INTO AutoMod(guild, _status) VALUES ('{guild.id}','enabled')")
         database.commit()
 
 

@@ -1,9 +1,9 @@
 import discord 
 
-from db import database 
+from db import * 
 from discord.ext import commands
 
-db = database.cursor()
+
 
 """
 In case the bot was added to a server when it was offline, the prefix for it won't be there in the database.
