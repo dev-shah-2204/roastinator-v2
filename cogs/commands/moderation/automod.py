@@ -58,9 +58,7 @@ class AutoModCommands(commands.Cog):
 
     async def get_status(self, guild):
         db.execute(f"SELECT _status FROM AutoMod WHERE guild = '{guild}'")
-        status = await get_data(db=db)
-        if mysql.connector.errors.InternalError:
-            return None
+        status = db.fetchone()
         return status
 
 
@@ -86,12 +84,10 @@ class AutoModCommands(commands.Cog):
     @automod_cmds.command(name='remove', aliases=['rm','unban'])
     async def automod_remove(self, ctx, *, word):
         status = await self.get_status(ctx.guild.id)
-        
         if status == 'disabled' or status == None:
             await ctx.send("You need to enable Auto Mod first by running this command:```automod enable```")
             return
         
-
         try:
             db.execute(f"SELECT * FROM am_{ctx.guild.id}")
             lst = db.fetchall()
