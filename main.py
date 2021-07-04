@@ -6,10 +6,9 @@ import discord
 import os
 
 from cache import prefix_cache
-from db import database
+from db import *
 from discord.ext import commands
 
-db = database.cursor()
 
 def get_prefix(client, message):
     cache = prefix_cache
@@ -30,7 +29,7 @@ token = os.environ.get('token')
 
 #Defining our bot (client)
 client = commands.Bot(
-    command_prefix = get_prefix,
+    command_prefix = '>',#get_prefix,
     intents = discord.Intents.all(), 
     case_insensitive = True,
     allowed_mentions = discord.AllowedMentions(everyone = False),
@@ -42,10 +41,12 @@ client.remove_command('help')
 
 #Cogs list
 event_cog_list = (
+    'auto_mod',
     'fix_prefix',
     'modmail',
     'on_command_error',
     'on_guild_join',
+    'on_guild_remove',
     'on_member_join',
     'on_mention',
     'on_ready',
@@ -72,6 +73,7 @@ cmd_cog_list = (
     'games.cointoss',
     'games.rockpaperscissors',
     'help',
+    'moderation.automod',
     'moderation.autorole',
     'moderation.ban',
     'moderation.clean',
