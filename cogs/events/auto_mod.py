@@ -39,7 +39,7 @@ class AutoModEvent(commands.Cog):
     async def on_message(self, msg):
         status = await self.get_status(msg.guild.id)
         if status is None or status == 'disabled':
-            await process_commands(msg)
+            await self.client.process_commands(msg)
             return 
 
         if status == 'enabled':
