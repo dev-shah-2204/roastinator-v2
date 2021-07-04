@@ -47,7 +47,7 @@ class AutoModEvent(commands.Cog):
                 if not str(msg.guild.id) in cache:
                     blacklist = await self.get_blacklist(msg.guild.id)
                 else:
-                    blacklist = cache[str(ctx.guild.id)]
+                    blacklist = cache[str(msg.guild.id)]
 
                 for words in blacklist:
                     if words in msg.content.lower():
