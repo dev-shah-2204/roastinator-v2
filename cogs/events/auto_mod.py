@@ -10,9 +10,18 @@ class AutoModEvent(commands.Cog):
     def __init__(self, client):
         self.client = client 
 
+    _status = {
+
+    }
+
     async def get_status(self, guild):
-        db.execute(f"SELECT _status FROM automod WHERE guild = '{guild}'")
-        status = await get_data(db=db)
+        global _status
+        if guild not in _status:
+            db.execute(f"SELECT _status FROM automod WHERE guild = '{guild}'")
+            status = await get_data(db=db)
+            _status[str(guild)] = status #Cache
+        else:
+            status = _status[str(guild)] #Cache
         return status
 
     async def get_blacklist(self, guild):
@@ -27,12 +36,9 @@ class AutoModEvent(commands.Cog):
         cache[str(guild)] = blacklist #Adding in cache
         return blacklist
 
-        
-
-
     @commands.Cog.listener()
     async def on_message(self, msg):
-        status = await get_status(msg.guild.id)
+        status = await self.get_status(msg.guild.id)
         if status is None or status == 'disabled':
             await process_commands(msg)
             return 
