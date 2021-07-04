@@ -22,6 +22,19 @@ class StarboardCommands(commands.Cog):
             """,
             color=hex_colors.l_yellow)
 
+        db.execute(f"SELECT _status FROM Starboard WHERE guild = '{ctx.guild}'")
+        status = await get_data(db=db)
+        if status == 'enabled':
+            db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{ctx.guild}'")
+            channel = await get_data(db=db)
+            
+            em.add_field(
+                name='Starboard channel:',
+                value=f'<@&{channel[0]}>'
+            )
+        else:
+            em.set_footer(text="Starboard hasn't been setup in this server yet")
+
         await ctx.send(embed=em)
 
     @starboard_commands.command(name='channel', help="Set the starboard channel")

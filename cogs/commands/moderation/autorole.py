@@ -20,6 +20,19 @@ class AutoRole(commands.Cog):
 `disable`""",         
             color=hex_colors.m_red
         )
+        db.execute(f"SELECT _status FROM AutoRole WHERE guild = '{ctx.guild}'")
+        status = await get_data(db=db)
+        if status == 'enabled':
+            db.execute(f"SELECT _role FROM AutoRole WHERE guild = '{ctx.guild}'")
+            role = await get_data(db=db)
+            
+            em.add_field(
+                name='Default role:',
+                value=f'<@&{role[0]}>'
+            )
+        else:
+            em.set_footer(text="Auto role hasn't been setup in this server yet")
+
         await ctx.send(embed=em)
 
     @auto_role.command(name='set', help='Set the role to be given to new members')
