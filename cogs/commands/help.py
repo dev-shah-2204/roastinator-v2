@@ -7,7 +7,7 @@ from discord.ext import commands
 from discord.ext.commands import command
 
 
-pfpG = 0x5A8D3E #my bot's pfp color
+pfpG = 0x60FF60 #my bot's pfp color
 
 def decorate(command):
     args = []
