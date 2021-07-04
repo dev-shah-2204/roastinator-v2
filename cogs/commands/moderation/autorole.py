@@ -28,7 +28,7 @@ class AutoRole(commands.Cog):
             
             em.add_field(
                 name='Default role:',
-                value=f'<@&{role[0]}>'
+                value=f'<@&{role}>'
             )
         else:
             em.set_footer(text="Auto role hasn't been setup in this server yet")
@@ -68,7 +68,7 @@ class AutoRole(commands.Cog):
     @commands.bot_has_permissions(manage_roles=True)
     async def enable_autorole(self, ctx):
         try:
-            db.execute(f"UPDATE AutoRole SET _status = 'enable' WHERE guild = '{ctx.guild.id}'")
+            db.execute(f"UPDATE AutoRole SET _status = 'enabled' WHERE guild = '{ctx.guild.id}'")
             database.commit()
             await ctx.send("Enabled autorole for your server")
         except:
