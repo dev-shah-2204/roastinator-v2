@@ -30,7 +30,7 @@ class StarboardCommands(commands.Cog):
             
             em.add_field(
                 name='Starboard channel:',
-                value=f'<@&{channel[0]}>'
+                value=f'<#{channel}>'
             )
         else:
             em.set_footer(text="Starboard hasn't been setup in this server yet")
