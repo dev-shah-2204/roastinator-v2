@@ -12,5 +12,10 @@ CREATE TABLE Starboard(
 
 
 CREATE TABLE ModBan(
-    user_id VARCHAR(20)
+    user_id VARCHAR(20) PRIMARY KEY
+)
+
+CREATE TABLE AutoMod(
+    guild VARCHAR(20) PRIMARY KEY,
+    _status VARCHAR(10)
 )
