@@ -49,8 +49,8 @@ class AutoModEvent(commands.Cog):
                 else:
                     blacklist = cache[str(msg.guild.id)]
 
-                for words in blacklist:
-                    if words in msg.content.lower():
+                for word in blacklist:
+                    if word.lower() in msg.content.lower():
                         await msg.delete()
                         try:
                             await msg.author.send(f"Hey! That word is not allowed in {msg.guild.name}")
