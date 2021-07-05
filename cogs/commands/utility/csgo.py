@@ -12,26 +12,18 @@ class CSGOStats(commands.Cog):
         self.client = client 
 
     async def get_id_from_url(self, url):
-        if 'profiles' in url:
-            url = url.replace('https://','')
-            url = url.replace('steamcommunity.com/profiles/','')
-            url = url.strip('/')
-            return url
-
-        elif '/id/' in url:
-            url = url.replace('https://','')
-            url = url.replace('steamcommunity.com/id/','')
-            url = url.strip('/')
+        url = url.replace('https://','')
+        url = url.replace('steamcommunity.com/profiles/','')
+        url = url.replace('steamcommunity.com/id/','')
+        url = url.strip('/')    
         
-
         try:
-            _id = int(url) #To check if they entered the ID or the vanity URL
+            _id = int(url) #If the user doesn't have a vanity url
             return _id
         except:
             _id = requests.get(f"http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={os.environ.get('STEAM_API_KEY')}&vanityurl={url}").json() #To get ID from vanity URL
 
         return _id['response']['steamid']
-        
 
 
     @commands.command(name='csgo', aliases=['csgostats'], help="Get CSGO Stats of a Steam Account")
@@ -75,28 +67,33 @@ class CSGOStats(commands.Cog):
                 dict_ = gstats[pos]
                 value = dict_['value']
                 try:
-                    return "{:,}".format(str(value))
+                    return "{:,}".format(value)
                 except: #If the value is NoneType
                     return value
+            except:
+                pass
+
+        def get_value_without_comma(name):
+            pos = get_pos(name)
+            try:
+                dict_ = gstats[pos]
+                value = dict_['value']
+                return value
             except:
                 pass
             
 
         kills = (get_value('total_kills'))
         deaths = (get_value('total_deaths'))
-        
-        _kills = str(kills).strip(',')
-        _deaths = str(deaths).strip(',')
 
-        kd = int(_kills)/int(_deaths)
+        _kills = get_value_without_comma('total_kills')
+        _deaths = get_value_without_comma('total_deaths')
+        kd = (_kills)/(_deaths)
 
-        playtime = (get_value('total_time_played'))
-
-        _playtime = str(playtime).strip(',')
-        _playtime = float(_playtime)
-        _playtime = round(_playtime)/3600
-
+        playtime = (get_value_without_comma('total_time_played'))
+        playtime = playtime/3600
         playtime = (round(playtime))
+        
         games_won = (get_value('total_wins'))
         damage = (get_value('total_damage_done'))
         money = (get_value('total_money_earned'))
