@@ -54,9 +54,13 @@ class CSGOStats(commands.Cog):
 
         _id = await self.get_id_from_url(url=url)  
 
-        stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={os.environ.get('STEAM_API_KEY')}&steamid={_id}").json()
+        stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={os.environ.get('STEAM_API_KEY')}&steamid={_id}")
         if stats.status_code == 500:
             await ctx.send("I think your profile and/or game details are set to private. Make them public and try again")
+            return 
+
+        stats = stats.json()
+        
         
         json = stats['playerstats']
         gstats = json['stats'] #game stats
