@@ -64,26 +64,34 @@ class CSGOStats(commands.Cog):
         json = stats['playerstats']
         gstats = json['stats'] #game stats
         def get_pos(name):
-            for i in range(0, len(gstats)+1):
+            for i in range(0, len(gstats)):
                 if gstats[i]['name'] == name:
                     return i
 
         def get_value(name):
             pos = get_pos(name)
-            dict_ = gstats[pos]
-            return dict_['value']
+            try:
+                dict_ = gstats[pos]
+                value = dict_['value']
+                try:
+                    return "{:,}".format(value)
+                except: #If the value is NoneType
+                    return value
+            except:
+                pass
+            
 
-        kills = "{:,}".format(get_value('total_kills'))
-        deaths = "{:,}".format(get_value('total_deaths'))
+        kills = (get_value('total_kills'))
+        deaths = (get_value('total_deaths'))
         kd = int(get_value('total_kills'))/int(get_value('total_deaths'))
         playtime = int(get_value('total_time_played'))/3600
-        playtime = "{:,}".format(round(playtime))
-        games_won = "{:,}".format(get_value('total_wins'))
-        damage = "{:,}".format(get_value('total_damage_done'))
-        money = "{:,}".format(get_value('total_money_earned'))
-        knife = "{:,}".format(get_value('total_kills_knife'))
-        headshots = "{:,}".format(get_value('total_kills_headshot'))
-        grenade = "{:,}".format(get_value('total_kills_hegrenade'))
+        playtime = (round(playtime))
+        games_won = (get_value('total_wins'))
+        damage = (get_value('total_damage_done'))
+        money = (get_value('total_money_earned'))
+        knife = (get_value('total_kills_knife'))
+        headshots = (get_value('total_kills_headshot'))
+        grenade = get_value('total_kills_hegrenade')
 
         em = discord.Embed(
             title=f"CSGO Stats for {_id}",
@@ -137,54 +145,61 @@ class CSGOStats(commands.Cog):
         json = stats['playerstats']
         gstats = json['stats'] #game stats
         def get_pos(name):
-            for i in range(0, len(gstats)+1):
+            for i in range(0, len(gstats)):
                 if gstats[i]['name'] == name:
                     return i
 
         def get_value(name):
             pos = get_pos(name)
-            dict_ = gstats[pos]
-            return dict_['value']
+            try:
+                dict_ = gstats[pos]
+                value = dict_['value']
+                try:
+                    return "{:,}".format(value)
+                except: #If the value is NoneType
+                    return value
+            except:
+                pass
 
         #Pistol
-        glock = "{:,}".format(get_value('total_kills_glock'))
-        usp = "{:,}".format(get_value('total_kills_hkp2000'))
-        dual = "{:,}".format(get_value('total_kills_elite'))
-        p250 = "{:,}".format(get_value('total_kills_p250'))
-        tec9 = "{:,}".format(get_value('total_kills_tec9'))
-        fiveseven = "{:,}".format(get_value('total_kills_fiveseven'))
-        deag = "{:,}".format(get_value('total_kills_deagle'))     
+        glock = (get_value('total_kills_glock'))
+        usp = (get_value('total_kills_hkp2000'))
+        dual = (get_value('total_kills_elite'))
+        p250 = (get_value('total_kills_p250'))
+        tec9 = (get_value('total_kills_tec9'))
+        fiveseven = (get_value('total_kills_fiveseven'))
+        deag = (get_value('total_kills_deagle'))     
 
         #Smg
-        mac10 = "{:,}".format(get_value('total_kills_mac10'))
-        mp9 = "{:,}".format(get_value('total_kills_mp9'))
-        mp7 = "{:,}".format(get_value('total_kills_mp7'))
-        ump = "{:,}".format(get_value('total_kills_ump45'))
-        p90 = "{:,}".format(get_value('total_kills_p90'))
-        bizon = "{:,}".format(get_value('total_kills_bizon'))
+        mac10 = (get_value('total_kills_mac10'))
+        mp9 = (get_value('total_kills_mp9'))
+        mp7 = (get_value('total_kills_mp7'))
+        ump = (get_value('total_kills_ump45'))
+        p90 = (get_value('total_kills_p90'))
+        bizon = (get_value('total_kills_bizon'))
 
         #Shotgun
-        nova = "{:,}".format(get_value('total_kills_nova'))
-        xm1014 = "{:,}".format(get_value('total_kills_xm1014'))
-        sawed = "{:,}".format(get_value('total_kills_sawdoff'))
-        mag7 = "{:,}".format(get_value('total_kills_mag7'))
+        nova = (get_value('total_kills_nova'))
+        xm1014 = (get_value('total_kills_xm1014'))
+        sawed = (get_value('total_kills_sawdoff'))
+        mag7 = (get_value('total_kills_mag7'))
 
         #Rifle
-        galil = "{:,}".format(get_value('total_kills_galilar'))
-        famas = "{:,}".format(get_value('total_kills_famas'))
-        ak47 = "{:,}".format(get_value('total_kills_ak47'))
-        m4 = "{:,}".format(get_value('total_kills_m4a1'))
-        ssg08 = "{:,}".format(get_value('total_kills_ssg08'))
-        sg553 = "{:,}".format(get_value('total_kills_sg553'))
-        aug = "{:,}".format(get_value('total_kills_aug'))
-        awp = "{:,}".format(get_value('total_kills_awp'))
-        g3sg1 = "{:,}".format(get_value('total_kills_g3sg1'))
-        scar20 = "{:,}".format(get_value('total_kills_scar20'))
+        galil = (get_value('total_kills_galilar'))
+        famas = (get_value('total_kills_famas'))
+        ak47 = (get_value('total_kills_ak47'))
+        m4 = (get_value('total_kills_m4a1'))
+        ssg08 = (get_value('total_kills_ssg08'))
+        sg553 = (get_value('total_kills_sg553'))
+        aug = (get_value('total_kills_aug'))
+        awp = (get_value('total_kills_awp'))
+        g3sg1 = (get_value('total_kills_g3sg1'))
+        scar20 = (get_value('total_kills_scar20'))
 
         #Misc
-        negev = "{:,}".format(get_value('total_kills_negev'))
-        m249 = "{:,}".format(get_value('total_kills_m249'))
-        zeus = "{:,}".format(get_value('total_kills_taser'))        
+        negev = (get_value('total_kills_negev'))
+        m249 = (get_value('total_kills_m249'))
+        zeus = (get_value('total_kills_taser'))        
 
         em = discord.Embed(
             title=f"CSGO Stats for {_id}",
@@ -195,56 +210,48 @@ class CSGOStats(commands.Cog):
             value=f"""
 **Glock**: {glock}
 **Tec-9**: {tec9}
--
 **Mac-10**: {mac10}
--
 **Sawed-off**: {sawed}
--
 **Galil AR**: {galil}
 **AK-47**: {ak47}
 **SG553**: {sg553}
 **G3SG1**: {g3sg1}
-            """
+            """,
+            inline=False
         )
         em.add_field(
             name="Counter-Terrorist Weapons",
             value=f"""
-**USP/P2000*: {usp}
+**USP/P2000**: {usp}
 **Five-Seven**: {fiveseven}
--
 **MP9**: {mp9}
--
 **Mag 7**: {mag7}
--
 **FAMAS**: {famas}
 **M4**: {m4}
 **AUG**: {aug}
 **SCAR-20**: {scar20}
-            """
+            """,
+            inline=False
         )
         em.add_field(
             name="Common Weapons",
             value=f"""
 **Dual Berettas**: {dual}
 **P250**: {p250}
-**Desert Eagle/R8**: {deagle}
--
+**Desert Eagle/R8**: {deag}
 **MP7**: {mp7}
 **P90**: {p90}
 **PP Bizon**: {bizon}
--
 **Nova**: {nova}
 **XM-1014**: {xm1014}
--
 **SSG-08**: {ssg08}
 **AWP**: {awp}
--
 **Negev**: {negev}
 **M249**: {m249}
--
 **Zeus x27**: {zeus}
 ****
-            """
+            """,
+            inline=Falsewa
         )
         await ctx.send(embed=em)
 
