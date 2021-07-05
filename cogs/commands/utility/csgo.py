@@ -83,7 +83,11 @@ class CSGOStats(commands.Cog):
 
         kills = (get_value('total_kills'))
         deaths = (get_value('total_deaths'))
-        kd = int(get_value('total_kills'))/int(get_value('total_deaths'))
+        
+        _kills = kills.strip(',')
+        _deaths = kills.strip(',')
+
+        kd = int(_kills)/int(_deaths)
         playtime = int(get_value('total_time_played'))/3600
         playtime = (round(playtime))
         games_won = (get_value('total_wins'))
@@ -251,7 +255,7 @@ class CSGOStats(commands.Cog):
 **Zeus x27**: {zeus}
 ****
             """,
-            inline=Falsewa
+            inline=False
         )
         await ctx.send(embed=em)
 
