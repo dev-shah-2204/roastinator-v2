@@ -10,7 +10,7 @@ class StarboardCommands(commands.Cog):
     def __init__(self, client):
         self.client = client 
 
-    @commands.group(name='starboard', help='Commands related to starboard', invoke_without_command=True)
+    @commands.group(name='starboard', help='Configure starboard', invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
     async def starboard_commands(self, ctx):
         em = discord.Embed(
