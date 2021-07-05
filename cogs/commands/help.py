@@ -92,7 +92,7 @@ Fun
         if cmd.lower() == 'moderation' or cmd.lower() == 'mod':
             em = discord.Embed(
                 title="Moderation Commands:",
-                description='`clear` , `clean` , `nuke`\n`kick` , `ban` , `softban`\n`mute` , `tempmute` , `unmute`\n`lock`, `unlock`',
+                description='`clear` , `clean` , `nuke`\n`kick` , `ban` , `softban`\n`mute` , `tempmute` , `unmute`\n`lock`, `unlock`\n`automod`',
                 color=pfpG)
             em.set_footer(text='Use -help <command> for more info')
 
@@ -102,7 +102,7 @@ Fun
         if cmd.lower() == 'utility' or cmd.lower() == 'util':
             em = discord.Embed(
                 title="Utility Commands:",
-                description='`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`snipe` , `editsnipe`\n`urban` , `reddit`  , `python`\n`embed` , `stealemoji` , `enlargeemoji` , `prefix`',
+                description='`avatar` , `roleinfo` , `serverinfo` , `userinfo`\n`snipe` , `editsnipe`\n`urban` , `reddit`  , `python` , `csgo`\n`embed` , `stealemoji` , `enlargeemoji` , `prefix` , `starboard`',
                 color=pfpG)
             em.set_footer(text='Use -help <command> for more info')
 
