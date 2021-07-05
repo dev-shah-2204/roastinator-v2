@@ -39,7 +39,7 @@ class EnlargeEmoji(commands.Cog):
 
     async def install_emoji(self, ctx, emoji_json):
         response = requests.get(emoji_json["image"], stream=True)
-        if response.status_code == : #If there were no errors
+        if response.status_code == 200: #If there were no errors
             with open(f"./emojis/{emoji_json['title']}.gif", "wb") as img:
                 response.raw.decode_content = True
                 shutil.copyfileobj(response.raw, img)
