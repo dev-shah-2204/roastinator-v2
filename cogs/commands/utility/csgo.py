@@ -214,7 +214,7 @@ class CSGOStats(commands.Cog):
             color=random.choice(hex_colors.colors)
         )
         em.add_field(
-            name="Terrorist Weapons",
+            name="__Terrorist Weapons__",
             value=f"""
 **Glock**: {glock}
 **Tec-9**: {tec9}
@@ -228,7 +228,7 @@ class CSGOStats(commands.Cog):
             inline=False
         )
         em.add_field(
-            name="Counter-Terrorist Weapons",
+            name="__Counter-Terrorist Weapons__",
             value=f"""
 **USP/P2000**: {usp}
 **Five-Seven**: {fiveseven}
@@ -242,7 +242,7 @@ class CSGOStats(commands.Cog):
             inline=False
         )
         em.add_field(
-            name="Common Weapons",
+            name="__Common Weapons__",
             value=f"""
 **Dual Berettas**: {dual}
 **P250**: {p250}
