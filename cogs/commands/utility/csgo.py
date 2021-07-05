@@ -26,6 +26,7 @@ class CSGOStats(commands.Cog):
 
         try:
             _id = int(url) #To check if they entered the ID or the vanity URL
+            return _id
         except:
             _id = requests.get(f"http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={os.environ.get('STEAM_API_KEY')}&vanityurl={url}").json() #To get ID from vanity URL
 
@@ -74,7 +75,7 @@ class CSGOStats(commands.Cog):
                 dict_ = gstats[pos]
                 value = dict_['value']
                 try:
-                    return "{:,}".format(value)
+                    return "{:,}".format(str(value))
                 except: #If the value is NoneType
                     return value
             except:
@@ -84,14 +85,14 @@ class CSGOStats(commands.Cog):
         kills = (get_value('total_kills'))
         deaths = (get_value('total_deaths'))
         
-        _kills = kills.strip(',')
-        _deaths = kills.strip(',')
+        _kills = str(kills).strip(',')
+        _deaths = str(deaths).strip(',')
 
         kd = int(_kills)/int(_deaths)
 
         playtime = (get_value('total_time_played'))
 
-        _playtime = playtime.strip(',')
+        _playtime = str(playtime).strip(',')
         _playtime = float(_playtime)
         _playtime = round(_playtime)/3600
 
