@@ -88,7 +88,13 @@ class CSGOStats(commands.Cog):
         _deaths = kills.strip(',')
 
         kd = int(_kills)/int(_deaths)
-        playtime = int(get_value('total_time_played'))/3600
+
+        playtime = (get_value('total_time_played'))
+
+        _playtime = playtime.strip(',')
+        _playtime = float(_playtime)
+        _playtime = round(_playtime)/3600
+
         playtime = (round(playtime))
         games_won = (get_value('total_wins'))
         damage = (get_value('total_damage_done'))
