@@ -38,10 +38,6 @@ class AutoModEvent(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, msg):
         status = await self.get_status(msg.guild.id)
-        if status is None or status == 'disabled':
-            await self.client.process_commands(msg)
-            return 
-
         if status == 'enabled':
             if not msg.author.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
                 if not str(msg.guild.id) in cache:
