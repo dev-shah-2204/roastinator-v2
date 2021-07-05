@@ -29,7 +29,7 @@ token = os.environ.get('token')
 
 #Defining our bot (client)
 client = commands.Bot(
-    command_prefix = get_prefix,
+    command_prefix = '>',
     intents = discord.Intents.all(), 
     case_insensitive = True,
     allowed_mentions = discord.AllowedMentions(everyone = False),
@@ -85,6 +85,7 @@ cmd_cog_list = (
     'moderation.softban',
     'moderation.temp_mute',
     'utility.avatar',
+    'utility.csgo',
     'utility.editsnipe',
     'utility.embed',
     'utility.enlarge_emoji',
