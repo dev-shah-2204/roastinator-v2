@@ -12,7 +12,7 @@ class AutoModCommands(commands.Cog):
         self.client = client 
 
 
-    @commands.group(name='automod', aliases=['am'], invoke_without_command=True)
+    @commands.group(name='automod', aliases=['am'], help="Configure AutoMod for the server", invoke_without_command=True)
     @commands.has_permissions(manage_messages = True)
     async def automod_cmds(self, ctx):
         em = discord.Embed(
