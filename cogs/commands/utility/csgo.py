@@ -257,7 +257,6 @@ class CSGOStats(commands.Cog):
 **Negev**: {negev}
 **M249**: {m249}
 **Zeus x27**: {zeus}
-****
             """,
             inline=False
         )
