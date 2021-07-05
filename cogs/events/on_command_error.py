@@ -68,14 +68,14 @@ class ErrorHandling(commands.Cog):
                 error.retry_after = error.retry_after//3600
                 mode = "hour(s)"
 
-            em = discord.Embed(title = "Error", color = hex_colors.m_red)
-            em.add_field(name = "Command on Cooldown", value = f":x: | The `{ctx.command}` command is on a cooldown, try again in **{error.retry_after:,.1f} {mode}**")
-            await ctx.send(embed = em)
+            em = discord.Embed(title="Error", color=hex_colors.m_red)
+            em.add_field(name="Command on Cooldown", value=f":x: | The `{ctx.command}` command is on a cooldown, try again in **{error.retry_after:,.1f} {mode}**")
+            await ctx.send(embed=em)
             return
 
         if isinstance(error, commands.BadArgument):
-            em = discord.Embed(title = "Error", color = hex_colors.m_red)
-            em.add_field(name = "Invalid arguments", value = ":x: I think you used the command wrong. For more info, try running: ```-help {}```".format(ctx.command))
+            em = discord.Embed(title = "Error", color=hex_colors.m_red)
+            em.add_field(name="Invalid arguments", value = ":x: I think you used the command wrong. For more info, try running: ```-help {}```".format(ctx.command))
             await ctx.send(embed = em)
             ctx.command.reset_cooldown(ctx)
             return
@@ -88,12 +88,12 @@ class ErrorHandling(commands.Cog):
             em.add_field(name = 'Missing Permissions', value = ":x: Error code 403 Forbidden was raised. I don't have the permissons to do so.")
 
         else:
+            await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
+            await ctx.send(f"```{error}```")
             if ctx.author.id != 416979084099321866: #I get to see the errors first hand
-                await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
-                await ctx.send(f"```{error}```")
-
                 channel = self.client.get_channel(857878860251136020) #Enter your channel ID here
                 em = discord.Embed(title = 'Error', color = hex_colors.m_red)
+
                 em.add_field(name = 'Command', value = ctx.command, inline = False)
                 em.add_field(name = 'Error:', value = f"```{error}```", inline = False)
                 em.add_field(name = 'Server:', value = f"{ctx.guild} ({ctx.guild.id})", inline = False)
