@@ -57,7 +57,7 @@ class CSGOStats(commands.Cog):
         stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={key}&steamid={_id}")
 
         if 'Internal Server Error' in stats.text:
-            await ctx.send("I couldn't find a Steam Profile with those details")
+            await ctx.send("Uh-oh. Error.\nMaybe a Steam Profile with those details doesn't exist?\nMaybe they don't play CS:GO?\nMaybe their game details are private?")
             return
 
         if stats.status_code == 500: #Status code is 500 when profile not found or profile private
