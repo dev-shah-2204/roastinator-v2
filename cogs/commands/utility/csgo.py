@@ -53,7 +53,7 @@ class CSGOStats(commands.Cog):
             await ctx.send("I couldn't find your steam profile from that. Try running `help csgo`")
             return 
 
-        key = os.evniron.get('STEAM_API_KEY')
+        key = os.environ.get('STEAM_API_KEY')
         stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={key}&steamid={_id}")
 
         if 'Internal Server Error' in stats.text:
@@ -158,7 +158,7 @@ class CSGOStats(commands.Cog):
             await ctx.send("I couldn't find your steam profile from that. Try running `help csgo`")
             return  
 
-        key = os.evniron.get('STEAM_API_KEY')
+        key = os.environ.get('STEAM_API_KEY')
         stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={key}&steamid={_id}")
         if stats.status_code == 500:
             await ctx.send("I think your profile and/or game details are set to private. Make them public and try again")
