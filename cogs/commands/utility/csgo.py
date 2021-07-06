@@ -23,7 +23,10 @@ class CSGOStats(commands.Cog):
         except:
             _id = requests.get(f"http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={os.environ.get('STEAM_API_KEY')}&vanityurl={url}").json() #To get ID from vanity URL
 
-        return _id['response']['steamid']
+        try:
+            return _id['response']['steamid']
+        except:
+            return None
 
 
     @commands.command(name='csgo', aliases=['csgostats'], help="Get CSGO Stats of a Steam Account")
@@ -45,7 +48,10 @@ class CSGOStats(commands.Cog):
                 await msg.edit('This message is now inactive because you took too long to respond')
                 return 
 
-        _id = await self.get_id_from_url(url=url)  
+        _id = await self.get_id_from_url(url=url)
+        if _id == None:
+            await ctx.send("I couldn't find your steam profile from that. Try running `help csgo`")
+            return 
 
         stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={os.environ.get('STEAM_API_KEY')}&steamid={_id}")
         if stats.status_code == 500:
@@ -141,7 +147,10 @@ class CSGOStats(commands.Cog):
                 await msg.edit('This message is now inactive because you took too long to respond')
                 return 
 
-        _id = await self.get_id_from_url(url=url)  
+        _id = await self.get_id_from_url(url=url)
+        if _id == None:
+            await ctx.send("I couldn't find your steam profile from that. Try running `help csgo`")
+            return  
 
         stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={os.environ.get('STEAM_API_KEY')}&steamid={_id}")
         if stats.status_code == 500:
