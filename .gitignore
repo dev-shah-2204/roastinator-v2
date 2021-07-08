@@ -5,6 +5,7 @@ cogs/commands/utility/code_run_by_users.txt
 .git
 settings.json
 test.py
+test2.py
 db_p.py
 cogs/events/on_vote.py
 images/bonked.jpg
