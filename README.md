@@ -8,7 +8,8 @@ Refer LICENSE for copyright details. *Spoiler Alert*: You can do anything you li
 Modularity and customizability. For beginners making their personal discord bot, removing commands becomes an easier job. Also, when testing multiple features at the same time, you don't need to comment things out, as you can choose to not load the cog/extension for a particular test.
 
 ## YouTube
-There are tons of YouTube videos that show in detail how to make your own Discord Bot using python. If you have difficulty understanding how to make a bot here, well, this isn't a tutorial. This is code for you to copy and paste to add features to your bot without spending a lot of time. Check out [Carberra Tutorials](https://www.youtube.com/channel/UC13cYu7lec-oOcqQf5L-brg) and [Code With Swastik](https://www.youtube.com/channel/UC2ITRZ4_Di-KMHSIylTQbBA). They have a great series of tutorials on a python discord bot.
+There are tons of YouTube videos that show in detail how to make your own Discord Bot using python. If you have difficulty understanding how to make a bot here, well, this isn't a tutorial. This is code for you to copy and paste to add features to your bot without spending a lot of time. Check out [Carberra Tutorials](https://www.youtube.com/channel/UC13cYu7lec-oOcqQf5L-brg) and [Menu Docs](https://www.youtube.com/channel/UCpGGFqJP9vYvzFudqnQ-6IA). They have a great series of tutorials on a python discord bot.</br>
+If you wish to learn python, [this](https://youtu.be/_uQrJ0TkZlc) tutorial from [Programming with Mosh](https://youtu.be/_uQrJ0TkZlc) is really nice.
 
 ## Other open-sourced bots
 [Carl-Bot](https://github.com/CarlGroth/Carl-Bot) - Has great features. It is made in python. \[Outdated\]<br />
