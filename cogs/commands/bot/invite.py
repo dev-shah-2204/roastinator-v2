@@ -2,6 +2,7 @@ import discord
 
 from discord.ext import commands
 
+
 class Invite(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -16,6 +17,7 @@ class Invite(commands.Cog):
         em.set_footer(text='Bot created by StatTrakDiamondSword#9696 (Tag maybe outdated)')
 
         await ctx.send(embed=em)
+
 
 def setup(client):
     client.add_cog(Invite(client))
