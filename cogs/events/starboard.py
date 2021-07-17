@@ -72,7 +72,7 @@ class StarboardEvent(commands.Cog):
 
                 em.add_field(
                     name = f"Source", 
-                    value = f"{desc}\n\n[Jump to message]({msg.jump_url})")
+                    value = f"[Jump to message]({msg.jump_url})")
                 
                 starcount = self.starcount
 
