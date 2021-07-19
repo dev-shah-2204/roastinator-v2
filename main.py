@@ -59,7 +59,6 @@ passive_cog_list = [
 cmd_cog_list = (
     'bot.invite',
     'bot.ping',
-    'bot.stats',
     'developer.cogs',
     'developer.modmail',
     'developer.modmail_reply',
