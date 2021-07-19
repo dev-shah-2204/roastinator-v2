@@ -34,6 +34,9 @@ class CSGOStats(commands.Cog):
         def check(message: discord.Message) -> bool:
             return message.author == ctx.author
 
+        await ctx.send("This command is under maintainence")
+        return
+        
         url = steam_profile_link
 
         if url is None:
@@ -60,7 +63,7 @@ class CSGOStats(commands.Cog):
             await ctx.send("Uh-oh. Error.\nMaybe a Steam Profile with those details doesn't exist?\nMaybe they don't play CS:GO?\nMaybe their game details are private?")
             return
 
-        if stats.status_code == 500:  # Status code is 500 when profile not found or profile private
+        if stats.status_code == '500':  # Status code is 500 when profile not found or profile private
             await ctx.send("I think your profile and/or game details are set to private. Make them public and try again")
             return
 
@@ -135,6 +138,9 @@ class CSGOStats(commands.Cog):
 
     @commands.command(name='csgodetail', aliases=['csgostatsdetail'], help='Get CSGO Stats of a Steam account')
     async def csgo_detail(self, ctx, steam_profile_link=None):
+        await ctx.send("This command is under maintainence")
+        return
+    
         def check(message: discord.Message) -> bool:
             return message.author == ctx.author
 
