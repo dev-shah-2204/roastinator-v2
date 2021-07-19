@@ -40,7 +40,8 @@ class AutoModEvent(commands.Cog):
     async def on_message(self, msg):
         status = await self.get_status(msg.guild.id)
         if status == 'enabled':
-            if not msg.author.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
+            member = msg.guild.get_member(msg.author.id)
+            if not member.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
                 if str(msg.guild.id) in cache:
                     blacklist = cache[str(msg.guild.id)]
                 else:
