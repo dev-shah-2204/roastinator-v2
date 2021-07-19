@@ -32,6 +32,7 @@ class AutoModEvent(commands.Cog):
         for word in lst:
             blacklist.append(word[0]) #word is a tuple
 
+        cache[str(guild)] = []
         cache[str(guild)] = blacklist #Adding in cache
         return blacklist
 
@@ -40,10 +41,10 @@ class AutoModEvent(commands.Cog):
         status = await self.get_status(msg.guild.id)
         if status == 'enabled':
             if not msg.author.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
-                if not str(msg.guild.id) in cache:
-                    blacklist = await self.get_blacklist(msg.guild.id)
-                else:
+                if str(msg.guild.id) in cache:
                     blacklist = cache[str(msg.guild.id)]
+                else:
+                    blacklist = await self.get_blacklist(msg.guild.id)
 
                 for word in blacklist:
                     if word.lower() in msg.content.lower():
