@@ -41,6 +41,7 @@ client.remove_command('help')
 event_cog_list = (
     'auto_mod',
     'fix_prefix',
+    'ignore_people',
     'modmail',
     'on_command_error',
     'on_guild_join',
@@ -58,6 +59,7 @@ passive_cog_list = [
 cmd_cog_list = (
     'bot.invite',
     'bot.ping',
+    'bot.stats',
     'developer.cogs',
     'developer.modmail',
     'developer.modmail_reply',
