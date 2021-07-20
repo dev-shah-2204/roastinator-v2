@@ -45,7 +45,10 @@ class AutoModEvent(commands.Cog):
                 if str(msg.guild.id) in cache:
                     blacklist = cache[str(msg.guild.id)]
                 else:
-                    blacklist = await self.get_blacklist(msg.guild.id)
+                    try:
+                        blacklist = await self.get_blacklist(msg.guild.id)
+                    except:
+                        pass
 
                 for word in blacklist:
                     if word.lower() in msg.content.lower():
