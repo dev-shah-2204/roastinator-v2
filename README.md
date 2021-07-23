@@ -1,3 +1,4 @@
+[![Discord Bots](https://top.gg/api/widget/status/822795444089782293.svg)](https://top.gg/bot/822795444089782293)
 # Utility/Moderation Discord Bot
 
 I'm assuming you know basic python before viewing this code. If not, you are going to have a hard time customizing it. I have put comments all over the code to help you understand it, but I wouldn't be so sure about the ease of customizing the bot.
