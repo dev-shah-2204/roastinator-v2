@@ -15,9 +15,6 @@ class Embed(commands.Cog):
         def check(message: discord.Message) -> bool:
             return message.author == ctx.author and message.channel == ctx.channel
 
-        await ctx.send("Note: If you're not sure what an embed is or you don't know about the terminology of an embed, run the command `embedhelp` to get an example embed\n\nAlso, for now, the embed only supports a title, a description and the color. Fields and attachments will be added later when my developer is less lazy")
-
-
         await ctx.send("What channel do you want the embed to be in? You have 30 seconds to respond")
         try:
             channel_name = await self.client.wait_for('message', timeout=30, check=check)
