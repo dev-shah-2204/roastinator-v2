@@ -22,3 +22,4 @@ If you wish to learn python, [this](https://youtu.be/_uQrJ0TkZlc) tutorial from 
 • For understanding how to take input after a command is run, refer to the first game cog i.e. `cogs/commands/games/cointoss`
 • If you're making commands that use a database, make sure that the operation statement is correct according to your table
 • Hosting the bot isn't a difficult, heroku is fine for a bot of this level.
+
