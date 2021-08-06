@@ -2,10 +2,9 @@ import discord
 
 from discord.ext import commands 
 from db import *
-from cache import am as cache
+from cache import am
 
-
-
+cache = am
 class AutoModEvent(commands.Cog):
     def __init__(self, client):
         self.client = client 
@@ -30,6 +29,7 @@ class AutoModEvent(commands.Cog):
         blacklist = []
 
         for word in lst:
+            print(word)
             blacklist.append(word[0]) #word is a tuple
 
         cache[str(guild)] = []
@@ -42,13 +42,15 @@ class AutoModEvent(commands.Cog):
         if status == 'enabled':
             member = msg.guild.get_member(msg.author.id)
             if member is not None:
-                if not member.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
+                if not member.guild_permissions.manage_messages or member.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
                                        
                     if str(msg.guild.id) in cache:
                         blacklist = cache[str(msg.guild.id)]
+                        print(blacklist)
 
                     else:
                         blacklist = await self.get_blacklist(msg.guild.id)
+                        print(blacklist)
                         cache[str(msg.guild.id)] = blacklist
                         
                     for words in blacklist:
