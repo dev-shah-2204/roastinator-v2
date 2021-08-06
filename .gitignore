@@ -2,6 +2,8 @@ __pycache__
 *.__pycache__
 bot_token.py
 cogs/commands/utility/code_run_by_users.txt
+cogs/commands/bot/stats.py
+.idea
 .git
 settings.json
 test.py
