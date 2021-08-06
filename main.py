@@ -67,7 +67,6 @@ cmd_cog_list = (
     'fun.dadjoke',
     'fun.meme',
     'fun.roast',
-    'fun.say',
     'fun.wholesome',
     'games.cointoss',
     'games.rockpaperscissors',
@@ -103,34 +102,27 @@ cmd_cog_list = (
 # Loading cogs
 for event_cog in event_cog_list:
     if __name__ == '__main__':
-        client.load_extension(f"cogs.events.{event_cog}")
+        try:
+            client.load_extension(f"cogs.events.{event_cog}")
+        except Exception as e:
+            print(e)
 
 for command_cog in cmd_cog_list:
     if __name__ == '__main__':
-        client.load_extension(f"cogs.commands.{command_cog}")
+        try:
+            client.load_extension(f"cogs.commands.{command_cog}")
+        except Exception as e:
+            print(e)
 
 for passive_cog in passive_cog_list:
     if __name__ == '__main__':
-        client.load_extension(f"cogs.passive.{passive_cog}")
+        try:
+            client.load_extension(f"cogs.passive.{passive_cog}")
+        except Exception as e:
+            print(e)
 
 client.load_extension("jishaku")
-
-"""
-The following cog loading method is easiser since you dont have to make a big tuple, but if you don't want to load some cogs,
-it can pose as a problem. And making the cog tuple isn't difficult. Over time, it will get big, sure, but that doesn't matter.
-
-Make a cog, add to the tuple. Not that difficult.
-"""
-# for event_cog in os.listdir('./cogs/events'):
-#     if event_cog.endswith('.py'):
-#         client.load_extension(f"cogs.events.{event_cog[:-3]}")
-
-# for folder in os.listdir('./cogs/commands'):
-#     print(folder)
-#     for cmd_cog in os.listdir(f'./cogs/commands/{folder}'):
-#         if cmd_cog.endswith('.py'):
-#             client.load_extension(f"cogs.commands.{folder}.{cmd_cog[:-3]}")
-
-# client.load_extension(f"cogs.passive.nqn")
-
-client.run(token)
+@client.event
+async def on_ready():
+    print('ready')
+client.run(str(token))
