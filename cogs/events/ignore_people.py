@@ -30,7 +30,7 @@ class IgnorePeople(commands.Cog):
         if ctx.author.id != 416979084099321866:
             return 
         
-        db.execute(f"INSERT INTO command_blacklist(user_id) VALUES '{user_id}'")    
+        db.execute(f"INSERT INTO command_blacklist (user_id) VALUES ('{user_id}')")    
         database.commit() 
         cache.append(str(user_id))   
         await ctx.send(f"Added {user_id} to the blacklist")
