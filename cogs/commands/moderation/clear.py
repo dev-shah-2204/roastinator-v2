@@ -7,6 +7,7 @@ class Clear(commands.Cog):
         self.client = client
 
     @commands.command(name='clear', aliases=['delete','purge','prune'], help='Mass delete messages', usage='<number of messages>')
+    @commands.bot_has_permissions(manage_messages=True)
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, amount=1):
         if amount <= 0: #The number needs to be more than 0
