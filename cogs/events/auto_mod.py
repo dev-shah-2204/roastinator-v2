@@ -49,17 +49,17 @@ class AutoModEvent(commands.Cog):
                                        
                 if str(msg.guild.id) in cache:
                     blacklist = cache[str(msg.guild.id)]
-                    print(blacklist)
+                    print(f"1st print: {blacklist}")
 
                 else:
                     blacklist = await self.get_blacklist(msg.guild.id)
-                    print(blacklist)
+                    print(f"2nd print: {blacklist}")
                     cache[str(msg.guild.id)] = blacklist
                     
                 for words in blacklist:
-                    print(words)
+                    print(f"words: {words}")
                     for word in words:
-                        print(word)
+                        print(f"word: {word}")
                         if word.lower() in msg.content.lower():
                             await msg.delete()
                             try:

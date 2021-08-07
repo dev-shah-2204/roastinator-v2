@@ -17,7 +17,7 @@ class IgnorePeople(commands.Cog):
             db.execute("SELECT * FROM command_blacklist")
             db.fetchall()
             for tup in db:
-                print(tup)
+                print(f"ignore tuple: {tup}")
                 self.cache.append(tup[0])
             self.cache_updated  = True 
         
