@@ -73,15 +73,14 @@ class StealEmoji(commands.Cog):
                     await ctx.send("Only letters, numbers and underscores are allowed in emoji names.")
                     return
 
-                embed = discord.Embed(
-                    title="Emoji added successfully",
-                    colour=discord.Color.green(),
-                    description=f"`:{emoji_json['title']}:`"
-                    )
-                embed.set_thumbnail(url=emoji_json["image"])
+            embed = discord.Embed(
+                title="Emoji added successfully",
+                colour=discord.Color.green(),
+                description=f"`:{emoji_json['title']}:`"
+                )
+            embed.set_thumbnail(url=emoji_json["image"])
 
-                await ctx.message.channel.send(embed=embed)
-            return new_emoji
+            await ctx.message.channel.send(embed=embed)
 
 
 def setup(client):
