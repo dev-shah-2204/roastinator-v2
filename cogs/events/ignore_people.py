@@ -25,7 +25,7 @@ class IgnorePeople(commands.Cog):
             return
         
         
-    @commands.command(name = 'ignore')
+    @commands.command(name='ignore')
     async def ignore(self, ctx, user_id):
         if ctx.author.id != 416979084099321866:
             return 
@@ -34,6 +34,16 @@ class IgnorePeople(commands.Cog):
         database.commit() 
         cache.append(str(user_id))   
         await ctx.send(f"Added {user_id} to the blacklist")
+        
+    @commands.command(name='unignore')
+    async def ignore(self, ctx, user_id):
+        if ctx.author.id != 416979084099321866:
+            return
+        
+        db.execute(f"DELETE FROM command_blacklist WHERE user_id = '{user_id}'")
+        database.commit()
+        cache.remove(str(user_id))
+        await ctx.send(f"Removed {user_id} from the blacklist")
     
         
 def setup(client):
