@@ -62,8 +62,10 @@ class StarboardEvent(commands.Cog):
                     timestamp = msg.created_at 
                     )
                 em.set_author(
-                    name = f"{msg.author}", 
-                    icon_url = user.avatar_url)
+                    name = msg.author, 
+                    icon_url = msg.author.avatar_url)
+                
+                em.set_footer(text=f"Starred by {user}", icon_url=user.avatar_url)
                 
                 if len(msg.attachments) > 0:
                     em.set_image(url = msg.attachments[0].url)
