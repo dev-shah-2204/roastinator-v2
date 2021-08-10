@@ -46,12 +46,12 @@ class StealEmoji(commands.Cog):
             image_url = ctx.message.attachments[0].url
 
         try:
-            await self.install_emoji(ctx=ctx, emoji_json={"title": emoji_name, "image": image_url}, success_message= "E")
-        except requests.exceptions.MissingSchema or requests.exceptions.InvalidSchema:
+            await self.install_emoji(ctx=ctx, emoji_json={"title": emoji_name, "image": image_url})
+        except requests.exceptions.MissingSchema:
             await ctx.send(f"{image_url}... That doesn't seem like an emoji or an image")
 
 
-    async def install_emoji(self, ctx, emoji_json, success_message: str = None):
+    async def install_emoji(self, ctx, emoji_json):
         response = requests.get(emoji_json["image"], stream=True)
 
         if response.status_code == 200:
@@ -68,19 +68,19 @@ class StealEmoji(commands.Cog):
                     new_emoji = await ctx.create_custom_emoji(name=emoji_json['title'], image=image.read())
                 else:
                     new_emoji = await ctx.message.guild.create_custom_emoji(name=emoji_json['title'], image=image.read())
-            except discord.HTTPException:
-                await ctx.send("Only letters, numbers and underscores (_) are allowed in emoji names.")
-                return
+            except discord.HTTPException as e:
+                if e.code == 400:
+                    await ctx.send("Only letters, numbers and underscores are allowed in emoji names.")
+                    return
 
-                if success_message:
-                    embed = discord.Embed(
-                        title="Emoji added successfully",
-                        colour=discord.Color.green(),
-                        description=f"`:{emoji_json['title']}:`"
-                        )
-                    embed.set_thumbnail(url=emoji_json["image"])
+                embed = discord.Embed(
+                    title="Emoji added successfully",
+                    colour=discord.Color.green(),
+                    description=f"`:{emoji_json['title']}:`"
+                    )
+                embed.set_thumbnail(url=emoji_json["image"])
 
-                    await ctx.message.channel.send(embed=embed)
+                await ctx.message.channel.send(embed=embed)
             return new_emoji
 
 
