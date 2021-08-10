@@ -17,7 +17,10 @@ class AutoModEvent(commands.Cog):
         if guild not in self._status:
             db.execute(f"SELECT _status FROM automod WHERE guild = '{guild}'")
             status = await get_data(db=db)
-            self._status[str(guild)] = status #Cache
+            if status is not None:
+                self._status[str(guild)] = status #Cache
+            else:
+                self._status[str(guild)] = 'disabled'
         else:
             status = self._status[str(guild)] #Cache
         return status
@@ -29,13 +32,13 @@ class AutoModEvent(commands.Cog):
 
         blacklist = []
 
-        for word in lst:
-            print(word)
-            blacklist.append(word[0]) #word is a tuple
+        if guild not in cache:
+            for word in lst:
+                blacklist.append(word[0]) #word is a tuple
 
-        cache[str(guild)] = []
-        cache[str(guild)] = blacklist #Adding in cache
-        print(blacklist)
+            cache[str(guild)] = []
+            cache[str(guild)] = blacklist #Adding in cache
+            
         return blacklist
 
 
@@ -49,24 +52,19 @@ class AutoModEvent(commands.Cog):
                                        
                 if str(msg.guild.id) in cache:
                     blacklist = cache[str(msg.guild.id)]
-                    print(f"1st print: {blacklist}")
 
                 else:
                     blacklist = await self.get_blacklist(msg.guild.id)
-                    print(f"2nd print: {blacklist}")
                     cache[str(msg.guild.id)] = blacklist
                     
-                for words in blacklist:
-                    print(f"words: {words}")
-                    for word in words:
-                        print(f"word: {word}")
-                        if word.lower() in msg.content.lower():
-                            await msg.delete()
-                            try:
-                                await msg.author.send(f"Hey! That word is not allowed in {msg.guild.name}")
-                            except:
-                                pass
-                            break
+                for word in blacklist:
+                    if word.lower() in msg.content.lower():
+                        await msg.delete()
+                        try:
+                            await msg.author.send(f"Hey! That word is not allowed in {msg.guild.name}")
+                        except:
+                            pass
+                        break
 
 
 def setup(client):
