@@ -122,4 +122,4 @@ for passive_cog in passive_cog_list:
             print(e)
 
 client.load_extension("jishaku")
-client.run(str(token))
+client.run(token)
