@@ -89,7 +89,7 @@ class ErrorHandling(commands.Cog):
 
         else:
             await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
-            if ctx.author.id != 416979084099321866:
+            if ctx.author.id == 416979084099321866:
                 print(error)
                 return
 
