@@ -68,7 +68,7 @@ class AutoModCommands(commands.Cog):
             await ctx.send("Word length cannot exceed 40 characters")
             return 
         
-        db.execute(f"CREATE TABLE IF NOT EXISTS am_{ctx.guild.id}(words VARCHAR(40) PRIMARY KEY)") #If they didn't use the enable command first
+        db.execute(f"CREATE TABLE IF NOT EXISTS am_{ctx.guild.id}(words VARCHAR(40) PRIMARY KEY)")
         db.execute(f"INSERT INTO am_{ctx.guild.id}(words) VALUES ('{word}')")
         database.commit()
         await ctx.send(f"||{word}|| is now blacklisted from the server")
@@ -78,8 +78,10 @@ class AutoModCommands(commands.Cog):
             await self.automod_enable(ctx)
 
         #Cache
-        cache[str(ctx.guild.id)].append(cache)
-
+        if str(ctx.guild.id) not in cache:
+            cache[str(ctx.guild.id)] = []
+            
+        cache[str(ctx.guild.id)].append(str(word))
 
     @automod_cmds.command(name='remove', aliases=['rm','unban'])
     async def automod_remove(self, ctx, *, word):
@@ -100,6 +102,11 @@ class AutoModCommands(commands.Cog):
 
             db.execute(f"DELETE FROM am_{ctx.guild.id} WHERE words = '{word}'")
             database.commit()
+            
+            #Cache
+            if str(ctx.guild.id) not in cache:
+                cache[str(ctx.guild.id)] = []      
+                 
             await ctx.send(f'Un-blacklisted `{word}`')
         except:
             await ctx.send("That word isn't blacklisted")
