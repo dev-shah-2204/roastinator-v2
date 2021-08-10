@@ -45,7 +45,7 @@ class ErrorHandling(commands.Cog):
         if isinstance(error, commands.BotMissingPermissions):
             mp = error.missing_perms[0]
             mp = mp.title()
-            mp = mp.replace('_',' ')
+            mp = mp.replace('_', ' ')
 
             em = discord.Embed(title='Error', color=hex_colors.m_red)
             em.add_field(name="I don't have the permission", value=f":x: | That command should have worked but I don't have the {mp} permission.")
@@ -89,18 +89,20 @@ class ErrorHandling(commands.Cog):
 
         else:
             await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
-            await ctx.send(f"```{error}```")
-            if ctx.author.id != 416979084099321866: #I get to see the errors first hand
-                channel = self.client.get_channel(857878860251136020) #Enter your channel ID here
-                em = discord.Embed(title = 'Error', color = hex_colors.m_red)
+            if ctx.author.id != 416979084099321866:
+                print(error)
+                return
 
-                em.add_field(name = 'Command', value = ctx.command, inline = False)
-                em.add_field(name = 'Error:', value = f"```{error}```", inline = False)
-                em.add_field(name = 'Server:', value = f"{ctx.guild} ({ctx.guild.id})", inline = False)
-                em.add_field(name = 'User:', value = f"{ctx.author} ({ctx.author.id})", inline = False)
-                em.add_field(name = 'Message:', value = ctx.message.content)
+            channel = self.client.get_channel(857878860251136020) #Enter your channel ID here
+            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
 
-                await channel.send(embed = em)
+            em.add_field(name = 'Command', value = ctx.command, inline = False)
+            em.add_field(name = 'Error:', value = f"```{error}```", inline = False)
+            em.add_field(name = 'Server:', value = f"{ctx.guild} ({ctx.guild.id})", inline = False)
+            em.add_field(name = 'User:', value = f"{ctx.author} ({ctx.author.id})", inline = False)
+            em.add_field(name = 'Message:', value = ctx.message.content)
+
+            await channel.send(embed = em)
         
 
 def setup(client):
