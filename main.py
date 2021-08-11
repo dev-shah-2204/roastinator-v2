@@ -19,10 +19,9 @@ def get_prefix(_client, message):
 
     else:
         db.execute(f"SELECT prefix FROM Prefix WHERE guild = {str(message.guild.id)}")
-        for row in db:
-            prefix = row[0]  # row is a tuple
-            cache[guild] = prefix  # So that it gets stored in the cache
-            return prefix
+        prefix = db.fetchone()
+        cache[guild] = prefix[0]  # So that it gets stored in the cache
+        return prefix[0]
 
 
 token = os.environ.get('token')
