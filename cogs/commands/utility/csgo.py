@@ -33,9 +33,6 @@ class CSGOStats(commands.Cog):
     async def get_csgo_stats(self, ctx, steam_profile_link=None):
         def check(message: discord.Message) -> bool:
             return message.author == ctx.author
-
-        await ctx.send("This command is under maintainence")
-        return
         
         url = steam_profile_link
 
@@ -138,9 +135,6 @@ class CSGOStats(commands.Cog):
 
     @commands.command(name='csgodetail', aliases=['csgostatsdetail'], help='Get CSGO Stats of a Steam account')
     async def csgo_detail(self, ctx, steam_profile_link=None):
-        await ctx.send("This command is under maintainence")
-        return
-    
         def check(message: discord.Message) -> bool:
             return message.author == ctx.author
 
