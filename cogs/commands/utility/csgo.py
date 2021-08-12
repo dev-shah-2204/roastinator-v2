@@ -65,7 +65,6 @@ class CSGOStats(commands.Cog):
             return
 
         stats = stats.json()
-
         playerstats = stats['playerstats']
         gstats = playerstats['stats']  # game stats
 
@@ -160,12 +159,15 @@ class CSGOStats(commands.Cog):
         key = os.environ.get('STEAM_API_KEY')
         stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={key}&steamid={_id}")
 
-        if stats.status_code == 500:  # Error code 500 is a generic status code sent when the website/API can't pin-point the problem
+        if 'Internal Server Error' in stats.text:
+            await ctx.send("Uh-oh. Error.\nMaybe a Steam Profile with those details doesn't exist?\nMaybe they don't play CS:GO?\nMaybe their game details are private?")
+            return
+
+        if stats.status_code == '500':  # Status code is 500 when profile not found or profile private
             await ctx.send("I think your profile and/or game details are set to private. Make them public and try again")
             return
 
         stats = stats.json()
-
         playerstats = stats['playerstats']
         gstats = playerstats['stats']  # game stats
 
