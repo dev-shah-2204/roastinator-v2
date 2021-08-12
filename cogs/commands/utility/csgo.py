@@ -178,6 +178,10 @@ class CSGOStats(commands.Cog):
 
         def get_value(name):
             pos = get_pos(name)
+
+            if pos is None:
+                return None
+
             try:
                 dict_ = gstats[pos]
                 value = dict_['value']
@@ -190,8 +194,8 @@ class CSGOStats(commands.Cog):
 
         # Pistol
         glock = (get_value('total_kills_glock'))
-        usp = (get_value('total_kills_hkp2000'))
-        dual = (get_value('total_kills_elite'))
+        usp = (get_value('total_kills_hkp2000'))  # USP is called hkp2000 in the json returned by the API
+        dual = (get_value('total_kills_elite'))  # Dual Berettas are called elite in the json returned by the API
         p250 = (get_value('total_kills_p250'))
         tec9 = (get_value('total_kills_tec9'))
         fiveseven = (get_value('total_kills_fiveseven'))
@@ -217,7 +221,7 @@ class CSGOStats(commands.Cog):
         ak47 = (get_value('total_kills_ak47'))
         m4 = (get_value('total_kills_m4a1'))
         ssg08 = (get_value('total_kills_ssg08'))
-        sg553 = (get_value('total_kills_sg553'))
+        sg553 = (get_value('total_kills_sg556'))  # sg553 is called ss556 in the json returned by the API
         aug = (get_value('total_kills_aug'))
         awp = (get_value('total_kills_awp'))
         g3sg1 = (get_value('total_kills_g3sg1'))
