@@ -15,6 +15,7 @@ database = mysql.connector.connect(
 
 db = database.cursor()
 
+
 async def get_data(db):
     """
     Same as db.fetchone()
