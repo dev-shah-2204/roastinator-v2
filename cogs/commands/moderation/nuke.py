@@ -9,7 +9,7 @@ class Nuke(commands.Cog):
 
     @commands.command(name='nuke', help='Deletes the channel and makes a copy of it')
     @commands.has_permissions(manage_channels=True)
-    @commands.bot_has_permissions(manage_channels=True)
+    @commands.bot_has_permissions(administrator=True)
     async def nuke(self, ctx):
         existing_channel = ctx.channel
         pos = existing_channel.position
