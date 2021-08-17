@@ -1,16 +1,16 @@
 import discord 
+import json
 
 from db import * 
 from discord.ext import commands
 
 
-
-"""
-In case the bot was added to a server when it was offline, the prefix for it won't be there in the database.
-So, when a message is sent, bot will check the database for the guild.
-If it's not there, it'll add it with the default prefix
-"""
 class FixPrefix(commands.Cog):
+    """
+    In case the bot was added to a server when it was offline, the prefix for it won't be there in the database.
+    So, when a message is sent, bot will check the database for the guild.
+    If it's not there, it'll add it with the default prefix
+    """
     def __init__(self, client):
         self.client = client
     
@@ -34,6 +34,14 @@ class FixPrefix(commands.Cog):
                 db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{msg.guild.id}','-')")
                 print("Fixed prefix for a guild")
                 database.commit()
+
+                with open('prefix.json', 'r') as f:
+                    cache = json.load(f)
+
+                cache[str(msg.guild.id)] = '-'
+
+                with open('prefix.json', 'w') as g:
+                    json.dump(cache, g)
 
         
 

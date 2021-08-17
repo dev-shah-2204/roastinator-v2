@@ -1,10 +1,9 @@
 import discord 
-import hex_colors 
+import hex_colors
+import json
 
-from cache import am as cache
 from discord.ext import commands
 from db import *
-
 
 
 class AutoModCommands(commands.Cog):
@@ -38,14 +37,23 @@ class AutoModCommands(commands.Cog):
         try:
             db.execute(f"INSERT INTO AutoMod(guild, _status) VALUES('{ctx.guild.id}','enabled')")
             db.execute(f"CREATE TABLE IF NOT EXISTS am_{ctx.guild.id}(words VARCHAR(40) PRIMARY KEY)")
-            databse.commit()
+            database.commit()
         except:
             db.execute(f"UPDATE AutoMod SET _status = 'enabled' WHERE guild = '{ctx.guild.id}'")
             database.commit()
         finally:
             #Add in cache
+            with open('automod.json', 'r') as f:
+                cache = json.load(f)
+
             if str(ctx.guild.id) not in cache:
-                cache[str(ctx.guild.id)] = []
+                cache[str(ctx.guild.id)] = {}
+                cache[str(ctx.guild.id)]['status'] = 'enabled'
+                cache[str(ctx.guild.id)]['blacklist'] = []
+
+                with open('automod.json', 'w') as f:
+                    json.dump(cache, f)
+
             await ctx.send("Enabled Auto Mod for your server")
 
 
@@ -55,81 +63,130 @@ class AutoModCommands(commands.Cog):
         database.commit()
         await ctx.send("Disabled Auto Mod for your server")
 
+        with open('automod.json', 'r') as f:
+            cache = json.load(f)
+
+        cache[str(ctx.guild.id)] = {}
+        cache[str(ctx.guild.id)]['status'] = 'disabled'
+        cache[str(ctx.guild.id)]['blacklist'] = []
+
+        with open('automod.json', 'w') as f:
+            json.dump(cache, f)
+
 
     async def get_status(self, guild):
-        db.execute(f"SELECT _status FROM AutoMod WHERE guild = '{guild}'")
-        status = db.fetchone()
+        with open('automod.json', 'r') as f:
+            cache = json.load(f)
+
+        if guild not in cache:
+            db.execute(f"SELECT _status FROM AutoMod WHERE guild = '{guild}'")
+            status = db.fetchone()
+
+            cache[guild] = {}
+            cache[guild]['blacklist'] = []
+            cache[guild]['status'] = status[0]
+            with open('automod.json', 'w') as f:
+                json.dump(cache, f)
+        else:
+            status = cache[str(guild)]['status']
         return status
 
 
-    @automod_cmds.command(name='blacklist', aliases=['bl','ban'])
-    async def automod_blacklist(self, ctx, *, word:str):
+    @automod_cmds.command(name='blacklist', aliases=['bl', 'ban'])
+    async def automod_blacklist(self, ctx, *, word):
         if len(word) > 40:
             await ctx.send("Word length cannot exceed 40 characters")
             return 
         
         db.execute(f"CREATE TABLE IF NOT EXISTS am_{ctx.guild.id}(words VARCHAR(40) PRIMARY KEY)")
-        db.execute(f"INSERT INTO am_{ctx.guild.id}(words) VALUES ('{word}')")
+        db.execute(f"INSERT INTO am_{ctx.guild.id} (words) VALUES ('{word}')")
         database.commit()
         await ctx.send(f"||{word}|| is now blacklisted from the server")
         
         status = await self.get_status(ctx.guild.id)
-        if status == 'disabled' or status == None:
+        if status == 'disabled' or status is None:
             await self.automod_enable(ctx)
 
         #Cache
-        if str(ctx.guild.id) not in cache:
-            cache[str(ctx.guild.id)] = []
-            
-        cache[str(ctx.guild.id)].append(str(word))
+        with open('automod.json', 'r') as f:
+            cache = json.load(f)
 
-    @automod_cmds.command(name='remove', aliases=['rm','unban'])
+        if str(ctx.guild.id) not in cache:
+            cache[str(ctx.guild.id)] = {}
+            cache[str(ctx.guild.id)]['status'] = 'enabled'
+            cache[str(ctx.guild.id)]['blacklist'] = []
+        else:
+            cache[str(ctx.guild.id)]['blacklist'].append(str(word))
+
+        with open('automod.json', 'w') as f:
+            json.dump(cache, f)
+
+    @automod_cmds.command(name='remove', aliases=['rm', 'unban'])
     async def automod_remove(self, ctx, *, word):
+        guild = str(ctx.guild.id)
         status = await self.get_status(ctx.guild.id)
-        if status == 'disabled' or status == None:
-            await ctx.send("You need to enable Auto Mod first by running this command:```automod enable```")
-            return
-        
-        try:
+        if status == 'disabled' or status is None:
+            await self.automod_enable(ctx)
+        with open('automod.json', 'r') as f:
+            cache = json.load(f)
+
+
+        if guild not in cache:
             db.execute(f"SELECT * FROM am_{ctx.guild.id}")
             lst = db.fetchall()
             blacklist = []
             for _word in lst:
                 blacklist.append(_word[0])
 
+            cache[guild] = {}
+            cache[guild]['blacklist'] = blacklist
+
             if word not in blacklist:
                 await ctx.send("That word isn't blacklisted")
 
-            db.execute(f"DELETE FROM am_{ctx.guild.id} WHERE words = '{word}'")
-            database.commit()
-            
-            #Cache
-            if str(ctx.guild.id) not in cache:
-                cache[str(ctx.guild.id)] = []      
-                 
-            await ctx.send(f'Un-blacklisted `{word}`')
-        except:
-            await ctx.send("That word isn't blacklisted")
-        finally:
-            cache[str(ctx.guild.id)].remove(word) #The word might not be in the cache, so I put it in 'finally'
+        db.execute(f"DELETE FROM am_{ctx.guild.id} WHERE words = '{word}'")
+        database.commit()
+        try:
+            cache[guild]['blacklist'].remove(word)
+        except ValueError:
+            pass
+
+        with open('automod.json', 'w') as f:
+            json.dump(cache, f)
+
+        await ctx.send(f'Un-blacklisted `{word}`')
 
     @automod_cmds.command(name='show', aliases=['list'])
     async def automod_show(self, ctx):
+        guild = str(ctx.guild.id)
         status = await self.get_status(ctx.guild.id)
 
-        if status == 'disabled' or status == None:
-            await ctx.send("You need to enable Auto Mod first by running this command:```automod enable```")
-            return
-        
-        db.execute(f"SELECT * FROM am_{ctx.guild.id}")
-        lst = db.fetchall()
+        if status == 'disabled' or status is None:
+            await self.automod_enable(ctx)
+
+        with open('automod.json', 'r') as f:
+            cache = json.load(f)
 
         desc = ''
 
-        for word in lst:
-            desc += f"`{word[0]}`\n" #word is a tuple
-        if desc == None:
-            desc = f"{ctx.guild.name} has no blacklisted words"
+        if guild not in cache:
+            db.execute(f"SELECT * FROM am_{ctx.guild.id}")
+            lst = db.fetchall()
+
+            for word in lst:
+                desc += f"`{word[0]}`\n" #word is a tuple
+                cache['blacklist'].append(word[0])
+            if desc is None:
+                desc = f"{ctx.guild.name} has no blacklisted words"
+
+            with open('automod.json', 'w') as f:
+                json.dump(cache, f)
+        else:
+            for word in cache[guild]['blacklist']:
+                desc += f"`{word}`\n"
+
+        if desc == '':
+            desc = 'No words blacklisted in your server'
 
         em = discord.Embed(
             title=f'Blacklisted words in {ctx.guild.name}',

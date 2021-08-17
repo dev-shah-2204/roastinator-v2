@@ -1,44 +1,69 @@
 import discord 
+import json
 
 from discord.ext import commands 
 from db import *
-from cache import am
 
-cache = am
+
 class AutoModEvent(commands.Cog):
     def __init__(self, client):
-        self.client = client 
-
-    _status = {
-
-    }
+        self.client = client
 
     async def get_status(self, guild):
-        if guild not in self._status:
+        with open('automod.json', 'r') as f:
+            cache = json.load(f)
+        guild = str(guild)
+
+        if guild not in cache:
             db.execute(f"SELECT _status FROM automod WHERE guild = '{guild}'")
             status = await get_data(db=db)
             if status is not None:
-                self._status[str(guild)] = status #Cache
+                db.execute(f"SELECT * FROM am_{guild}")
+                blacklist = db.fetchall()
+                lst = []
+                for word in blacklist:
+                    lst.append(word[0])
+
+                cache[str(guild)] = {}
+                cache[str(guild)]['status'] = 'enabled'
+                cache[str(guild)]['blacklist'] = lst
+
+                with open('automod.json', 'w') as f:
+                    json.dump(cache, f)
+
             else:
-                self._status[str(guild)] = 'disabled'
+                cache[str(guild)] = {}
+                cache[str(guild)]['status'] = 'disabled'
+                cache[str(guild)]['blacklist'] = []
+
+                with open('automod.json', 'w') as f:
+                    json.dump(cache, f)
+
         else:
-            status = self._status[str(guild)] #Cache
+            status = cache[str(guild)]['status']
+
         return status
 
 
     async def get_blacklist(self, guild):
-        db.execute(f"SELECT * FROM am_{guild}")
-        lst = db.fetchall()
+        with open('automod.json', 'r') as f:
+            cache = json.load(f)
 
         blacklist = []
 
         if guild not in cache:
+            db.execute(f"SELECT * FROM am_{guild}")
+            lst = db.fetchall()
             for word in lst:
                 blacklist.append(word[0]) #word is a tuple
 
-            cache[str(guild)] = []
-            cache[str(guild)] = blacklist #Adding in cache
-            
+            cache[str(guild)]['blacklist'] = blacklist
+
+            with open('automod.json', 'w') as f:
+                json.dump(cache, f)
+        else:
+            blacklist = cache[str(guild)]['blacklist']
+
         return blacklist
 
 
@@ -48,14 +73,9 @@ class AutoModEvent(commands.Cog):
         if status == 'enabled':
             member = msg.guild.get_member(msg.author.id)
             if member is not None:
-                if not member.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission  
-                    if str(msg.guild.id) in cache:
-                        blacklist = cache[str(msg.guild.id)]
+                if not member.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
+                    blacklist = await self.get_blacklist(str(msg.guild.id))
 
-                    else:
-                        blacklist = await self.get_blacklist(msg.guild.id)
-                        cache[str(msg.guild.id)] = blacklist
-                        
                     for word in blacklist:
                         if word.lower() in msg.content.lower():
                             await msg.delete()

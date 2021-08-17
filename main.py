@@ -4,14 +4,16 @@ will help you out with most of your problems
 """
 import discord
 import os
+import json
 
-from cache import prefix_cache
 from db import *
 from discord.ext import commands
 
 
 def get_prefix(_client, message):
-    cache = prefix_cache
+    with open('prefix.json', 'r') as f:
+        cache = json.load(f)
+
     guild = str(message.guild.id)
     if guild in cache:  # We don't want to call the database every single time
         prefix = cache[guild]
@@ -21,6 +23,8 @@ def get_prefix(_client, message):
         db.execute(f"SELECT prefix FROM Prefix WHERE guild = {str(message.guild.id)}")
         prefix = db.fetchone()
         cache[guild] = prefix[0]  # So that it gets stored in the cache
+        with open('prefix.json', 'w') as f:
+            json.dump(cache, f)
         return prefix[0]
 
 

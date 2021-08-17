@@ -1,30 +1,54 @@
 import discord 
 import mysql.connector
 import hex_colors
+import json
 
-from cache import star_cache
 from db import *
-from discord.ext import commands 
-
+from discord.ext import commands
 
 
 class StarboardEvent(commands.Cog):
     def __init__(self, client):
         self.client = client 
 
+
     async def get_star_channel(self, guild):
-        if str(guild) not in star_cache:
+        with open('starboard.json', 'r') as f:
+            cache = json.load(f)
+        if str(guild) not in cache:
+            cache[str(guild)] = {}
             db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{guild}'")
             channel = await get_data(db = db)
-            star_cache[str(guild)] = int(channel) #So it gets stored in the cache
-            return channel
+            cache[str(guild)]['channel'] = int(channel) #So it gets stored in the cache
+            cache[str(guild)]['status'] = 'enabled'
 
+            with open('starboard.json', 'w') as g:
+                json.dump(cache, g)
+
+            return channel
         else:
-            return star_cache[str(guild)]
+            return cache[str(guild)]['channel']
+
 
     async def get_star_guild_status(self, guild):
-        db.execute(f"SELECT _status FROM Starboard WHERE guild = '{guild}'")
-        status = await get_data(db = db)
+        with open('starboard.json', 'r') as f:
+            cache = json.load(f)
+
+        if str(guild) not in cache:
+            db.execute(f"SELECT _status FROM Starboard WHERE guild = '{guild}'")
+            status = await get_data(db = db)
+            db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{guild}'")
+            channel = await get_data(db=db)
+
+            cache[str(guild)] = {}
+            cache[str(guild)]['channel'] = channel
+            cache[str(guild)]['status'] = status
+
+            with open('starboard.json', 'w') as g:
+                json.dump(cache, g)
+        else:
+            status = cache[str(guild)]['status']
+
         return status
 
     starcount = {}
