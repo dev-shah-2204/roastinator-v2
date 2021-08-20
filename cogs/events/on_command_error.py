@@ -83,16 +83,17 @@ class ErrorHandling(commands.Cog):
         if isinstance(error, commands.CommandNotFound):
             return
 
-        if isinstance(error, discord.Forbidden):
-            em = discord.Embed(title = 'Error', color = hex_colors.m_red)
-            em.add_field(name = 'Missing Permissions', value = ":x: Error code 403 Forbidden was raised. I don't have the permissons to do so.")
+        if isinstance(error, discord.errors.Forbidden):
+            try:
+                em = discord.Embed(title = 'Error', color = hex_colors.m_red)
+                em.add_field(name = 'Missing Permissions', value = ":x: Error code 403 Forbidden was raised. I don't have the permissons to do so.")
+                return
+            except discord.errors.Forbidden:
+                await ctx.send("I need the 'Embed Links' permission")
+                return
 
         else:
             await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
-            if ctx.author.id == 416979084099321866:
-                print(error)
-                return
-
             channel = self.client.get_channel(857878860251136020) #Enter your channel ID here
             em = discord.Embed(title = 'Error', color = hex_colors.m_red)
 
