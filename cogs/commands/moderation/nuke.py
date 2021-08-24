@@ -13,7 +13,7 @@ class Nuke(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     @commands.bot_has_permissions(administrator=True)
     async def nuke(self, ctx):
-        existing_channel = discord.TextChannel(ctx.channel)
+        existing_channel = ctx.channel
 
         new_channel = await existing_channel.clone(reason=f'Original was nuked by {ctx.author}') #Reason to be registered in the audit log
         await new_channel.edit(position=existing_channel.position)
