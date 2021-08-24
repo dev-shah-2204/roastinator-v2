@@ -82,7 +82,7 @@ cmd_cog_list = (
     'moderation.kick',
     'moderation.lock_unlock',
     'moderation.mute_unmute',
-    #'moderation.nuke',  Some issue with the commmand
+    'moderation.nuke',
     'moderation.softban',
     'moderation.temp_mute',
     'utility.avatar',
