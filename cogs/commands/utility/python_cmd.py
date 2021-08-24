@@ -1,12 +1,11 @@
-"""
-Having trouble figuring out cogs? Check the on_message.py file
-"""
 import discord
 import re
 import sys
 import os
+
 from discord.ext import commands
 from discord.ext.commands import cooldown, BucketType, Cog
+
 
 class Python(Cog):
     def __init__(self, client):
@@ -36,7 +35,11 @@ class Python(Cog):
 
 
         sys.stdout = open('cogs/commands/utility/code_run_by_users.txt', 'w')#Output will be written in this file instead of terminal
-        exec(code)
+        try:
+            exec(code)
+        except Exception as e:
+            await ctx.send(f"```{e.__class__.__name__}: {e}```")
+
         sys.stdout.close()#If we don't close, the file is active and the data isn't saved
 
         return_code = open('cogs/commands/utility/code_run_by_users.txt', 'r')
@@ -44,6 +47,7 @@ class Python(Cog):
         return_code.close()
 
         await ctx.send(f"```\n{return_code_string}\n```")
+
 
 def setup(client):
     client.add_cog(Python(client))
