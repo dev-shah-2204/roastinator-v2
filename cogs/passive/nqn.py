@@ -22,14 +22,15 @@ class NQN(commands.Cog):
 		else:
 			return None
 
+
 	async def getinstr(self, content):
 		ret = []
 
-		spc = content.split(" ")
+		space = content.split(" ")
 		cnt = content.split(":")
 
 		if len(cnt) > 1:
-			for item in spc:
+			for item in space:
 				if item.count(":") > 1:
 					wr = ""
 					if item.startswith("<") and item.endswith(">"):
@@ -91,15 +92,15 @@ class NQN(commands.Cog):
 			else:
 				ret += msg
 
-
 			if em:
 				webhooks = await message.channel.webhooks()
-				webhook = utils.get(webhooks, name = "Imposter NQN")
+				webhook = utils.get(webhooks, name="Imposter NQN")
 				if webhook is None:
-					webhook = await message.channel.create_webhook(name = "roastinator") #Bot needs manage webhook permissions
+					webhook = await message.channel.create_webhook(name="roastinator") #Bot needs manage webhook permissions
 
-				await webhook.send(ret, username = message.author.name, avatar_url = message.author.avatar_url, allowed_mentions = discord.AllowedMentions(everyone = False, roles = False)) #So people can't ping roles/everyone
+				await webhook.send(ret, username=message.author.name, avatar_url=message.author.avatar_url, allowed_mentions=discord.AllowedMentions(everyone=False, roles=False)) #So people can't ping roles/everyone
 				await message.delete()
+
 
 def setup(client):
 	client.add_cog(NQN(client))

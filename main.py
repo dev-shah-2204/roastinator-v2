@@ -117,12 +117,12 @@ for command_cog in cmd_cog_list:
         except Exception as e:
             print(e)
 
-for passive_cog in passive_cog_list:
-    if __name__ == '__main__':
-        try:
-            client.load_extension(f"cogs.passive.{passive_cog}")
-        except Exception as e:
-            print(e)
+# for passive_cog in passive_cog_list:
+#     if __name__ == '__main__':
+#         try:
+#             client.load_extension(f"cogs.passive.{passive_cog}")
+#         except Exception as e:
+#             print(e)
 
 client.load_extension("jishaku")
 client.run(token)
