@@ -17,11 +17,11 @@ class StealEmoji(commands.Cog):
 
     @commands.command(aliases=["stealemoji", "emojiadd"], description="Download emojis that you have access to and upload them to your own server.")
     @commands.has_permissions(manage_emojis=True)
-    async def steal(self, ctx, emoji_name, custom_emoji_name=None):
-        if emoji_name.startswith("https://") or emoji_name.startswith("http://"):
+    async def steal(self, ctx, emoji, custom_emoji_name=None):
+        if emoji.startswith("https://") or emoji.startswith("http://"):
             await ctx.send("You can't steal emojis using URLs like that (yet)")
             return
-        await self.emoji_from_url(ctx, emoji_name, custom_emoji_name)
+        await self.emoji_from_url(ctx, emoji, custom_emoji_name)
 
 
     async def emoji_from_url(self, ctx, emoji_name, custom_emoji_name=None, image=None):
