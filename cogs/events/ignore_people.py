@@ -13,18 +13,19 @@ class IgnorePeople(commands.Cog):
     
     @commands.Cog.listener()
     async def on_message(self, msg):
-        _id = str(msg.author.id)
+        if not msg.author.bot and not isinstance(msg.channel, discord.DMChannel):
+            _id = str(msg.author.id)
 
-        if not self.cache_updated:
-            db.execute("SELECT * FROM command_blacklist")
-            db.fetchall()
-            for tup in db:
-                print(f"ignore tuple: {tup}")
-                self.cache.append(str(tup[0]))
-            self.cache_updated = True
-        
-        if str(_id) in self.cache:
-            return
+            if not self.cache_updated:
+                db.execute("SELECT * FROM command_blacklist")
+                db.fetchall()
+                for tup in db:
+                    print(f"ignore tuple: {tup}")
+                    self.cache.append(str(tup[0]))
+                self.cache_updated = True
+
+            if str(_id) in self.cache:
+                return
         
         
     @commands.command(name='ignore')

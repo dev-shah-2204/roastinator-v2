@@ -28,7 +28,7 @@ class FixPrefix(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
-        if not isinstance(msg.channel, discord.DMChannel):
+        if not msg.author.bot and not isinstance(msg.channel, discord.DMChannel):
             check = await self.check_prefix(str(msg.guild.id))
             if check is None:
                 db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{msg.guild.id}','-')")

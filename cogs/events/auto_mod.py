@@ -69,21 +69,22 @@ class AutoModEvent(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
-        status = await self.get_status(msg.guild.id)
-        if status == 'enabled':
-            member = msg.guild.get_member(msg.author.id)
-            if member is not None:
-                if not member.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
-                    blacklist = await self.get_blacklist(str(msg.guild.id))
+        if not msg.author.bot and not isinstance(msg.channel, discord.DMChannel):
+            status = await self.get_status(msg.guild.id)
+            if status == 'enabled':
+                member = msg.guild.get_member(msg.author.id)
+                if member is not None:
+                    if not member.guild_permissions.manage_messages: #If message author doesn't have manage_messages permission
+                        blacklist = await self.get_blacklist(str(msg.guild.id))
 
-                    for word in blacklist:
-                        if word.lower() in msg.content.lower():
-                            await msg.delete()
-                            try:
-                                await msg.author.send(f"Hey! That word is not allowed in {msg.guild.name}")
-                            except:
-                                pass
-                            break
+                        for word in blacklist:
+                            if word.lower() in msg.content.lower():
+                                await msg.delete()
+                                try:
+                                    await msg.author.send(f"Hey! That word is not allowed in {msg.guild.name}")
+                                except:
+                                    pass
+                                break
 
 
 def setup(client):
