@@ -6,6 +6,7 @@ from discord.ext import commands
 from discord.ext.commands import cooldown, BucketType
 from aiohttp import ClientSession
 
+
 class Cursed(commands.Cog):
     def __init__(self, client):
         self.client = client
