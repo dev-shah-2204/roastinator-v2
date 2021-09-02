@@ -11,7 +11,7 @@ class Roast(commands.Cog):
 
     @commands.command(name='roast', aliases=['insult'])
     async def roast(self, ctx, user:discord.Member=None):
-        if user == None:
+        if user is None:
             user = ctx.author 
 
         if user.bot:

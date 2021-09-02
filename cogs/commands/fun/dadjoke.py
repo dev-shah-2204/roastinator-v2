@@ -1,9 +1,10 @@
 import discord
 import os
+import requests
 
-from aiohttp import ClientSession 
 from discord.ext import commands
 from asyncio import sleep
+
 
 class DadJoke(commands.Cog):
     def __init__(self, client):
@@ -30,13 +31,15 @@ class DadJoke(commands.Cog):
                     'x-rapidapi-host': "dad-jokes.p.rapidapi.com"
                     }
 
-                async with ClientSession() as session:
-                    async with session.get(url, headers=headers) as response:
-                        result = await response.json()
-                        result = result["body"][0]
+                response = requests.get(url=url, headers=headers)
+                result = response.json()
+                result = result["body"][0]
+                question = result['setup']
+                punchline = result['punchline']
 
-                        await ctx.send(f"**{result['setup']}**\n\n*{result['punchline']}*")
-                        break 
+                await ctx.send(f"**{question}**\n\n*{punchline}*")
+                break
+
             except:
                 keys.remove(key)
                 #Heroku will add it again after 12 hours when it clears cache or something.
