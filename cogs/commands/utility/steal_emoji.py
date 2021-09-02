@@ -13,14 +13,16 @@ class StealEmoji(commands.Cog):
     @commands.command(aliases=["stealemoji", "emojiadd"], description="Download emojis that you have access to and upload them to your own server.")
     @commands.has_permissions(manage_emojis=True)
     async def steal(self, ctx, emoji_name, custom_emoji_name=None):
+        image = None
+
         if len(ctx.message.attachments) == 0:
             image = emoji_name
             emoji_name = None
             image_url = None
 
-        elif len(ctx.message.attachments) > 0:
+        if len(ctx.message.attachments) > 0:
             image_url = ctx.message.attachments[0].url
-            image = None
+            custom_emoji_name = emoji_name
 
         if image:
             try:
@@ -42,7 +44,6 @@ class StealEmoji(commands.Cog):
 
         try:
             response = requests.get(image_url, stream=True)
-
             if response.status_code == 200:
                 with open(f"./emojis/{custom_emoji_name}.gif", "wb") as img:
                     response.raw.decode_content = True
@@ -58,22 +59,23 @@ class StealEmoji(commands.Cog):
                     else:
                         new_emoji = await ctx.message.guild.create_custom_emoji(name=custom_emoji_name, image=image.read())
 
-                        embed = discord.Embed(
-                            title="Emoji added successfully",
-                            colour=hex_colors.l_green,
-                            description=f"`:{custom_emoji_name}:`"
-                        )
-                        embed.set_thumbnail(url=image_url)
+                    embed = discord.Embed(
+                        title="Emoji added successfully",
+                        colour=hex_colors.l_green,
+                        description=f"`:{custom_emoji_name}:`"
+                    )
+                    embed.set_thumbnail(url=image_url)
 
-                        await ctx.message.channel.send(embed=embed)
+                    await ctx.message.channel.send(embed=embed)
 
-                except discord.HTTPException as e:
+                except discord.errors.HTTPException as e:
                     if e.code == 400:
                         await ctx.send("Only letters, numbers and underscores are allowed in emoji names.")
                         return
 
                 except Exception as e:
                     print(e)
+
         except requests.exceptions.MissingSchema:
             await ctx.send(f"`{image_url}` doesn't seem like an emoji or an image")
 
