@@ -20,6 +20,7 @@ class StealEmoji(commands.Cog):
 
         elif len(ctx.message.attachments) > 0:
             image_url = ctx.message.attachments[0].url
+            image = None
 
         if image:
             try:
