@@ -16,7 +16,7 @@ def get_prefix(_client, message):
 
     guild = str(message.guild.id)
     if guild in cache:  # We don't want to call the database every single time
-        prefix = cache[guild]
+        prefix = commands.when_mentioned_or(cache[guild])(_client, message)
         return prefix
 
     else:
@@ -25,7 +25,9 @@ def get_prefix(_client, message):
         cache[guild] = prefix[0]  # So that it gets stored in the cache
         with open('prefix.json', 'w') as f:
             json.dump(cache, f)
-        return prefix[0]
+
+        prefix = commands.when_mentioned_or(prefix[0])(_client, message)
+        return prefix
 
 
 token = os.environ.get('token')
