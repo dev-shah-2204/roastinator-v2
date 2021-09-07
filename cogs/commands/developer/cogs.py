@@ -49,10 +49,7 @@ class Cogs(commands.Cog):
             await ctx.send("That is a developer command, you can't use that")
             return 
 
-        res = eval(code)
-        if inspect.isawaitable(res):
-            await ctx.send(await res)
-
+        await ctx.send(await eval(str(code)))
 
 def setup(client):
     client.add_cog(Cogs(client))
