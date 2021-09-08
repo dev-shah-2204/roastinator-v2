@@ -26,8 +26,7 @@ def get_prefix(_client, message):
         with open('prefix.json', 'w') as f:
             json.dump(cache, f)
 
-        prefix = commands.when_mentioned_or(prefix[0])(_client, message)
-        return prefix
+        return commands.when_mentioned_or(prefix[0])(_client, message)
 
 
 token = os.environ.get('token')
@@ -119,12 +118,12 @@ for command_cog in cmd_cog_list:
         except Exception as e:
             print(e)
 
-# for passive_cog in passive_cog_list:
-#     if __name__ == '__main__':
-#         try:
-#             client.load_extension(f"cogs.passive.{passive_cog}")
-#         except Exception as e:
-#             print(e)
+for passive_cog in passive_cog_list:
+    if __name__ == '__main__':
+        try:
+            client.load_extension(f"cogs.passive.{passive_cog}")
+        except Exception as e:
+            print(e)
 
-client.load_extension("jishaku")
+client.load_extension("jishaku")  # pip install jishaku
 client.run(token)
