@@ -1,10 +1,10 @@
-import discord, random
+import discord
 
 from discord.ext import commands
-from discord.ext.commands import CommandOnCooldown, BucketType
 import hex_colors
 
 colors = hex_colors.colors
+
 
 class Ban(commands.Cog):
     def __init__(self, client):
@@ -23,14 +23,22 @@ class Ban(commands.Cog):
             await ctx.send("Why do you wanna ban your self?")
             return
 
-        #Checking if the other person has a higher role
+        # Checking if the other person has a higher or same role
         if member.top_role.position >= ctx.author.top_role.position:
-            await ctx.send(f"{member.mention} has a higher role than you/same role as you. You cannot ban them")
+            await ctx.send(f"{member.mention} has a higher role than you. You cannot ban them")
             return
 
-        #Checking if the other person has a higher role than the bot
-        if member.top_role.position >= ctx.guild.me.top_role.position:
-            await ctx.send(f"{member} has a higher/same role than/as me. I can't kick them")
+        if member.top_role.position == ctx.author.top_role.position:
+            await ctx.send(f"{member.mention} has the same top role as you. You cannot ban them.")
+            return
+
+        # Checking if the other person has a higher role than the bot
+        if member.top_role.position > ctx.guild.me.top_role.position:
+            await ctx.send(f"{member} has a higher role than me. I can't ban them.")
+            return
+
+        if member.top_role.position == ctx.guild.me.top_role.position:
+            await ctx.send(f"{member} has the same top role as me. I cannot ban them.")
             return
 
         #Embed to be sent to the member 
@@ -51,7 +59,6 @@ class Ban(commands.Cog):
             pass
 
         await member.ban(reason=reason)
-        await ctx.message.delete()
         await ctx.send(embed=em)
 
 def setup(client):

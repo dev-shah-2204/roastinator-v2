@@ -24,14 +24,22 @@ class SoftBan(commands.Cog):
             await ctx.send("Why do you wanna ban your self?")
             return
 
-        #Checking if the other person has a higher role
+        #Checking if the other person has a higher or same role
         if member.top_role.position >= ctx.author.top_role.position:
-            await ctx.send(f"{member.mention} has a higher role than you/same role as you. You cannot ban them")
+            await ctx.send(f"{member.mention} has a higher role than you. You cannot ban them")
+            return
+
+        if member.top_role.position == ctx.author.top_role.position:
+            await ctx.send(f"{member.mention} has the same top role as you. You cannot ban them.")
             return
 
         #Checking if the other person has a higher role than the bot
-        if member.top_role.position >= ctx.guild.me.top_role.position:
-            await ctx.send(f"{member} has a higher/same role than/as me. I can't kick them")
+        if member.top_role.position > ctx.guild.me.top_role.position:
+            await ctx.send(f"{member} has a higher role than me. I can't ban them.")
+            return
+
+        if member.top_role.position == ctx.guild.me.top_role.position:
+            await ctx.send(f"{member} has the same top role as me. I cannot ban them.")
             return
 
         #Embed to be sent to the member
@@ -52,7 +60,6 @@ class SoftBan(commands.Cog):
             pass
         
         await member.ban(reason=reason)
-        await ctx.message.delete()
         await ctx.send(embed=em)
         await member.unban(reason=f"Soft-banned by {ctx.author}")
 

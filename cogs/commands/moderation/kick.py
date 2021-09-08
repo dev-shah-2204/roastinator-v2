@@ -3,6 +3,7 @@ import hex_colors
 
 from discord.ext import commands
 
+
 class Kick(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -20,14 +21,22 @@ class Kick(commands.Cog):
             await ctx.send("Why do you wanna kick your self?")
             return
 
-        #Checking if the other person has a higher role
+        # Checking if the other person has a higher or same role
         if member.top_role.position >= ctx.author.top_role.position:
-            await ctx.send(f"{member} has a higher role than you/same role as you. You cannot kick them")
+            await ctx.send(f"{member.mention} has a higher role than you. You cannot kick them")
             return
-        
-        #Checking if the other person has a higher role than the bot
-        if member.top_role.position >= ctx.guild.me.top_role.position:
-            await ctx.send(f"{member} has a higher/same role than/as me. I can't kick them")
+
+        if member.top_role.position == ctx.author.top_role.position:
+            await ctx.send(f"{member.mention} has the same top role as you. You cannot kick them.")
+            return
+
+        # Checking if the other person has a higher role than the bot
+        if member.top_role.position > ctx.guild.me.top_role.position:
+            await ctx.send(f"{member} has a higher role than me. I can't kick them.")
+            return
+
+        if member.top_role.position == ctx.guild.me.top_role.position:
+            await ctx.send(f"{member} has the same top role as me. I cannot kick them.")
             return
 
         #Embed to be sent in the channel
@@ -48,7 +57,6 @@ class Kick(commands.Cog):
             pass
 
         await member.kick(reason=reason)
-        await ctx.message.delete()
         await ctx.send(embed=em)
 
 
