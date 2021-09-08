@@ -1,107 +1,88 @@
 import discord
-from discord.ext import commands
-from discord import utils
 
-"""
-Code taken from https://github.com/animeforreal
-"""
+from discord.ext import commands
+
 
 class NQN(commands.Cog):
-	def __init__(self, client):
-		self.client = client
+    """
+    The code can get a little confusing, I couldn't write it better than this.
+    The message is first checked for colons. If there are more than 1 colon.
+    If yes, then it loops through each word of the message to find potential emojis.
+    If any word in this structure is found - <anything> - then it splits that word between the colons.
+    Then using discord.utils, the bot checks if an emoji with that name (the name found in the previous step) exists.
+    If yes, then the message is deleted and using webhooks, is resent.
+    """
+    def __init__(self, client):
+        self.client = client
 
-	async def getemote(self, arg):
-		emoji = utils.get(self.client.emojis, name = arg.strip(":"))
+    @commands.Cog.listener()
+    async def on_message(self, msg):
+        author = msg.author  # For ease of access
+        channel = msg.channel  # For ease of access
+        message = msg.content  # For ease of access
+        guild = msg.guild  # For ease of access
 
-		if emoji is not None:
-			if emoji.animated:
-				add = "a"
-			else:
-				add = ""
-			return f"<{add}:{emoji.name}:{emoji.id}>"
-		else:
-			return None
+        if not author.bot:
+            if ":" in message and message.count(":") > 1:
+                nqn = False  # Whether or not it is required to call this event
+                sentence_cln = message.split(":")  # List of all the string separated by a colon or ":"
+                sentence_spc = message.split(" ")  # List of all the words in the message
 
+                for word in sentence_spc:
+                    print(word)
+                    if word.startswith("<") and word.endswith(">"):
+                        print('condition met')
+                        emoji_str = word.split(":")
+                        emoji = discord.utils.get(guild.emojis, name=emoji_str[1])
+                        print(emoji_str[1])
 
-	async def getinstr(self, content):
-		ret = []
+                        if emoji:
+                            print(emoji)
+                            print('found emoji')
 
-		space = content.split(" ")
-		cnt = content.split(":")
+                            if emoji.animated:
+                                nqn = True
+                                message = message.replace(word, f"<a:{emoji.name}:{emoji.id}>")
+                            else:
+                                nqn = False
 
-		if len(cnt) > 1:
-			for item in space:
-				if item.count(":") > 1:
-					wr = ""
-					if item.startswith("<") and item.endswith(">"):
-						ret.append(item)
-					else:
-						cnt = 0
-						for i in item:
-							if cnt == 2:
-								aaa = wr.replace(" ", "")
-								ret.append(aaa)
-								wr = ""
-								cnt = 0
+                    else:  # If emoji was not properly separated from the rest of the words
+                        found_potential_emoji = False
+                        for char in word:  # each character
+                            if char == "<":
+                                word = word[word.index(char):]
+                                for _char in word:
+                                    if char == ">":
+                                        word = word[word.index(char):]
+                                        found_potential_emoji = True
 
-							if i != ":":
-								wr += i
-							else:
-								if wr == "" or cnt == 1:
-									wr += " : "
-									cnt += 1
-								else:
-									aaa = wr.replace(" ", "")
-									ret.append(aaa)
-									wr = ":"
-									cnt = 1
+                        if found_potential_emoji:
+                            emoji_str = word.split(":")
+                            emoji = discord.utils.get(guild.emojis, name=emoji_str[1])
 
-						aaa = wr.replace(" ", "")
-						ret.append(aaa)
-				else:
-					ret.append(item)
-		else:
-			return content
+                            if emoji:
+                                if emoji.animated:
+                                    nqn = True
+                                    message = message.replace(word, f"<a:{emoji.name}:{emoji.id}>")
+                                else:
+                                    nqn = False
 
-		return ret
+                if nqn:
+                    if guild.me.guild_permissions.manage_messages and guild.me.guild_permissions.manage_webhooks:
+                        webhooks = await channel.webhooks()
+                        webhook = discord.utils.get(webhooks, name='roastinator')
 
+                        if webhook is None:
+                            webhook = await channel.create_webhook(name='roastinator')
 
-	@commands.Cog.listener()
-	async def on_message(self, message):
-		if message.author.bot:
-			return
-
-		if ":" in message.content:
-			msg = await self.getinstr(message.content)
-			ret = ""
-			em = False
-			smth = message.content.split(":")
-			if len(smth) > 1:
-				for word in msg:
-					if word.startswith(":") and word.endswith(":") and len(word) > 1:
-						emoji = await self.getemote(word)       
-
-						if emoji is not None:
-							em = True
-							ret += f" {emoji}"
-						else:
-							ret += f" {word}"
-					else:
-						ret += f" {word}"
-
-			else:
-				ret += msg
-
-			if em:
-				webhooks = await message.channel.webhooks()
-				webhook = utils.get(webhooks, name="Imposter NQN")
-				if webhook is None:
-					webhook = await message.channel.create_webhook(name="roastinator") #Bot needs manage webhook permissions
-
-				await webhook.send(ret, username=message.author.name, avatar_url=message.author.avatar_url, allowed_mentions=discord.AllowedMentions(everyone=False, roles=False)) #So people can't ping roles/everyone
-				await message.delete()
+                        await webhook.send(message,
+                                           username=author.display_name,
+                                           avatar_url=author.avatar_url,
+                                           allowed_mentions=discord.AllowedMentions(everyone=False, roles=False)
+                                           )
+                        await msg.delete()
 
 
 def setup(client):
-	client.add_cog(NQN(client))
-	print('NQN')
+    client.add_cog(NQN(client))
+    print("NQN")
