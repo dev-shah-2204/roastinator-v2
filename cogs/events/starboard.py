@@ -15,6 +15,7 @@ class StarboardEvent(commands.Cog):
     async def get_star_channel(self, guild):
         with open('starboard.json', 'r') as f:
             cache = json.load(f)
+
         if str(guild) not in cache:
             cache[str(guild)] = {}
             db.execute(f"SELECT _channel FROM Starboard WHERE guild = '{guild}'")
@@ -51,18 +52,19 @@ class StarboardEvent(commands.Cog):
 
         return status
 
-    starcount = {}
-    error = []
+    starcount = {}  # Dictionary to keep track of the number of reactions on a message
+    error = []  # List to keep track of who tried to re-star a message
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.emoji.name == '⭐':
             channel = await self.get_star_channel(payload.guild_id)
+            channel = int(channel)
 
             if channel is None:
                 return
 
-            channel = self.client.get_channel(int(channel))
+            channel = self.client.get_channel(channel)
             status = await self.get_star_guild_status(payload.guild_id)
 
             if status == 'enabled':
@@ -76,6 +78,7 @@ class StarboardEvent(commands.Cog):
                         self.error.append(user.id) #So that they can't make the bot spam
                         return 
                     return
+
                 desc = msg.content
                 if msg.content == '':
                     desc = 'Attachment'
