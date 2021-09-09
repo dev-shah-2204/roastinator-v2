@@ -67,6 +67,9 @@ class NQN(commands.Cog):
                                 else:
                                     nqn = False
 
+                if '.gif' in str(author.avatar_url):  # They already have nitro, they don't need this feature.
+                    nqn = False
+
                 if nqn:
                     if guild.me.guild_permissions.manage_messages and guild.me.guild_permissions.manage_webhooks:
                         webhooks = await channel.webhooks()
@@ -75,12 +78,16 @@ class NQN(commands.Cog):
                         if webhook is None:
                             webhook = await channel.create_webhook(name='roastinator')
 
+                        try:
+                            await msg.delete()
+                        except discord.errors.NotFound as e:  # If message was deleted by some other bot
+                            return
+
                         await webhook.send(message,
                                            username=author.display_name,
                                            avatar_url=author.avatar_url,
-                                           allowed_mentions=discord.AllowedMentions(everyone=False, roles=False)
+                                           allowed_mentions=discord.AllowedMentions(everyone=False, roles=False)  # So people can't ping everyone using the bot
                                            )
-                        await msg.delete()
 
 
 def setup(client):
