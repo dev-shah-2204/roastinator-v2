@@ -12,3 +12,4 @@ cogs/events/on_vote.py
 images/bonked.jpg
 website
 /venv
+main-test.py
