@@ -64,9 +64,6 @@ class NQN(commands.Cog):
                                     nqn = True
                                     message = message.replace(word, f"<a:{emoji.name}:{emoji.id}>")
 
-                                if ".gif" in author.avatar_url:  # Currently, this is the only way to check if a user has nitro in discord.
-                                   nqn = False
-
                                 else:
                                     nqn = False
 
