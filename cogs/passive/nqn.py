@@ -5,7 +5,7 @@ from discord.ext import commands
 
 class NQN(commands.Cog):
     """
-    The code can get a little confusing, I couldn't write it better than this.
+    The code can get a little confusing, I couldn't write it better than this. This is how it works:
     The message is first checked for colons. If there are more than 1 colon.
     If yes, then it loops through each word of the message to find potential emojis.
     If any word in this structure is found - <anything> - then it splits that word between the colons.
@@ -25,8 +25,7 @@ class NQN(commands.Cog):
         if not author.bot:
             if ":" in message and message.count(":") > 1:
                 nqn = False  # Whether or not it is required to call this event
-                sentence_cln = message.split(":")  # List of all the string separated by a colon or ":"
-                sentence_spc = message.split(" ")  # List of all the words in the message
+                sentence_spc = message.split(" ")  # List of all the words in the message separated by a space.
 
                 for word in sentence_spc:
                     if word.startswith("<") and word.endswith(">"):
@@ -43,8 +42,10 @@ class NQN(commands.Cog):
                     else:  # If emoji was not properly separated from the rest of the words
                         found_potential_emoji = False
 
-                        #Extracting the emoji from the word
-                        #If word was "e<:emoji:1234567890>e", the following loop is to remove the e from the start and end.
+                        """
+                        Extracting the emoji from the word.
+                        If word was "e<:emoji:1234567890>e", the following loop is to remove the e from the start and end.
+                        """
 
                         for char in word:  # Each character
                             if char == "<":  # Start of the emoji
@@ -63,8 +64,8 @@ class NQN(commands.Cog):
                                     nqn = True
                                     message = message.replace(word, f"<a:{emoji.name}:{emoji.id}>")
 
-                                #if ".gif" in author.avatar_url:  # Currently, this is the only way to check if a user has nitro in discord.
-                                #    nqn = False
+                                if ".gif" in author.avatar_url:  # Currently, this is the only way to check if a user has nitro in discord.
+                                   nqn = False
 
                                 else:
                                     nqn = False
