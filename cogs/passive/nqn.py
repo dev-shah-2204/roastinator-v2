@@ -29,17 +29,11 @@ class NQN(commands.Cog):
                 sentence_spc = message.split(" ")  # List of all the words in the message
 
                 for word in sentence_spc:
-                    print(word)
                     if word.startswith("<") and word.endswith(">"):
-                        print('condition met')
                         emoji_str = word.split(":")
                         emoji = discord.utils.get(guild.emojis, name=emoji_str[1])
-                        print(emoji_str[1])
 
                         if emoji:
-                            print(emoji)
-                            print('found emoji')
-
                             if emoji.animated:
                                 nqn = True
                                 message = message.replace(word, f"<a:{emoji.name}:{emoji.id}>")
@@ -48,12 +42,16 @@ class NQN(commands.Cog):
 
                     else:  # If emoji was not properly separated from the rest of the words
                         found_potential_emoji = False
-                        for char in word:  # each character
-                            if char == "<":
-                                word = word[word.index(char):]
+
+                        #Extracting the emoji from the word
+                        #If word was "e<:emoji:1234567890>e", the following loop is to remove the e from the start and end.
+
+                        for char in word:  # Each character
+                            if char == "<":  # Start of the emoji
+                                word = word[word.index(char):] # <:emoji:1234567890>e (partially extracted emoji)
                                 for _char in word:
-                                    if char == ">":
-                                        word = word[word.index(char):]
+                                    if _char == ">":  # End of the emoji
+                                        word = word[:word.index(_char)+1]  # <:emoji:1234567890> (extracted emoji)
                                         found_potential_emoji = True
 
                         if found_potential_emoji:
@@ -64,6 +62,10 @@ class NQN(commands.Cog):
                                 if emoji.animated:
                                     nqn = True
                                     message = message.replace(word, f"<a:{emoji.name}:{emoji.id}>")
+
+                                #if ".gif" in author.avatar_url:  # Currently, this is the only way to check if a user has nitro in discord.
+                                #    nqn = False
+
                                 else:
                                     nqn = False
 
