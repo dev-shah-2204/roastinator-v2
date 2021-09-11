@@ -14,7 +14,7 @@ class Invite(commands.Cog):
             description="Click [here](https://discord.com/api/oauth2/authorize?client_id=874503385745870848&permissions=190992215286&scope=bot) to add me to your server\nClick [here](https://discord.gg/GG647gySEy) to join the support server."
         )
         em.set_thumbnail(url=self.client.user.avatar_url)
-        em.set_footer(text='Bot created by StatTrakDiamondSword#9696 (Tag maybe outdated)')
+        em.set_footer(text='Bot created by StatTrakDiamondSword#5493 (Tag maybe outdated)')
 
         await ctx.send(embed=em)
 
