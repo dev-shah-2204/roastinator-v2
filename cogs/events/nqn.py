@@ -28,11 +28,11 @@ class NQN(commands.Cog):
                 sentence_spc = message.split(" ")  # List of all the words in the message separated by a space.
 
                 for word in sentence_spc:
-                    if word.startswith("<") and word.endswith(">"):
+                    if word.startswith("<") and word.endswith(">"):  # A potential emoji (might me a channel, role or user mention too)
                         emoji_str = word.split(":")
                         emoji = discord.utils.get(guild.emojis, name=emoji_str[1])
 
-                        if emoji:
+                        if emoji:  # If an emoji object was found
                             if emoji.animated:
                                 nqn = True
                                 message = message.replace(word, f"<a:{emoji.name}:{emoji.id}>")
@@ -40,7 +40,7 @@ class NQN(commands.Cog):
                                 nqn = False
 
                     else:  # If emoji was not properly separated from the rest of the words
-                        found_potential_emoji = False
+                        found_potential_emoji = False  # Initial value
 
                         """
                         Extracting the emoji from the word.
