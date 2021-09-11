@@ -15,13 +15,21 @@ class Snipe(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
-        del_msg[str(message.channel.id)] = {}
-        del_msg[str(message.channel.id)]['content'] = message.content
-        del_msg[str(message.channel.id)]['author'] = message.author
-        del_msg[str(message.channel.id)]['time'] = datetime.now(pytz.utc) #This will be used for the timestamp
+        channel = str(message.channel.id)
+        del_msg[channel] = {}
+        del_msg[channel]['content'] = message.content
+        del_msg[channel]['author'] = message.author
+        del_msg[channel]['time'] = datetime.now(pytz.utc) #This will be used for the timestamp
 
         if len(message.attachments) > 0:
-            del_msg[str(message.channel.id)]['attachment'] = str(message.attachments[0].url)
+            del_msg[channel]['attachment'] = str(message.attachments[0].url)
+        else:
+            del_msg[channel]['attachment'] = None
+
+        if len(message.embeds) > 0:
+            del_msg[channel]['embed'] = message.embeds[0]
+        else:
+            del_msg[channel]['embed'] = None
 
 
     @commands.command(name='snipe', help='Check the last deleted message in the channel')
@@ -36,10 +44,21 @@ class Snipe(commands.Cog):
             em.set_author(name=f"{del_msg[str(ctx.channel.id)]['author']} said:", icon_url=del_msg[str(ctx.channel.id)]['author'].avatar_url)
 
             if del_msg[str(ctx.channel.id)]['attachment'] is not None:
-                em.description = f"{msg_content}\n[**Attachment**]({del_msg[str(ctx.channel.id)]['attachment']})"
+                em.description = f"{msg_content} \n\n [**Attachment**]({del_msg[str(ctx.channel.id)]['attachment']})"
+
+            if del_msg[str(ctx.channel.id)]['embed'] is not None:
+                em.description = f"{msg_content} \n\n The deleted message had this embed:"
 
             await ctx.send(embed=em)
-        except:
+
+            if del_msg[str(ctx.channel.id)]['embed'] is not None:  # Yes, same check 2nd time. I needed it to send the embed after the main embed
+                await ctx.send(embed=del_msg[str(ctx.channel.id)]['embed'])
+
+        except discord.errors.Forbidden or discord.Forbidden:
+            await ctx.send("I don't have the embed links permission. I need that.")
+
+        except KeyError as e:
+            print(e)
             await ctx.send("There are no recently deleted messages")
 
 
