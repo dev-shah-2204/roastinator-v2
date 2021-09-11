@@ -13,7 +13,7 @@ class OnGuildJoin(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
         for channel in guild.text_channels:
-            if guild.me.guild_permissions.send_messages:
+            if guild.me.guild_permissions.send_messages and guild.me.guild_permissions.embed_links:
                 em = discord.Embed(
                     title='Hey there!',
                     description='Thanks for inviting me to your server.\nMy prefix is `-`. If you wish to change it, use the prefix command.',
