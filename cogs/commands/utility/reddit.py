@@ -38,8 +38,17 @@ class Reddit(commands.Cog):
                 text=f"👍 {post['ups']} | Author: u/{post['author']}")  # post['ups'] is the upvote count, post['author'] is the author
 
             await ctx.send(embed=em)
-        except KeyError:
-            await ctx.send(f"I couldn't find a subreddit called `{subreddit}`")
+
+        except KeyError as e:
+            if post["code"] == 400:
+                if "no posts with images" in post["message"].lower():
+                    await ctx.send("That subreddit doesn't have any posts with images")
+                    return
+
+            if post["code"] == 404:
+                await ctx.send("This subreddit has no posts or doesn't exist.")
+                return
+
 
 
 def setup(client):
