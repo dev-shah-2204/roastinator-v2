@@ -11,6 +11,9 @@ from discord.ext import commands
 
 
 def get_prefix(_client, message):
+    """
+    Function to get prefix for a guild
+    """
     with open('prefix.json', 'r') as f:
         cache = json.load(f)
 
@@ -29,9 +32,12 @@ def get_prefix(_client, message):
         return commands.when_mentioned_or(prefix[0])(_client, message)
 
 
-token = os.environ.get('token')
+"""
++--------------------------------+
+| Making the commands.Bot object |
++--------------------------------+
+"""
 
-# Defining our bot (client)
 client = commands.Bot(
     command_prefix=get_prefix,
     intents=discord.Intents.all(),
@@ -53,12 +59,9 @@ event_cog_list = (
     'on_member_join',
     'on_mention',
     'on_ready',
-    'starboard'
-)
-
-passive_cog_list = [
+    'starboard',
     'nqn'
-]
+)
 
 cmd_cog_list = (
     'bot.invite',
@@ -103,7 +106,12 @@ cmd_cog_list = (
     'utility.user_info'
 )
 
-# Loading cogs
+"""
++--------+
+|  COGS  |
++--------+
+"""
+
 for event_cog in event_cog_list:
     if __name__ == '__main__':
         try:
@@ -118,12 +126,7 @@ for command_cog in cmd_cog_list:
         except Exception as e:
             print(e)
 
-for passive_cog in passive_cog_list:
-    if __name__ == '__main__':
-        try:
-            client.load_extension(f"cogs.passive.{passive_cog}")
-        except Exception as e:
-            print(e)
 
 client.load_extension("jishaku")  # pip install jishaku
-client.run(token)
+#client.run(os.environ.get('token'))
+client.run(os.environ.get('token'))
