@@ -67,9 +67,6 @@ class NQN(commands.Cog):
                                 else:
                                     nqn = False
 
-                if '.gif' in str(author.avatar_url):  # They already have nitro, they don't need this feature.
-                    nqn = False
-
                 if nqn:
                     if guild.me.guild_permissions.manage_messages and guild.me.guild_permissions.manage_webhooks:
                         webhooks = await channel.webhooks()
