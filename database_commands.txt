@@ -19,3 +19,13 @@ CREATE TABLE AutoMod(
     guild VARCHAR(20) PRIMARY KEY,
     _status VARCHAR(10)
 )
+
+CREATE TABLE AutoRole(
+    guild VARCHAR(20) PRIMARY KEY,
+    _role VARCHAR(20),
+    _status VARCHAR(10)
+)
+
+CREATE TABLE Command_Blacklist(
+    user_id VARCHAR(20)
+)
