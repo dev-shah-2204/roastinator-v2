@@ -1,9 +1,8 @@
 import discord
-import os
 
 from db import *
 from discord.ext import commands
-from cogs.events.modmail import people_on_cooldown # people_on_cooldown is a list, it gets reset every 12 hours on heroku. you need to setup a database to store the banned people's id
+from cogs.events.modmail import banned_people
 
 
 class ModMail(commands.Cog):
@@ -21,7 +20,7 @@ class ModMail(commands.Cog):
             db.execute(f"INSERT INTO ModBan (user_id) VALUES ('{user.id}')")
             database.commit()
             await ctx.send(f"Won't take mod-mail from {user} now")
-            return
+            banned_people.append(user.id)
 
     # You might want to unban them later too
     @commands.command(name='unbanmodmail', aliases=['unbanmm'], help="Un-ban people from mod-mail")
@@ -34,7 +33,7 @@ class ModMail(commands.Cog):
             db.execute(f"DELETE FROM ModBan WHERE user_id = '{user.id}'")
             database.commit()
             await ctx.send(f"Unbanned {user} from the mod-mail blacklist")
-            return
+            banned_people.remove(user.id)
 
 
 def setup(client):
