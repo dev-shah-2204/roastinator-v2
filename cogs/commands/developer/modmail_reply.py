@@ -16,7 +16,7 @@ class Reply(commands.Cog):
             return 
         
         em = discord.Embed(description=reply_message, color=red)
-        em.set_author(icon_url=ctx.author.avatar_url, name=f"Reply from {ctx.author}")
+        em.set_author(icon_url=ctx.author.avatar_url, name=f"Message from {ctx.author} (My developer)")
         
         try:
             await user.send(embed=em)
