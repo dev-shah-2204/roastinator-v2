@@ -24,18 +24,18 @@ class Reply(commands.Cog):
         except discord.Forbidden: # If user doesn't allow messages from server members, we'll have to message them in a different way.
             await ctx.send(f"{user} has closed their DMs. The reply will be sent to them when they send a message in any server") 
             
-            def check(message: discord.Message) -> bool:
-                return message.author == user
-
-            message = await self.client.wait_for('message', check=check)
-            
-            try:
-                await message.channel.send(f"<@!{user.id}>, your modmail has been replied to. Since your DMs are closed, we had to send it this way.")
-                await message.channel.send(embed=em)
-
-            except discord.Forbidden:
-                await ctx.send(f"I tried replying to {user} in a server but I didn't have permission to send messages/embed links in that channel. Add them yourself and convey the message.")
-                return
+            # def check(message: discord.Message) -> bool:
+            #     return message.author == user
+            #
+            # message = await self.client.wait_for('message', check=check)
+            #
+            # try:
+            #     await message.channel.send(f"<@!{user.id}>, your modmail has been replied to. Since your DMs are closed, we had to send it this way.")
+            #     await message.channel.send(embed=em)
+            #
+            # except discord.Forbidden:
+            #     await ctx.send(f"I tried replying to {user} in a server but I didn't have permission to send messages/embed links in that channel. Add them yourself and convey the message.")
+            #     return
 
 
 def setup(client):
