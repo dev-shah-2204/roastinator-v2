@@ -82,13 +82,13 @@ class ErrorHandling(commands.Cog):
         elif isinstance(error, commands.CommandNotFound):
             return
 
-        elif isinstance(error, discord.errors.Forbidden):
+        elif isinstance(error, discord.errors.Forbidden) or isinstance(error, discord.Forbidden):
             try:
                 em = discord.Embed(title = 'Error', color = hex_colors.m_red)
                 em.add_field(name = 'Missing Permissions', value = ":x: Error code 403 Forbidden was raised. I don't have the permissons to do so.")
                 return
-            except discord.errors.Forbidden:
-                await ctx.send("I need the 'Embed Links' permission")
+            except discord.errors.Forbidden or discord.Forbidden:
+                await ctx.send("I need the 'Embed Links' permission.")
                 return
 
         else:
