@@ -47,7 +47,12 @@ client = commands.Bot(
 )
 client.remove_command('help')
 
-# Cogs list
+"""
++--------+
+|  COGS  |
++--------+
+"""
+
 event_cog_list = (
     'auto_mod',
     'fix_prefix',
@@ -106,11 +111,6 @@ cmd_cog_list = (
     'utility.user_info'
 )
 
-"""
-+--------+
-|  COGS  |
-+--------+
-"""
 
 for event_cog in event_cog_list:
     if __name__ == '__main__':
