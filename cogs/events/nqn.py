@@ -28,7 +28,7 @@ class NQN(commands.Cog):
                 sentence_spc = message.split(" ")  # List of all the words in the message separated by a space.
 
                 for word in sentence_spc:
-                    if word.startswith("<") and word.endswith(">"):  # A potential emoji (might me a channel, role or user mention too)
+                    if word.startswith(":") and word.endswith(":"):  # A potential emoji (might me a channel, role or user mention too)
                         emoji_str = word.split(":")
                         emoji = discord.utils.get(guild.emojis, name=emoji_str[1])
 
@@ -48,10 +48,10 @@ class NQN(commands.Cog):
                         """
 
                         for char in word:  # Each character
-                            if char == "<":  # Start of the emoji
+                            if char == ":":  # Start of the emoji
                                 word = word[word.index(char):] # <:emoji:1234567890>e (partially extracted emoji)
                                 for _char in word:
-                                    if _char == ">":  # End of the emoji
+                                    if _char == ":":  # End of the emoji
                                         word = word[:word.index(_char)+1]  # <:emoji:1234567890> (extracted emoji)
                                         found_potential_emoji = True
 
@@ -67,7 +67,7 @@ class NQN(commands.Cog):
                                 else:
                                     nqn = False
 
-                if nqn:
+                if nqn is True:
                     if guild.me.guild_permissions.manage_messages and guild.me.guild_permissions.manage_webhooks:
                         webhooks = await channel.webhooks()
                         webhook = discord.utils.get(webhooks, name='roastinator')
