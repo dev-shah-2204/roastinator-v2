@@ -92,7 +92,7 @@ Fun
         if cmd.lower() == 'moderation' or cmd.lower() == 'mod':
             em = discord.Embed(
                 title="Moderation Commands:",
-                description='`clear` , `clean` , `nuke`\n`kick` , `ban` , `softban`\n`mute` , `tempmute` , `unmute`\n`lock`, `unlock`\n`automod`',
+                description='`clear` , `clean` , `nuke`\n`kick` , `ban` , `softban`\n`mute` , `tempmute` , `unmute`\n`lock` , `unlock`\n`automod` , `autorole`',
                 color=pfpG)
             em.set_footer(text='Use -help <command> for more info')
 
