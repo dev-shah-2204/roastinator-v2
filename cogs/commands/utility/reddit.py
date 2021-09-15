@@ -10,8 +10,7 @@ class Reddit(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='reddit', aliases=['subreddit', 'getredditpost'],
-                      help='Gets a post from the subreddit provided')
+    @commands.command(name='reddit', aliases=['subreddit', 'getredditpost'], help='Gets a post from the subreddit provided')
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def get_reddit_post(self, ctx, *, subreddit):
         url = f'https://meme-api.herokuapp.com/gimme/{subreddit}'  # This api only sends posts with images or gifs.

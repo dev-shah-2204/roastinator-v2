@@ -15,8 +15,6 @@ class MuteUnmute(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def mute(self, ctx, member:discord.Member, *, reason="No reason provided"):
-
-
         role = discord.utils.get(ctx.guild.roles, name='Muted') #Searching if the role already exists (If some other bot made it)
         permissions = discord.Permissions(send_messages=False) #Permission for new role (in case role doesn't exist)
 
@@ -48,9 +46,9 @@ class MuteUnmute(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def unmute(self, ctx, member:discord.Member, *, reason="No reason provided"):
-        try:
-            role = discord.utils.get(ctx.guild.roles, name='Muted')
-        except:
+        role = discord.utils.get(ctx.guild.roles, name='Muted')
+        if role is None:
+            permissions = discord.Permissions(send_messages=False)
             await ctx.send(f"Your server doesn't have a 'Muted' role, I highly doubt {member} is muted")
             await ctx.guild.create_role(name='Muted', permissions=permissions, reason='For mute command') #Making new role
 

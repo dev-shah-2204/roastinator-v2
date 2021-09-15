@@ -45,7 +45,7 @@ class LockUnlock(commands.Cog):
             await ctx.send("That command only works for text channels..")
             return
 
-        await channel.set_permissions(ctx.guild.default_role, send_messages=True)
+        await channel.set_permissions(ctx.guild.default_role, send_messages=None)
         await ctx.send("Unlocked the channel")
 
 def setup(client):

@@ -60,7 +60,7 @@ class UrbanDictionary(commands.Cog):
 
                 await ctx.send(embed=em)
             except:
-                await ctx.send("I couldn't find the defintion because both the API and the library are broken")
+                await ctx.send("I couldn't find the defintion for that")
 
 def setup(client):
     client.add_cog(UrbanDictionary(client))

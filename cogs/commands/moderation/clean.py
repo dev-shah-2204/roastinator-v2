@@ -10,7 +10,7 @@ class Clean(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='clean')
+    @commands.command(name='clean', help="Delete a lot of bot messages")
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
     async def clean(self, ctx):

@@ -9,7 +9,7 @@ class Roast(commands.Cog):
     def __init__(self, client):
         self.client = client 
 
-    @commands.command(name='roast', aliases=['insult'])
+    @commands.command(name='roast', aliases=['insult'], help="Roast someone. hehe")
     async def roast(self, ctx, user:discord.Member=None):
         if user is None:
             user = ctx.author 

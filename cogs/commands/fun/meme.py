@@ -11,7 +11,7 @@ class Meme(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='meme', aliases=['maymay'])
+    @commands.command(name='meme', aliases=['maymay'], help="Brings a post from r/memes")
     @cooldown(1, 3, BucketType.user)
     async def meme(self, ctx):
         subreddit = 'memes' #change this to whatever subreddit you want

@@ -8,7 +8,7 @@ class Reply(commands.Cog):
     def __init__(self, client):
         self.client = client 
     
-    @commands.command(name='mreply', help='Reply to modmail (Developer Command)')
+    @commands.command(name='mreply', help="This is a developer command")
     async def m_reply(self, ctx, user_id:int, *, reply_message):
         user = self.client.get_user(user_id)
         if user is None:

@@ -11,7 +11,7 @@ class Wholesome(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='wholesome', aliases=['wholesomememe'])
+    @commands.command(name='wholesome', aliases=['wholesomememe'], help="Brings a post from r/wholesomememes")
     @cooldown(1, 3, BucketType.user)
     async def wholesome_meme(self, ctx):
         url = 'https://meme-api.herokuapp.com/gimme/wholesomememes' #url of the api

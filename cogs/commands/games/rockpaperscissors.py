@@ -31,7 +31,7 @@ class RockPaperScissors(commands.Cog):
         if user_choice == bot_choice:
             return 'draw'
 
-    @commands.command(name='rockpaperscissors', aliases=['rps']) #I'm not adding a cooldown but you can
+    @commands.command(name='rockpaperscissors', aliases=['rps'], help="Play a game of rock paper scissors with the bot") #I'm not adding a cooldown but you can
     async def rock_paper_scissors(self, ctx):
         choices = ['rock','paper','scissors']
         bot_choice = random.choice(choices)

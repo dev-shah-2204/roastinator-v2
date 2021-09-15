@@ -11,7 +11,7 @@ class Cursed(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='cursed', aliases=['cursedimage'])
+    @commands.command(name='cursed', aliases=['cursedimage'], help="Brings a post from r/cursed_images")
     @cooldown(1, 3, BucketType.user)
     async def cursed_image(self, ctx):
         url = f'https://meme-api.herokuapp.com/gimme/cursed_images' #url of the api

@@ -15,7 +15,7 @@ class ServerInfo(Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name = 'serverinfo', help = 'Information about the server', usage = '')
+    @commands.command(name = 'serverinfo', help = 'Information about the server')
     @cooldown(1, 10, BucketType.guild)
     async def serverinfo(self, ctx):
         guild = server = ctx.guild

@@ -10,7 +10,7 @@ class ModMail(commands.Cog):
         self.client = client
     
     # The banned people will be unbanned when you restart the bot. You need to setup a database. I am unable to do so on heroku for some reason.
-    @commands.command(name='banmodmail', aliases=['banmm'], help='Ban people from mod-mail')
+    @commands.command(name='banmodmail', aliases=['banmm'], help="This is a developer command")
     async def banmodmail(self, ctx, user:discord.User):
         if ctx.author.id != self.client.owner_id:
             await ctx.send("You can't do that")
@@ -23,7 +23,7 @@ class ModMail(commands.Cog):
             banned_people.append(user.id)
 
     # You might want to unban them later too
-    @commands.command(name='unbanmodmail', aliases=['unbanmm'], help="Un-ban people from mod-mail")
+    @commands.command(name='unbanmodmail', aliases=['unbanmm'], help="This is a developer command")
     async def unbanmodmail(self, ctx, user:discord.User):
         if ctx.author.id != self.client.owner_id:
             await ctx.send("You can't do that")

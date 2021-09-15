@@ -9,7 +9,7 @@ class Cointoss(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='cointoss', aliases=['coin','coinflip','toss','flip']) #I'm not adding a cooldown but you can
+    @commands.command(name='cointoss', aliases=['coin','coinflip','toss','flip'], help="Flip a coin") #I'm not adding a cooldown but you can
     async def coin_toss(self, ctx):
         choices = ['heads', 'tails']
         coin = random.choice(choices)
