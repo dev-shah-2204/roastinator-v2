@@ -36,10 +36,15 @@ class MuteUnmute(commands.Cog):
         await ctx.send(embed=em)
 
         for channel in ctx.guild.channels: #Changing the permission for the Muted role in all channels
+            try:
                 overwrite = channel.overwrites_for(role)
                 overwrite.send_messages = False
 
                 await channel.set_permissions(role, overwrite=overwrite)
+            except:
+                await ctx.send("Since I don't have the manage channels permission, I couldn't change the permissions for the muted role in the channels.")
+                break
+
 
 
     @commands.command(name='unmute', aliases=['unstfu'], help='Unmute muted people')
@@ -53,10 +58,13 @@ class MuteUnmute(commands.Cog):
             await ctx.guild.create_role(name='Muted', permissions=permissions, reason='For mute command') #Making new role
 
             for channel in ctx.guild.channels: #Changing the permission for the Muted role in all channels
-                overwrite = channel.overwrites_for(role)
-                overwrite.send_messages = False
+                try:
+                    overwrite = channel.overwrites_for(role)
+                    overwrite.send_messages = False
 
-                await channel.set_permissions(role, overwrite=overwrite)
+                    await channel.set_permissions(role, overwrite=overwrite)
+                except:
+                    break
 
 
         if role not in member.roles:
