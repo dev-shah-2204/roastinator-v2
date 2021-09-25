@@ -98,8 +98,9 @@ class ErrorHandling(commands.Cog):
             em = discord.Embed(title = 'Error', color = hex_colors.m_red)
 
             em.add_field(name = 'Command', value = ctx.command, inline = False)
-            em.add_field(name = 'Error:', value = f"```{error}```", inline = False)
+            em.add_field(name = 'Error:', value = f"```{type(error)}\n{error}```", inline = False)
             em.add_field(name = 'Server:', value = f"{ctx.guild} ({ctx.guild.id})", inline = False)
+            em.add_field(name = 'Channel:', value = f"{ctx.channel} ({ctx.channel.id})", inline = False)
             em.add_field(name = 'User:', value = f"{ctx.author} ({ctx.author.id})", inline = False)
             em.add_field(name = 'Message:', value = ctx.message.content)
 
