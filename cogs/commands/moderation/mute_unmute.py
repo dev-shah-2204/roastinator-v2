@@ -23,6 +23,11 @@ class MuteUnmute(commands.Cog):
             await ctx.guild.create_role(name='Muted', permissions=permissions, reason='For mute command') #Making new role
 
         role = discord.utils.get(ctx.guild.roles, name='Muted') #The old role variable might have returned None
+
+        if role in member.roles:
+            await ctx.send(f"{member} is already muted")
+            return
+
         await member.add_roles(role, reason=f"{ctx.author} ran the mute command")
 
         em = discord.Embed(

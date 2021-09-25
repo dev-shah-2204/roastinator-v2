@@ -20,6 +20,11 @@ class TempMute(commands.Cog):
             await ctx.guild.create_role(name='Muted', permissions=permissions, reason='For mute command') #Making new role
 
         role = discord.utils.get(ctx.guild.roles, name='Muted') #The old role variable might have returned None
+
+        if role in member.roles:
+            await ctx.send(f"{member} is already muted")
+            return
+
         await member.add_roles(role, reason=f"{ctx.author} ran the mute command")
 
         em = discord.Embed(
@@ -32,12 +37,17 @@ class TempMute(commands.Cog):
         await ctx.send(embed=em)
 
         for channel in ctx.guild.channels: #Changing the permission for the Muted role in all channels
+            try:
                 overwrite = channel.overwrites_for(role)
                 overwrite.send_messages = False
 
                 await channel.set_permissions(role, overwrite=overwrite)
+            except:
+                await ctx.send("Since I don't have the manage channels permission, I couldn't change the permissions for the muted role in the channels.")
+                break
 
-        multiplier = 1 #If we put 0, and someone uses the command wrong, problems might occur.
+
+        multiplier = 1
 
         if mode == 's' or mode == 'seconds' or mode == 'second':
             multiplier = 1
