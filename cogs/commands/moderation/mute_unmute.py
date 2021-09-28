@@ -28,13 +28,17 @@ class MuteUnmute(commands.Cog):
             await ctx.send(f"{member} is already muted")
             return
 
-        await member.add_roles(role, reason=f"{ctx.author} ran the mute command")
+        try:
+            await member.add_roles(role, reason=f"{ctx.author} ran the mute command")
+        except:
+            await ctx.send("The 'Muted' role is above my highest role. Please fix that in the server settings and then run the mute command. Having trouble doing that? Then simply deleted the 'Muted' role.")
+            return
 
         em = discord.Embed(
-                        title=f"{ctx.author} muted {member}",
-                        description=f"Reason:\n{reason}",
-                        color=hex_colors.m_red
-                        )
+            title=f"{ctx.author} muted {member}",
+            description=f"Reason:\n{reason}",
+            color=hex_colors.m_red
+        )
         em.set_thumbnail(url=member.avatar_url)
 
         await ctx.message.delete()
