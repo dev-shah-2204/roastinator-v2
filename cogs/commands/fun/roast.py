@@ -10,7 +10,7 @@ class Roast(commands.Cog):
         self.client = client 
 
     @commands.command(name='roast', aliases=['insult'], help="Roast someone. hehe")
-    async def roast(self, ctx, user:discord.Member=None):
+    async def roast(self, ctx, user: discord.Member=None):
         if user is None:
             user = ctx.author 
 
