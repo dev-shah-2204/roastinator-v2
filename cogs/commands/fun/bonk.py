@@ -1,6 +1,5 @@
 import discord 
-import hex_colors 
-import random
+import hex_colors
 
 from discord.ext import commands
 from io import BytesIO
