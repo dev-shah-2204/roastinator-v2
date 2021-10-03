@@ -33,12 +33,13 @@ class Python(Cog):
             await ctx.send("Come on you can't run loops here. If you really want to, you can try https://repl.it")
             return
 
-
         sys.stdout = open('cogs/commands/utility/code_run_by_users.txt', 'w')#Output will be written in this file instead of terminal
+
         try:
             exec(code)
         except Exception as e:
             await ctx.send(f"```{e.__class__.__name__}: {e}```")
+            return
 
         sys.stdout.close()#If we don't close, the file is active and the data isn't saved
 
