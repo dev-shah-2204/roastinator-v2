@@ -24,7 +24,7 @@ class Ban(commands.Cog):
             return
 
         # Checking if the other person has a higher or same role
-        if member.top_role.position >= ctx.author.top_role.position:
+        if member.top_role.position > ctx.author.top_role.position:
             await ctx.send(f"{member.mention} has a higher role than you. You cannot ban them")
             return
 
