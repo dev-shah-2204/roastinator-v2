@@ -18,6 +18,7 @@ class ErrorHandling(commands.Cog):
             ctx.command.reset_cooldown(ctx)
             return
 
+
         elif isinstance(error, commands.MissingPermissions):
             em = discord.Embed(title='Error', color=hex_colors.m_red)
 
@@ -33,6 +34,7 @@ class ErrorHandling(commands.Cog):
             await ctx.send(embed=em)
             return
 
+
         elif isinstance(error, commands.MemberNotFound):
             em = discord.Embed(title='Error', color=hex_colors.m_red)
             em.add_field(name="Member not found", value=f":x: | I couldn't find anyone with that name in this server")
@@ -41,8 +43,9 @@ class ErrorHandling(commands.Cog):
             ctx.command.reset_cooldown(ctx)
             return
 
+
         elif isinstance(error, commands.BotMissingPermissions):
-            mp = error.missing_perms[0]
+            mp = error.missing_permissions[0]
             mp = mp.title()
             mp = mp.replace('_', ' ')
 
@@ -72,15 +75,18 @@ class ErrorHandling(commands.Cog):
             await ctx.send(embed=em)
             return
 
-        if isinstance(error, commands.BadArgument):
+
+        elif isinstance(error, commands.BadArgument):
             em = discord.Embed(title = "Error", color=hex_colors.m_red)
             em.add_field(name="Invalid arguments", value = ":x: I think you used the command wrong. For more info, try running: ```-help {}```".format(ctx.command))
             await ctx.send(embed = em)
             ctx.command.reset_cooldown(ctx)
             return
 
+
         elif isinstance(error, commands.CommandNotFound):
             return
+
 
         elif isinstance(error, discord.errors.Forbidden) or isinstance(error, discord.Forbidden):
             try:
@@ -91,7 +97,9 @@ class ErrorHandling(commands.Cog):
                 await ctx.send("I need the 'Embed Links' permission.")
                 return
 
+
         else:
+
             await ctx.send("An error occured that I wasn't able to handle myself. This has been conveyed to my developer.")
             channel = self.client.get_channel(857878860251136020) #Enter your channel ID here
 
