@@ -14,7 +14,7 @@ class Cursed(commands.Cog):
     @commands.command(name='cursed', aliases=['cursedimage'], help="Brings a post from r/cursed_images")
     @cooldown(1, 3, BucketType.user)
     async def cursed_image(self, ctx):
-        url = f'https://meme-api.herokuapp.com/gimme/cursed_images' #url of the api
+        url = 'https://meme-api.herokuapp.com/gimme/cursed_images' #url of the api
         """
         There is reddit's official API too, but it's slower and also sometimes returns mp4(s) that the discord.Embed class can't process. This API is much better in my opinion. Also, both, this and reddit's API are free.
         """
