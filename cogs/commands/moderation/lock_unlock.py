@@ -8,7 +8,7 @@ class LockUnlock(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='lock', aliases=['lc','lockchannel'], help='Locks a channel')
+    @commands.command(name='lock', aliases=['lockchannel'], help='Locks a channel')
     @commands.has_permissions(manage_channels=True)
     @commands.bot_has_permissions(manage_channels=True)
     async def lock_channel(self, ctx, channel:discord.TextChannel=None):
