@@ -58,7 +58,6 @@ class Snipe(commands.Cog):
             await ctx.send("I don't have the embed links permission. I need that.")
 
         except KeyError as e:
-            print(e)
             await ctx.send("There are no recently deleted messages")
 
 
