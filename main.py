@@ -100,7 +100,7 @@ cmd_cog_list = (
     'utility.embed',
     'utility.enlarge_emoji',
     'utility.prefix',
-    'utility.python_cmd',
+    #'utility.python_cmd',  It was like an open-for-all eval command. Needed to be removed. Might fix it later
     'utility.reddit',
     'utility.role_info',
     'utility.serverinfo',
@@ -128,5 +128,4 @@ for command_cog in cmd_cog_list:
 
 
 client.load_extension("jishaku")  # pip install jishaku
-#client.run(os.environ.get('token'))
 client.run(os.environ.get('token'))
