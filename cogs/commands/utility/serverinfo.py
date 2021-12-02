@@ -26,7 +26,6 @@ class ServerInfo(Cog):
         members = server.member_count
         owner = server.owner
         level = server.verification_level
-        region = server.region
         boost_level = server.premium_tier
         large = server.large
         subs = server.premium_subscribers
@@ -37,7 +36,6 @@ class ServerInfo(Cog):
         em.set_thumbnail(url=server.icon_url)
         em.add_field(name='ID', value=server.id, inline=False)
         em.add_field(name='Owner', value=owner, inline=False)
-        em.add_field(name='Server Region', value=str(region).capitalize(), inline=False)
         em.add_field(name='Created on', value=created, inline=False)
         em.add_field(name='Is this server considered a big server?', value=bool_str(large), inline=False)
         em.add_field(name='Member Count', value=members)
