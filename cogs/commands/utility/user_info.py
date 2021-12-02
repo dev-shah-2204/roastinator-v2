@@ -28,9 +28,12 @@ class UserInfo(Cog):
             if role in member.roles and role.name != '@everyone': #Because it logs @everyone as @@everyone
                 member_role_list.append(role.id)
 
-        roles = "@everyone " #@everyone is a default role
+        roles = "" #@everyone is a default role
         for member_role in member_role_list:
             roles += f"<@&{member_role}> "
+
+        if roles is None:
+            roles = "User has no roles in this server."
 
 
         em = discord.Embed(title=f"Found information for {member}", color=random.choice(hex_colors.colors))
