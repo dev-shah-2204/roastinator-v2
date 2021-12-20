@@ -20,7 +20,7 @@ class Roast(commands.Cog):
 
         url = 'https://insult.mattbas.org/api/en/insult.json' #Visit [https://insult.matlabs.org/api/] for documentation
         response = requests.get(url, params={'who': user.mention}).json()
-        await ctx.send(user.mention+response['insult'])
+        await ctx.send(user.mention + response['insult'])
 
 
 def setup(client):
