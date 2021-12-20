@@ -16,11 +16,6 @@ class Nuke(commands.Cog):
     async def nuke(self, ctx, channel: discord.TextChannel = None):
         if channel is None:
             channel = ctx.channel 
-            
-        existing_channel = ctx.channel
-
-        new_channel = await existing_channel.clone(reason=f'Original was nuked by {ctx.author}') #Reason to be registered in the audit log
-        await new_channel.edit(position=existing_channel.position)
         
         def check(message: discord.Message) -> bool:
             return message.author == ctx.author
@@ -36,10 +31,14 @@ class Nuke(commands.Cog):
             
             elif message.content.lower() == "confirm":
                 try:
-                    await ctx.channel.delete()
+                    new_channel = await channel.clone(reason=f'Original was nuked by {ctx.author}') #Reason to be registered in the audit log
+                    await new_channel.edit(position=channel.position)
+                    await channel.delete()
+                    
                 except discord.Forbidden:
                     await ctx.send("I couldn't delete the channel, maybe this is a community updates channel?") #Channels that are set for community updates cannot be deleted without transferring the community updates to another channel
-
+                    await new_channel.delete()  # The clone is useless if the original still exists 
+                    
                 em = discord.Embed(
                             title='This channel got nuked!',
                             description='Who did this? Check Audit Log',
