@@ -29,15 +29,22 @@ class Reddit(commands.Cog):
             link = post['postLink']  # the link to the post
 
             em = discord.Embed(
-                title=f"[{title}]({link})",
+                title=title,
+                description=link,
                 color=random.choice(hex_colors.colors)
             )
+            
+            if len(em.title) > 256:
+                em.title = "Title was too long for an embed."
+            
             em.set_image(url=image)
             em.set_footer(
                 text=f"👍 {post['ups']} | Author: u/{post['author']}")  # post['ups'] is the upvote count, post['author'] is the author
 
             await ctx.send(embed=em)
 
+
+        
         except KeyError as e:
             if post["code"] == 400:
                 if "no posts with images" in post["message"].lower():
