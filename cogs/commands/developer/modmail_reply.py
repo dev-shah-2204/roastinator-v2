@@ -30,7 +30,7 @@ class Reply(commands.Cog):
             # message = await self.client.wait_for('message', check=check)
             #
             # try:
-            #     await message.channel.send(f"<@!{user.id}>, your modmail has been replied to. Since your DMs are closed, we had to send it this way.")
+            #     await message.channel.send(f"{user.mention}, you have a message!. Since your DMs are closed, I had to send it this way.")
             #     await message.channel.send(embed=em)
             #
             # except discord.Forbidden:
