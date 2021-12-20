@@ -82,7 +82,7 @@ class AutoModEvent(commands.Cog):
                                 await msg.delete()
                                 try:
                                     await msg.author.send(f"Hey! That word is not allowed in {msg.guild.name}")
-                                except:
+                                except discord.Forbidden or discord.errors.Forbidden:
                                     pass
                                 break
 
