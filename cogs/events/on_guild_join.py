@@ -27,7 +27,9 @@ class OnGuildJoin(commands.Cog):
                 break
         db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{guild.id}','-')")
         db.execute(f"INSERT INTO AutoMod(guild, _status) VALUES ('{guild.id}','enabled')")
+        db.exexute(f"CREATE TABLE IF NOT EXISTS am_{guild}(words VARCHAR(40) PRIMARY KEY)")
         database.commit()
+
 
 
 def setup(client):
