@@ -32,13 +32,7 @@ def get_prefix(_client, message):
         return commands.when_mentioned_or(prefix[0])(_client, message)
 
 
-"""
-+--------------------------------+
-| Making the commands.Bot object |
-+--------------------------------+
-"""
-
-client = commands.Bot(
+client = commands.AutoShardedBot(
     command_prefix=get_prefix,
     intents=discord.Intents.all(),
     case_insensitive=True,
