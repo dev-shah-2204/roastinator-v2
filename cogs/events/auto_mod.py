@@ -1,6 +1,6 @@
 import discord 
 import json
-
+import mysql.connector
 from discord.ext import commands 
 from db import *
 
@@ -18,7 +18,11 @@ class AutoModEvent(commands.Cog):
             db.execute(f"SELECT _status FROM automod WHERE guild = '{guild}'")
             status = await get_data(db=db)
             if status is not None:
-                db.execute(f"SELECT * FROM am_{guild}")
+                try:
+                    db.execute(f"SELECT * FROM am_{guild}")
+                except mysql.connector.errors.ProgrammingError:
+                    db.execute(f"CREATE TABLE IF NOT EXISTS am_{guild}(words VARCHAR(40) PRIMARY KEY)")
+                    db.execute(f"SELECT * FROM am_{guild}")
                 blacklist = db.fetchall()
                 lst = []
                 for word in blacklist:
