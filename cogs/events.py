@@ -85,23 +85,24 @@ class Events(Cog):
                 await msg.channel.send("You're on cooldown")
                 return
 
-        # Auto Moderation
-        automod_status = checks.get_automod_status(msg.guild.id)
-        if automod_status == 'enabled':
-            blacklist = checks.get_blacklist(msg.guild.id)
-
-            user = msg.guild.get_member(msg.author.id)
-            if user is not None:
-                if not user.guild_permissions.manage_messages:
-
-                    for word in blacklist:
-                        if word.lower() in msg.content.lower():
-                            await msg.delete()
-                            try:
-                                await msg.author.send(f"Hey! That word is not allowed in this server")
-                            except discord.Forbidden:
-                                pass
-                            break
+        # Auto Moderation (Not working properly)
+        # automod_status = checks.get_automod_status(msg.guild.id)
+        # if automod_status == 'enabled':
+        #     print('enabled')
+        #     blacklist = checks.get_blacklist(msg.guild.id)
+        #
+        #     user = msg.guild.get_member(msg.author.id)
+        #     if user is not None:
+        #         if not user.guild_permissions.manage_messages:
+        #
+        #             for word in blacklist:
+        #                 if word.lower() in msg.content.lower():
+        #                     await msg.delete()
+        #                     try:
+        #                         await msg.author.send(f"Hey! That word is not allowed in this server")
+        #                     except discord.Forbidden:
+        #                         pass
+        #                     break
 
         # Prefix
         if msg.content == f"<@!{self.bot.user.id}>" or msg.content == f"<@{self.bot.user.id}>":
@@ -118,11 +119,11 @@ class Events(Cog):
 
 
         # Command Blacklist
-        command_blacklist = checks.get_command_blacklist()
-        if not str(msg.author.id) in command_blacklist:
-            await self.bot.process_commands(msg)
-        else:
-            return
+        # command_blacklist = checks.get_command_blacklist()
+        # if not str(msg.author.id) in command_blacklist:
+        #     await self.bot.process_commands(msg)
+        # else:
+        #     return
 
     @Cog.listener()
     async def on_guild_join(self, guild):

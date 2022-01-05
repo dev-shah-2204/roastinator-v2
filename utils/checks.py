@@ -45,7 +45,7 @@ def get_blacklist(guild):
     with open('./cache/automod.json', 'r') as f:
         cache = json.load(f)
             
-    if len(cache[guild]['blacklist']) == 0:
+    if guild not in cache:
         db.execute(f"SELECT * FROM am_{guild}")
         blacklist = db.fetchall()
         
@@ -57,7 +57,7 @@ def get_blacklist(guild):
               
     else:
         blacklist = cache[guild]['blacklist']
-            
+
     return blacklist
 
 
@@ -77,16 +77,17 @@ def get_command_blacklist():
 
         cache['banned'] = []
 
+        with open('./cache/banned.json', 'r') as f:
+            cache = json.load(f)
+
         for tup in db:
             cache['banned'].append(str(tup[0]))
 
-        with open('./cache/banned.json', 'w'):
+        with open('./cache/banned.json', 'w') as g:
             json.dump(cache, f)
 
+        print(cache)
         return cache['banned']
-
-
-
 
 
 def bool_str(variable):
