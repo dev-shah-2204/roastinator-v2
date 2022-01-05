@@ -1,9 +1,7 @@
-discord.py==1.7.3
-aiohttp==3.7.4.post0
-urbandict==0.6.1
 pytz==2021.1
+urbandict==0.6.1
+py_cord==1.7.3
 requests==2.25.1
 discord==1.7.3
-mysql_connector_python==8.0.25
-Pillow==8.2.0
-jishaku==2.0.0
+mysql_connector_repackaged==0.3.1
+Pillow==9.0.0

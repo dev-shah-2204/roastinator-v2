@@ -1,25 +1,58 @@
-<!--[![Discord Bots](https://top.gg/api/widget/status/822795444089782293.svg)](https://top.gg/bot/822795444089782293) [![Discord Bots](https://top.gg/api/widget/servers/822795444089782293.svg)](https://top.gg/bot/822795444089782293)-->
-# Utility/Moderation Discord Bot
+# Roastinator
 
-I'm assuming you know basic python before viewing this code. If not, you are going to have a hard time customizing it. I have put comments all over the code to help you understand it, but I wouldn't be so sure about the ease of customizing the bot.
+Roastinator is supposed to be a utility and moderation discord bot. I've tried my best to keep the bot as customisable as possible so that you can run an instance of it yourself. Refer `LICENSE` for copyright details. *Spoiler Alert*: You can copy any and everything except sensitive details like API keys (which are kept as environment tables for obvious reasons). Want to run your own Roastinator? Sure go ahead. I'd appreciate if you'd mention my name or the link to this repository in the start of your code or in your README.
 
-Refer LICENSE for copyright details. *Spoiler Alert*: You can do anything you like with this code. Heck even copy it all and say it's your own and I can't say anything.
+## Config Vars
 
-## Why each command code is in a separate file
-Modularity and customizability. For beginners making their personal discord bot, removing commands becomes an easier job. Also, when testing multiple features at the same time, you don't need to comment things out, as you can choose to not load the cog/extension for a particular test.
+**Database**:<br>
+db_host     - The host URL of your database (Might be your IPv4 or localhost)<br>
+db_user     - The username (root in most cases)<br>
+db_password - The password (Leave it as `""` if it's not password protected)<br>
+db_db       - The name of the database
 
-## YouTube
-There are tons of YouTube videos that show in detail how to make your own Discord Bot using python. If you have difficulty understanding how to make a bot here, well, this isn't a tutorial. This is code for you to copy and paste to add features to your bot without spending a lot of time. Check out [Carberra Tutorials](https://www.youtube.com/channel/UC13cYu7lec-oOcqQf5L-brg) and [Menu Docs](https://www.youtube.com/channel/UCpGGFqJP9vYvzFudqnQ-6IA). They have a great series of tutorials on a python discord bot.</br>
-If you wish to learn python, [this](https://youtu.be/_uQrJ0TkZlc) tutorial from [Programming with Mosh](https://youtu.be/_uQrJ0TkZlc) is really nice.
+**API Keys**:<br>
+dad_key_1      - Key for the dad joke api (get from rapid-api)<br>
+urban_dict_key - Key for the urban dictionary api (get from rapid-api)<br>
+STEAM_API_KEY  - Key for the Steam API (get from steam)
 
-## Other open-sourced bots
-[Carl-Bot](https://github.com/CarlGroth/Carl-Bot) - Has great features. It is made in python. \[Outdated\]<br />
-[YAGPDP](https://github.com/jonas747/yagpdb) - Also has great features. It's not made in python.
+**Bot Related**<br>
+discord_id      - Your discord ID (The owner ID)<br>
+token           - The bot token<br>
+error_channel   - The channel where you want to receive errors<br>
+modmail_channel - The channel where you want to receive mod mail<br>
 
 
-## Some important pointers:
-• For understanding how cogs work, refer to the first cog i.e. `cogs/events/modmail` </br>
-• For understanding how to take input after a command is run, refer to the first game cog i.e. `cogs/commands/games/cointoss`</br>
-• If you're making commands that use a database, make sure that the operation statement is correct according to your table.</br>
-• Hosting the bot isn't a difficult, heroku is fine for a bot of this level.
+## Database (MySQL)
+- Auto Mod setup:<br>
+```
+CREATE TABLE automod(
+    guild VARCHAR(20) PRIMARY KEY,
+    _status VARCHAR(10)
+)
+```
 
+- Command Blacklist setup:<br>
+```
+CREATE TABLE command_blacklist(
+    user_id VARCHAR(20) PRIMARY KEY
+)
+```
+
+- Modmail Ban setup:<br>
+```
+CREATE TABLE modban(
+    user_id VARCHAR(20) PRIMARY KEY
+)
+```
+
+- Prefix setup:<br>
+```
+CREATE TABLE prefix(
+    guild VARCHAR(20) PRIMARY KEY,
+    prefix VARCHAR(5)
+)
+```
+
+## NOTE
+
+This is not a tutorial on how to make a discord bot.
