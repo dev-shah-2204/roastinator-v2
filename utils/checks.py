@@ -65,9 +65,6 @@ def get_command_blacklist():
     """
     Get the command list of people that are not allowed to use the bot
     """
-    db.execute(f"SELECT * from command_blacklist")
-    db.fetchall()
-
     with open('./cache/banned.json', 'r') as f:
         cache = json.load(f)
 
@@ -75,6 +72,9 @@ def get_command_blacklist():
         return cache['banned']
 
     else:
+        db.execute(f"SELECT * from command_blacklist")
+        blacklist = db.fetchall()
+
         cache['banned'] = []
 
         for tup in db:
