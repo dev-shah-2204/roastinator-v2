@@ -10,6 +10,7 @@ cogs = [
     'basic',
     'developer',
     'error_handler',
+    'events',
     'fun',
     'games',
     'help',
