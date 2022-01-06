@@ -16,7 +16,6 @@ Roastinator is supposed to be a utility and moderation discord bot. I've tried m
 `STEAM_API_KEY`  - Key for the Steam API (get from steam)
 
 **Bot Related**<br>
-`discord_id`      - Your discord ID (The owner ID)<br>
 `token`           - The bot token<br>
 `error_channel`   - The channel where you want to receive errors<br>
 `modmail_channel` - The channel where you want to receive mod mail<br>

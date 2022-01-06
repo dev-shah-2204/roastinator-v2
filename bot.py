@@ -1,6 +1,5 @@
 import json 
-import discord 
-import os
+import discord
 
 from discord.ext import commands 
 from db import *
@@ -37,7 +36,7 @@ class Roastinator(commands.AutoShardedBot):
             intents=discord.Intents.all(),
             case_insensitive=True,
             allowed_mentions=discord.AllowedMentions(everyone=False),  # Set this according to your own preference
-            owner_id=os.getenv('discord_id')  # Enter your discord ID here
+            owner_id=416979084099321866  # Enter your discord ID here
         )
 
 
