@@ -77,7 +77,6 @@ def get_command_blacklist():
         banned_people = []
 
         for tup in blacklist:
-            print(tup)
             banned_people.append(str(tup[0]))
 
         cache["banned"] = banned_people
