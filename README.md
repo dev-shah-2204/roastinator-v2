@@ -13,7 +13,7 @@ Roastinator is supposed to be a utility and moderation discord bot. I've tried m
 **API Keys**:<br>
 `dad_key_1`      - Key for the dad joke api (get from rapid-api)<br>
 `urban_dict_key` - Key for the urban dictionary api (get from rapid-api)<br>
-`STEAM_API_KEY  - Key for the Steam API (get from steam)
+`STEAM_API_KEY`  - Key for the Steam API (get from steam)
 
 **Bot Related**<br>
 `discord_id`      - Your discord ID (The owner ID)<br>
