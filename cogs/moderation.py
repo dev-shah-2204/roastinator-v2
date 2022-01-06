@@ -346,7 +346,7 @@ class Moderation(commands.Cog):
         with open('./cache/prefix.json', 'r') as f:
             cache = json.load(f)
 
-        if guild  in cache:
+        if guild in cache:
             if cache[guild] == new_prefix:
                 await ctx.reply("The new prefix cannot be the same as your old prefix", mention_author=False)
                 return
@@ -363,7 +363,7 @@ class Moderation(commands.Cog):
 
         cache[guild] = new_prefix
 
-        with open('./cache/prefix.json', 'w'):
+        with open('./cache/prefix.json', 'w') as f:
             json.dump(cache, f)
 
 

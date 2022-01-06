@@ -74,21 +74,18 @@ def get_command_blacklist():
     else:
         db.execute(f"SELECT * from command_blacklist")
         blacklist = db.fetchall()
+        banned_people = []
 
-        cache['banned'] = []
+        for tup in blacklist:
+            print(tup)
+            banned_people.append(str(tup[0]))
 
-        with open('./cache/banned.json', 'r') as f:
-            cache = json.load(f)
+        cache["banned"] = banned_people
 
-        for tup in db:
-            cache['banned'].append(str(tup[0]))
-
-        with open('./cache/banned.json', 'w') as g:
+        with open('./cache/banned.json', 'w') as f:
             json.dump(cache, f)
 
-        print(cache)
-        return cache['banned']
-
+        return banned_people
 
 def bool_str(variable):
     """

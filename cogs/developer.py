@@ -88,7 +88,7 @@ class Developer(commands.Cog):
         if user not in cache['banned']:
             cache['banned'].append(user)
 
-        with open('./cache/banned.json', 'w'):
+        with open('./cache/banned.json', 'w') as f:
             json.dump(cache, f)
 
         await ctx.reply(f"Added {user} to the blacklist")
@@ -96,7 +96,7 @@ class Developer(commands.Cog):
 
     @command(name="unignore")
     @is_owner()
-    async def ignore_people(self, ctx, user: str):
+    async def unignore_people(self, ctx, user: str):
         db.execute(f"DELETE FROM command_blacklist WHERE user_id = '{user}'")
         database.commit()
 
@@ -109,7 +109,7 @@ class Developer(commands.Cog):
         if user in cache['banned']:
             cache['banned'].remove(user)
 
-        with open('./cache/banned.json', 'w'):
+        with open('./cache/banned.json', 'w') as f:
             json.dump(cache, f)
 
         await ctx.reply(f"Removed {user} from the blacklist")
@@ -135,7 +135,7 @@ class Developer(commands.Cog):
             cache = json.load(f)
 
         cache['modban'].append(user.id)
-        with open('./cache/banned.json', 'w'):
+        with open('./cache/banned.json', 'w') as f:
             json.dump(cache, f)
 
     @command(name='unbanmodmail')
@@ -161,7 +161,7 @@ class Developer(commands.Cog):
         except ValueError:
             pass
 
-        with open('./cache/banned.json', 'w'):
+        with open('./cache/banned.json', 'w') as f:
             json.dump(cache, f)
 
 

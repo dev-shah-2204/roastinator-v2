@@ -109,7 +109,7 @@ class Events(Cog):
             with open('./cache/prefix.json', 'r') as f:
                 cache = json.load(f)
 
-            prefix = cache[str(ctx.guild.id)]
+            prefix = cache[str(msg.guild.id)]
 
             em = discord.Embed(
                 title=f"My prefix for this server is `{prefix}`",
@@ -118,11 +118,11 @@ class Events(Cog):
             await msg.channel.send(embed=em)
 
 
-        # Command Blacklist
+        #Command Blacklist
         # command_blacklist = checks.get_command_blacklist()
-        # if not str(msg.author.id) in command_blacklist:
-        #     await self.bot.process_commands(msg)
-        # else:
+        #
+        # if str(msg.author.id) in command_blacklist or msg.author.id in command_blacklist:
+        #     print('in blacklist')
         #     return
 
     @Cog.listener()
