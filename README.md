@@ -5,21 +5,21 @@ Roastinator is supposed to be a utility and moderation discord bot. I've tried m
 ## Config Vars
 
 **Database**:<br>
-db_host     - The host URL of your database (Might be your IPv4 or localhost)<br>
-db_user     - The username (root in most cases)<br>
-db_password - The password (Leave it as `""` if it's not password protected)<br>
-db_db       - The name of the database
+`db_host`     - The host URL of your database (Might be your IPv4 or localhost)<br>
+`db_user`    - The username (root in most cases)<br>
+`db_password` - The password (Leave it as "" if it's not password protected)<br>
+`db_db`       - The name of the database
 
 **API Keys**:<br>
-dad_key_1      - Key for the dad joke api (get from rapid-api)<br>
-urban_dict_key - Key for the urban dictionary api (get from rapid-api)<br>
-STEAM_API_KEY  - Key for the Steam API (get from steam)
+`dad_key_1`      - Key for the dad joke api (get from rapid-api)<br>
+`urban_dict_key` - Key for the urban dictionary api (get from rapid-api)<br>
+`STEAM_API_KEY  - Key for the Steam API (get from steam)
 
 **Bot Related**<br>
-discord_id      - Your discord ID (The owner ID)<br>
-token           - The bot token<br>
-error_channel   - The channel where you want to receive errors<br>
-modmail_channel - The channel where you want to receive mod mail<br>
+`discord_id`      - Your discord ID (The owner ID)<br>
+`token`           - The bot token<br>
+`error_channel`   - The channel where you want to receive errors<br>
+`modmail_channel` - The channel where you want to receive mod mail<br>
 
 
 ## Database (MySQL)
