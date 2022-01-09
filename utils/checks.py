@@ -61,6 +61,32 @@ def get_blacklist(guild):
     return blacklist
 
 
+def get_server_prefix(msg):
+    with open('./cache/prefix.json', 'r') as f:
+        cache = json.load(f)
+
+    if str(msg.guild.id) in cache:
+        return cache[str(msg.guild.id)]
+
+
+    db.execute(f"SELECT prefix FROM Prefix WHERE guild = '{msg.guild.id}'")
+    prefix = db.fetchone()
+
+    if prefix is None:
+        db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{msg.guild.id}', '-')")
+        database.commit()
+        prefix = '-'
+    else:
+        prefix = prefix[0]
+
+    cache[str(msg.guild.id)] = prefix
+
+    with open('./cache/prefix.json', 'w') as f:
+        json.dump(cache, f)
+
+    return prefix
+
+
 def get_command_blacklist():
     """
     Get the command list of people that are not allowed to use the bot
