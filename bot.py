@@ -1,32 +1,13 @@
 import json 
 import discord
 
-from discord.ext import commands 
+from discord.ext import commands
+from utils import checks
 from db import *
 
 def get_prefix(bot, message):
-    with open('./cache/prefix.json', 'r') as f:
-        cache = json.load(f)
-    
-    guild = str(message.guild.id)
-    if guild in cache:
-        return commands.when_mentioned_or(cache[guild])(bot, message)
-    
-    else:
-        db.execute(f"SELECT prefix FROM Prefix WHERE guild = {guild}")
-        prefix = db.fetchone()
-
-        if prefix is None:
-            db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{guild}', '-')")  # Default prefix is - 
-            database.commit()
-            cache[guild] = '-'
-        else:
-            cache[guild] = prefix[0]
-        
-        with open('./cache/prefix.json', 'w') as f:
-            json.dump(cache, f)
-            
-        return commands.when_mentioned_or(prefix[0])(bot, message)
+    prefix = checks.get_server_prefix(message)
+    return commands.when_mentioned_or(prefix)(bot, message)
 
 
 class Roastinator(commands.AutoShardedBot):
