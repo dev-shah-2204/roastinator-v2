@@ -106,10 +106,7 @@ class Events(Cog):
 
         # Prefix
         if msg.content == f"<@!{self.bot.user.id}>" or msg.content == f"<@{self.bot.user.id}>":
-            with open('./cache/prefix.json', 'r') as f:
-                cache = json.load(f)
-
-            prefix = cache[str(msg.guild.id)]
+            prefix = checks.get_server_prefix(msg)
 
             em = discord.Embed(
                 title=f"My prefix for this server is `{prefix}`",
