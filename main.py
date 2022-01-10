@@ -32,5 +32,6 @@ async def before_invoke(coro):
 
         if str(coro.author.id) in command_blacklist:
             await coro.send("You've been blacklisted from using this bot. If you thing this is a mistake, contact StatTrakDiamondSword#5493. If they have blocked you, then there's nothing that can be done.")
-            raise Exception(f"{coro.author} ({coro.author.id}) - blacklisted user - tried using {coro.command}")
+            print(f"{coro.author} ({coro.author.id}) - blacklisted user - tried using {coro.command}")
+
 bot.run(os.getenv('token'))
