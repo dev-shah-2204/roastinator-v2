@@ -12,6 +12,7 @@ from db import *
 
 
 people_on_cooldown = []
+fixed_prefix = []  # If the bot was added when offline, prefix was probably not registered.
 
 def check_ban(user):
     with open('./cache/banned.json', 'r') as f:
@@ -105,9 +106,12 @@ class Events(Cog):
         #                     break
 
         # Prefix
+        if msg.guild.id not in fixed_prefix:
+            prefix = checks.get_server_prefix(msg)
+            fixed_prefix.append(msg.guild.id)
+
         if msg.content == f"<@!{self.bot.user.id}>" or msg.content == f"<@{self.bot.user.id}>":
             prefix = checks.get_server_prefix(msg)
-
             em = discord.Embed(
                 title=f"My prefix for this server is `{prefix}`",
                 color=colors.l_green
@@ -115,23 +119,40 @@ class Events(Cog):
             await msg.channel.send(embed=em)
 
 
-        #Command Blacklist
-        # command_blacklist = checks.get_command_blacklist()
-        #
-        # if str(msg.author.id) in command_blacklist or msg.author.id in command_blacklist:
-        #     print('in blacklist')
-        #     return
-
     @Cog.listener()
     async def on_guild_join(self, guild):
-        pass
+        db.execute(f"INSERT INTO Prefix(guild, prefix) VALUES ('{guild.id}', '-')")
+        db.execute(f"INSERT INTO AutoMod(guild, _status) VALUES ('{guild.id}', 'disabled')")
+        database.commit()
+
+        em = discord.Embed(
+            title="Hey there!",
+            description=f"""
+My name is Roastinator and I specialise in moderation and utility.
+My prefix is `-`. If you wish to change it, use the prefix command.
+You can also ping me instead of using the prefix. 
+For example: {self.bot.user.mention} prefix `.` will change the prefix to `.`
+""",
+            color=colors.l_green
+        )
+
+        for channel in guild.text_channels:
+            if guild.me.guild_permissions.send_messages and guild.me.guld_permissions.embed_links:
+                await channel.send(embed=em)
+                break
 
 
     @Cog.listener()
     async def on_guild_remove(self, guild):
-        pass
+        db.execute(f"DELETE FROM Prefix WHERE guild = '{guild.id}'")
+        db.execute(f"DELETE FROM AutoMod WHERE guild = '{guild.id}'")
 
+        try:
+            db.execute(f"DROP TABLE am_{guild.id}")
+        except:
+            pass
 
+        database.commit()
 
 
 
