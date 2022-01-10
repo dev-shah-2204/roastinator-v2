@@ -332,7 +332,7 @@ class Moderation(commands.Cog):
 
     @command(name='prefix', aliases=['setprefix', 'change_prefix'], help="Change the prefix for your server")
     @has_permissions(manage_guild=True)
-    async def change_prefix(self, ctx, new_prefix: str = None):
+    async def change_prefix(self, ctx, new_prefix):
         if len(new_prefix) > 5:
             await ctx.reply("Thre prefix cannot be longer than 5 characters", mention_author=False)
             return
