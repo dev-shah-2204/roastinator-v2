@@ -423,161 +423,161 @@ class Utility(commands.Cog):
             color=colors.l_green)
         await ctx.reply(embed=em, mention_author=False)
 
+    @command(name='csgodetail', aliases=['csgostatsdetail'], help='Get CSGO Stats of a Steam account')
+    async def csgo_detail(self, ctx, steam_profile_link=None):
+        """
+        A lot of code from the get_csgo_stats is being repeated here, but meh
+        """
 
-        @commands.command(name='csgodetail', aliases=['csgostatsdetail'], help='Get CSGO Stats of a Steam account')
-        async def csgo_detail(self, ctx, steam_profile_link=None):
-            """
-            A lot of code from the get_csgo_stats is being repeated here, but meh
-            """
-            def check(message: discord.Message) -> bool:
-                return message.author == ctx.author
+        def check(message: discord.Message) -> bool:
+            return message.author == ctx.author
 
-            url = steam_profile_link
+        url = steam_profile_link
 
-            if url is None:
-                msg = await ctx.reply("Enter your Steam Profile URL. This message is active for 2 minutes", mention_author=False)
-                await ctx.reply("To find your profile link, open steam in a browser, and go to your profile. Then copy the link and paste it here.", mention_author=False)
+        if url is None:
+            msg = await ctx.reply("Enter your Steam Profile URL. This message is active for 2 minutes", mention_author=False)
+            await ctx.reply("To find your profile link, open steam in a browser, and go to your profile. Then copy the link and paste it here.", mention_author=False)
+            try:
+                message = await self.client.wait_for('message', timeout=2 * 60, check=check)
+                url = message.content.lower()
+            except asyncio.TimeoutError:
+                await msg.edit('This message is now inactive because you took too long to respond')
+                return
+
+        _id = checks.get_steam_id_from_url(url=url)
+        if _id is None:
+            await ctx.reply("I couldn't find your steam profile from that. Try running `help csgo`", mention_author=False)
+            return
+
+        key = os.environ.get('STEAM_API_KEY')
+        stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={key}&steamid={_id}")
+
+        if 'Internal Server Error' in stats.text:
+            await ctx.reply("Uh-oh. Error.\nMaybe a Steam Profile with those details doesn't exist?\nMaybe they don't play CS:GO?\nMaybe their game details are private?", mention_author=False)
+            return
+
+        if stats.status_code == '500':  # Status code is 500 when profile not found or profile private
+            await ctx.reply("I think your profile and/or game details are set to private. Make them public and try again", mention_author=False)
+            return
+
+        stats = stats.json()
+        playerstats = stats['playerstats']
+        gstats = playerstats['stats']  # game stats
+
+        def get_pos(name):
+            for i in range(0, len(gstats)):
+                if gstats[i]['name'] == name:
+                    return i
+
+        def get_value(name):
+            pos = get_pos(name)
+
+            if pos is None:
+                return None
+
+            try:
+                dict_ = gstats[pos]
+                value = dict_['value']
                 try:
-                    message = await self.client.wait_for('message', timeout=2 * 60, check=check)
-                    url = message.content.lower()
-                except asyncio.TimeoutError:
-                    await msg.edit('This message is now inactive because you took too long to respond')
-                    return
+                    return "{:,}".format(value)
+                except TypeError:  # If the value is NoneType
+                    return value
+            except KeyError:
+                pass
 
-            _id = await self.get_id_from_url(url=url)
-            if _id is None:
-                await ctx.reply("I couldn't find your steam profile from that. Try running `help csgo`", mention_author=False)
-                return
+        # Pistol
+        glock = (get_value('total_kills_glock'))
+        usp = (get_value('total_kills_hkp2000'))  # USP is called hkp2000 in the json returned by the API
+        dual = (get_value('total_kills_elite'))  # Dual Berettas are called elite in the json returned by the API
+        p250 = (get_value('total_kills_p250'))
+        tec9 = (get_value('total_kills_tec9'))
+        fiveseven = (get_value('total_kills_fiveseven'))
+        deag = (get_value('total_kills_deagle'))
 
-            key = os.environ.get('STEAM_API_KEY')
-            stats = requests.get(f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=730&key={key}&steamid={_id}")
+        # Smg
+        mac10 = (get_value('total_kills_mac10'))
+        mp9 = (get_value('total_kills_mp9'))
+        mp7 = (get_value('total_kills_mp7'))
+        ump = (get_value('total_kills_ump45'))
+        p90 = (get_value('total_kills_p90'))
+        bizon = (get_value('total_kills_bizon'))
 
-            if 'Internal Server Error' in stats.text:
-                await ctx.reply("Uh-oh. Error.\nMaybe a Steam Profile with those details doesn't exist?\nMaybe they don't play CS:GO?\nMaybe their game details are private?", mention_author=False)
-                return
+        # Shotgun
+        nova = (get_value('total_kills_nova'))
+        xm1014 = (get_value('total_kills_xm1014'))
+        sawed = (get_value('total_kills_sawdoff'))
+        mag7 = (get_value('total_kills_mag7'))
 
-            if stats.status_code == '500':  # Status code is 500 when profile not found or profile private
-                await ctx.reply("I think your profile and/or game details are set to private. Make them public and try again", mention_author=False)
-                return
+        # Rifle
+        galil = (get_value('total_kills_galilar'))
+        famas = (get_value('total_kills_famas'))
+        ak47 = (get_value('total_kills_ak47'))
+        m4 = (get_value('total_kills_m4a1'))
+        ssg08 = (get_value('total_kills_ssg08'))
+        sg553 = (get_value('total_kills_sg556'))  # sg553 is called ss556 in the json returned by the API
+        aug = (get_value('total_kills_aug'))
+        awp = (get_value('total_kills_awp'))
+        g3sg1 = (get_value('total_kills_g3sg1'))
+        scar20 = (get_value('total_kills_scar20'))
 
-            stats = stats.json()
-            playerstats = stats['playerstats']
-            gstats = playerstats['stats']  # game stats
+        # Misc
+        negev = (get_value('total_kills_negev'))
+        m249 = (get_value('total_kills_m249'))
+        zeus = (get_value('total_kills_taser'))
 
-            def get_pos(name):
-                for i in range(0, len(gstats)):
-                    if gstats[i]['name'] == name:
-                        return i
-
-            def get_value(name):
-                pos = get_pos(name)
-
-                if pos is None:
-                    return None
-
-                try:
-                    dict_ = gstats[pos]
-                    value = dict_['value']
-                    try:
-                        return "{:,}".format(value)
-                    except TypeError:  # If the value is NoneType
-                        return value
-                except KeyError:
-                    pass
-
-            # Pistol
-            glock = (get_value('total_kills_glock'))
-            usp = (get_value('total_kills_hkp2000'))  # USP is called hkp2000 in the json returned by the API
-            dual = (get_value('total_kills_elite'))  # Dual Berettas are called elite in the json returned by the API
-            p250 = (get_value('total_kills_p250'))
-            tec9 = (get_value('total_kills_tec9'))
-            fiveseven = (get_value('total_kills_fiveseven'))
-            deag = (get_value('total_kills_deagle'))
-
-            # Smg
-            mac10 = (get_value('total_kills_mac10'))
-            mp9 = (get_value('total_kills_mp9'))
-            mp7 = (get_value('total_kills_mp7'))
-            ump = (get_value('total_kills_ump45'))
-            p90 = (get_value('total_kills_p90'))
-            bizon = (get_value('total_kills_bizon'))
-
-            # Shotgun
-            nova = (get_value('total_kills_nova'))
-            xm1014 = (get_value('total_kills_xm1014'))
-            sawed = (get_value('total_kills_sawdoff'))
-            mag7 = (get_value('total_kills_mag7'))
-
-            # Rifle
-            galil = (get_value('total_kills_galilar'))
-            famas = (get_value('total_kills_famas'))
-            ak47 = (get_value('total_kills_ak47'))
-            m4 = (get_value('total_kills_m4a1'))
-            ssg08 = (get_value('total_kills_ssg08'))
-            sg553 = (get_value('total_kills_sg556'))  # sg553 is called ss556 in the json returned by the API
-            aug = (get_value('total_kills_aug'))
-            awp = (get_value('total_kills_awp'))
-            g3sg1 = (get_value('total_kills_g3sg1'))
-            scar20 = (get_value('total_kills_scar20'))
-
-            # Misc
-            negev = (get_value('total_kills_negev'))
-            m249 = (get_value('total_kills_m249'))
-            zeus = (get_value('total_kills_taser'))
-
-            em = discord.Embed(
-                title=f"CSGO Stats for {_id}",
-                color=colors.l_green
-            )
-            em.add_field(
-                name="__Terrorist Weapons__",
-                value=f"""
-    **Glock**: {glock}
-    **Tec-9**: {tec9}
-    **Mac-10**: {mac10}
-    **Sawed-off**: {sawed}
-    **Galil AR**: {galil}
-    **AK-47**: {ak47}
-    **SG553**: {sg553}
-    **G3SG1**: {g3sg1}
-                """,
-                inline=False
-            )
-            em.add_field(
-                name="__Counter-Terrorist Weapons__",
-                value=f"""
-    **USP/P2000**: {usp}
-    **Five-Seven**: {fiveseven}
-    **MP9**: {mp9}
-    **Mag 7**: {mag7}
-    **FAMAS**: {famas}
-    **M4**: {m4}
-    **AUG**: {aug}
-    **SCAR-20**: {scar20}
-                """,
-                inline=False
-            )
-            em.add_field(
-                name="__Common Weapons__",
-                value=f"""
-    **Dual Berettas**: {dual}
-    **P250**: {p250}
-    **Desert Eagle/R8**: {deag}
-    **MP7/MP5**: {mp7}
-    **UMP-45**: {ump}
-    **P90**: {p90}
-    **PP Bizon**: {bizon}
-    **Nova**: {nova}
-    **XM-1014**: {xm1014}
-    **SSG-08**: {ssg08}
-    **AWP**: {awp}
-    **Negev**: {negev}
-    **M249**: {m249}
-    **Zeus x27**: {zeus}
-                """,
-                inline=False
-            )
-            await ctx.reply(embed=em, mention_author=False)
+        em = discord.Embed(
+            title=f"CSGO Stats for {_id}",
+            color=colors.l_green
+        )
+        em.add_field(
+            name="__Terrorist Weapons__",
+            value=f"""
+**Glock**: {glock}
+**Tec-9**: {tec9}
+**Mac-10**: {mac10}
+**Sawed-off**: {sawed}
+**Galil AR**: {galil}
+**AK-47**: {ak47}
+**SG553**: {sg553}
+**G3SG1**: {g3sg1}
+            """,
+            inline=False
+        )
+        em.add_field(
+            name="__Counter-Terrorist Weapons__",
+            value=f"""
+**USP/P2000**: {usp}
+**Five-Seven**: {fiveseven}
+**MP9**: {mp9}
+**Mag 7**: {mag7}
+**FAMAS**: {famas}
+**M4**: {m4}
+**AUG**: {aug}
+**SCAR-20**: {scar20}
+            """,
+            inline=False
+        )
+        em.add_field(
+            name="__Common Weapons__",
+            value=f"""
+**Dual Berettas**: {dual}
+**P250**: {p250}
+**Desert Eagle/R8**: {deag}
+**MP7/MP5**: {mp7}
+**UMP-45**: {ump}
+**P90**: {p90}
+**PP Bizon**: {bizon}
+**Nova**: {nova}
+**XM-1014**: {xm1014}
+**SSG-08**: {ssg08}
+**AWP**: {awp}
+**Negev**: {negev}
+**M249**: {m249}
+**Zeus x27**: {zeus}
+            """,
+            inline=False
+        )
+        await ctx.reply(embed=em, mention_author=False)
 
 
     @commands.Cog.listener()
@@ -597,7 +597,6 @@ class Utility(commands.Cog):
             del_msg[channel]['embed'] = message.embeds[0]
         else:
             del_msg[channel]['embed'] = None
-
 
     @commands.command(name='snipe', help='Check the last deleted message in the channel')
     async def snipe(self, ctx):
