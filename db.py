@@ -1,15 +1,7 @@
-import mysql.connector
-import os 
+import os
+import psycopg2 as sql
 
-host = os.getenv('db_host')
-user = os.getenv('db_user')
-passw = os.getenv('db_password')
-name = os.getenv('db_db')
+url = os.getenv('DATABASE_URL')
 
-database = mysql.connector.connect(
-    host = host,
-    user = user,
-    password = passw,
-    database = name
-)
+database = sql.connect(url)
 db = database.cursor()

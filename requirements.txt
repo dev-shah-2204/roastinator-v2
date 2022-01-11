@@ -3,6 +3,6 @@ requests==2.25.1
 py_cord==1.7.3
 urbandict==0.6.1
 discord==1.7.3
-mysql_connector_python==8.0.25
+psycopg2~=2.9.2
 Pillow==9.0.0
 jishaku==2.0.0
