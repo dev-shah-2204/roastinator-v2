@@ -367,170 +367,167 @@ class Moderation(commands.Cog):
             json.dump(cache, f)
 
 
-    """
-    Auto Mod not working properly rn
-    """
-    # @group(name='automod', aliases=['am'], help="Configure Auto Moderation settings for the server", invoke_without_command=True)
-    # @has_permissions(manage_messages=True)
-    # @bot_has_permissions(manage_messages=True)
-    # async def automod(self, ctx):
-    #     em = discord.Embed(
-    #         title="Commands:",
-    #         description="`enable` \n`disable` \n`blacklist` \n`remove` \n`show`"
-    #     )
-    #     em.set_footer(text="Use 'automod <command>' to use a command")
-    #     await ctx.reply(embed=em, mention_author=False)
-    #
-    #
-    # @automod.command(name='enable')
-    # @cooldown(1, 20 * 60, BucketType.user)
-    # async def automod_enable(self, ctx):
-    #     status = checks.get_automod_status(str(ctx.guild.id))
-    #     em = discord.Embed(
-    #         description="Enabled Auto Mod for your server",
-    #         color=colors.l_red
-    #     )
-    #
-    #     if status == 'enabled':
-    #         await ctx.reply(embed=em, mention_author=False)
-    #     else:
-    #         db.execute(f"UPDATE AutoMod SET _status = 'enabled' WHERE guild = '{ctx.guild.id}'")
-    #         database.commit()
-    #
-    #         with open("./cache/automod.json", 'r') as f:
-    #             cache = json.load(f)
-    #         cache[str(ctx.guild.id)]['status'] = 'enabled'
-    #
-    #         with open("./cache/automod.json", 'w') as f:
-    #             json.dump(cache, f)
-    #
-    #         await ctx.reply(embed=em, mention_author=False)
-    #
-    #
-    # @automod.command(name='disable')
-    # @cooldown(1, 20 * 60, BucketType.user)
-    # async def automod_disable(self, ctx):
-    #     em = discord.Embed(
-    #         description="Disabled Auto Mod for your server",
-    #         color=colors.l_red
-    #     )
-    #     status = checks.get_automod_status(str(ctx.guild.id))
-    #     if status == 'disabled':
-    #         await ctx.reply(embed=em, mention_author=False)
-    #
-    #     else:
-    #         db.execute(f"UPDATE AutoMod SET _status = 'disabled' WHERE guild = '{ctx.guild.id}'")
-    #         database.commit()
-    #
-    #         with open("./cache/automod.json", 'r') as f:
-    #             cache = json.load(f)
-    #
-    #         if str(ctx.guild.id) not in cache:
-    #             cache[str(ctx.guild.id)] = {}
-    #             cache[str(ctx.guild.id)]['status'] = 'disabled'
-    #             cache[str(ctx.guild.id)]['blacklist'] = []
-    #         else:
-    #             cache[str(ctx.guild.id)]['status'] = 'disabled'
-    #
-    #         with open("./cache/automod.json", 'w') as f:
-    #             json.dump(cache, f)
-    #
-    #         await ctx.reply(embed=em, mention_author=False)
-    #
-    #
-    # @automod.command(name='blacklist', aliases=['bl'])
-    # async def blacklist_word(self, ctx, *, word):
-    #     if len(word) > 40:
-    #         await ctx.reply("Word length cannot exceed 40 characters", mention_author=False)
-    #         return
-    #
-    #     if '"' in word or "'" in word:
-    #         await ctx.reply(f"""The word cannot contain `"` or `'`.""", mention_author=False)
-    #
-    #     guild = str(ctx.guild.id)
-    #     status = checks.get_automod_status(guild)
-    #     blacklist = checks.get_blacklist(guild)
-    #
-    #     if len(blacklist) >= 50:
-    #         await ctx.send("Your server has already reached the 50 word blacklist limit. Remove some blacklisted words in order to blacklist more words or contact StatTrakDiamondSword#5493")
-    #         return
-    #
-    #     db.execute(f"INSERT INTO am_{guild} (words) VALUES ('{word}')")
-    #     database.commit()
-    #
-    #     with open('./cache/automod.json', 'r') as f:
-    #         cache = json.load(f)
-    #
-    #     cache[guild]['blacklist'].append(word)
-    #
-    #     with open('./cache/automod.json', 'w') as f:
-    #         json.dump(cache, f)
-    #
-    #     em = discord.Embed(
-    #         description=f'||{word}|| has been blacklisted in this server',
-    #         color=colors.l_red
-    #     )
-    #     await ctx.reply(embed=em, mention_author=False)
-    #
-    #
-    # @automod.command(name='remove', aliases=['rm', 'unblacklist'])
-    # async def un_blacklist_word(self, ctx, *, word):
-    #     guild = str(ctx.guild.id)
-    #     status = checks.get_automod_status(guild)
-    #     blacklist = checks.get_blacklist(guild)
-    #     print(blacklist)
-    #
-    #     if word not in blacklist:
-    #         em = discord.Embed(
-    #             description="That word isn't blacklisted in this server",
-    #             color=colors.l_red
-    #         )
-    #         await ctx.reply(embed=em, mention_author=False)
-    #         return
-    #
-    #     db.execute(f"DELETE FROM am_{guild} WHERE words = '{word}'")
-    #     database.commit()
-    #
-    #     with open('./cache/automod.json', 'r') as f:
-    #         cache = json.load(f)
-    #
-    #     try:
-    #         cache[guild]['blacklist'].remove(word)
-    #     except ValueError:
-    #         pass
-    #
-    #     with open('./cache/automod.json', 'w') as f:
-    #         json.dump(cache, f)
-    #
-    #     em = discord.Embed(
-    #         description=f"Removed '{word}' from the blacklist",
-    #         color=colors.l_red
-    #     )
-    #     await ctx.reply(embed=em, mention_author=False)
-    #
-    #
-    # @automod.command(name='show', aliases=['list'])
-    # async def show_blacklist(self, ctx):
-    #     guild = str(ctx.guild.id)
-    #     blacklist = checks.get_blacklist(guild)
-    #     desc = ""
-    #
-    #     for word in blacklist:
-    #         desc += f"`{word[0]}`\n"
-    #
-    #     if desc == "":
-    #         em = discord.Embed(
-    #             description="There are no blacklisted words in your server",
-    #             color=colors.l_red
-    #         )
-    #         await ctx.send(embed=em)
-    #     else:
-    #         em = discord.Embed(
-    #             title="Blacklisted words in your server",
-    #             description=desc,
-    #             color=colors.l_red
-    #         )
-    #         await ctx.send(embed=em)
+    @group(name='automod', aliases=['am'], help="Configure Auto Moderation settings for the server", invoke_without_command=True)
+    @has_permissions(manage_messages=True)
+    @bot_has_permissions(manage_messages=True)
+    async def automod(self, ctx):
+        em = discord.Embed(
+            title="Commands:",
+            description="`enable` \n`disable` \n`blacklist` \n`remove` \n`show`"
+        )
+        em.set_footer(text="Use 'automod <command>' to use a command")
+        await ctx.reply(embed=em, mention_author=False)
+
+
+    @automod.command(name='enable')
+    @cooldown(1, 20 * 60, BucketType.user)
+    async def automod_enable(self, ctx):
+        status = checks.get_automod_status(str(ctx.guild.id))
+        em = discord.Embed(
+            description="Enabled Auto Mod for your server",
+            color=colors.l_red
+        )
+
+        if status == 'enabled':
+            await ctx.reply(embed=em, mention_author=False)
+        else:
+            db.execute(f"UPDATE AutoMod SET _status = 'enabled' WHERE guild = '{ctx.guild.id}'")
+            database.commit()
+
+            with open("./cache/automod.json", 'r') as f:
+                cache = json.load(f)
+            cache[str(ctx.guild.id)]['status'] = 'enabled'
+
+            with open("./cache/automod.json", 'w') as f:
+                json.dump(cache, f)
+
+            await ctx.reply(embed=em, mention_author=False)
+
+
+    @automod.command(name='disable')
+    @cooldown(1, 20 * 60, BucketType.user)
+    async def automod_disable(self, ctx):
+        em = discord.Embed(
+            description="Disabled Auto Mod for your server",
+            color=colors.l_red
+        )
+        status = checks.get_automod_status(str(ctx.guild.id))
+        if status == 'disabled':
+            await ctx.reply(embed=em, mention_author=False)
+
+        else:
+            db.execute(f"UPDATE AutoMod SET _status = 'disabled' WHERE guild = '{ctx.guild.id}'")
+            database.commit()
+
+            with open("./cache/automod.json", 'r') as f:
+                cache = json.load(f)
+
+            if str(ctx.guild.id) not in cache:
+                cache[str(ctx.guild.id)] = {}
+                cache[str(ctx.guild.id)]['status'] = 'disabled'
+                cache[str(ctx.guild.id)]['blacklist'] = []
+            else:
+                cache[str(ctx.guild.id)]['status'] = 'disabled'
+
+            with open("./cache/automod.json", 'w') as f:
+                json.dump(cache, f)
+
+            await ctx.reply(embed=em, mention_author=False)
+
+
+    @automod.command(name='blacklist', aliases=['bl'])
+    async def blacklist_word(self, ctx, *, word):
+        if len(word) > 40:
+            await ctx.reply("Word length cannot exceed 40 characters", mention_author=False)
+            return
+
+        if '"' in word or "'" in word:
+            await ctx.reply(f"""The word cannot contain `"` or `'`.""", mention_author=False)
+
+        guild = str(ctx.guild.id)
+        status = checks.get_automod_status(guild)
+        blacklist = checks.get_blacklist(guild)
+
+        if len(blacklist) >= 50:
+            await ctx.send("Your server has already reached the 50 word blacklist limit. Remove some blacklisted words in order to blacklist more words or contact StatTrakDiamondSword#5493")
+            return
+
+        db.execute(f"INSERT INTO am_{guild} (words) VALUES ('{word}')")
+        database.commit()
+
+        with open('./cache/automod.json', 'r') as f:
+            cache = json.load(f)
+
+        cache[guild]['blacklist'].append(word)
+
+        with open('./cache/automod.json', 'w') as f:
+            json.dump(cache, f)
+
+        em = discord.Embed(
+            description=f'||{word}|| has been blacklisted in this server',
+            color=colors.l_red
+        )
+        await ctx.reply(embed=em, mention_author=False)
+
+
+    @automod.command(name='remove', aliases=['rm', 'unblacklist'])
+    async def un_blacklist_word(self, ctx, *, word):
+        guild = str(ctx.guild.id)
+        status = checks.get_automod_status(guild)
+        blacklist = checks.get_blacklist(guild)
+        print(blacklist)
+
+        if word not in blacklist:
+            em = discord.Embed(
+                description="That word isn't blacklisted in this server",
+                color=colors.l_red
+            )
+            await ctx.reply(embed=em, mention_author=False)
+            return
+
+        db.execute(f"DELETE FROM am_{guild} WHERE words = '{word}'")
+        database.commit()
+
+        with open('./cache/automod.json', 'r') as f:
+            cache = json.load(f)
+
+        try:
+            cache[guild]['blacklist'].remove(word)
+        except ValueError:
+            pass
+
+        with open('./cache/automod.json', 'w') as f:
+            json.dump(cache, f)
+
+        em = discord.Embed(
+            description=f"Removed '{word}' from the blacklist",
+            color=colors.l_red
+        )
+        await ctx.reply(embed=em, mention_author=False)
+
+
+    @automod.command(name='show', aliases=['list'])
+    async def show_blacklist(self, ctx):
+        guild = str(ctx.guild.id)
+        blacklist = checks.get_blacklist(guild)
+        desc = ""
+
+        for word in blacklist:
+            desc += f"`{word[0]}`\n"
+
+        if desc == "":
+            em = discord.Embed(
+                description="There are no blacklisted words in your server",
+                color=colors.l_red
+            )
+            await ctx.send(embed=em)
+        else:
+            em = discord.Embed(
+                title="Blacklisted words in your server",
+                description=desc,
+                color=colors.l_red
+            )
+            await ctx.send(embed=em)
 
 
 def setup(bot):
