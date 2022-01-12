@@ -93,36 +93,38 @@ class Events(Cog):
                 await msg.channel.send("You're on cooldown")
                 return
 
-        automod_status = checks.get_automod_status(msg.guild.id)
-        if automod_status == 'enabled':
-            print('enabled')
-            blacklist = checks.get_blacklist(msg.guild.id)
+        else:
+            automod_status = checks.get_automod_status(msg.guild.id)
+            if automod_status == 'enabled':
+                print('enabled')
+                blacklist = checks.get_blacklist(msg.guild.id)
 
-            user = msg.guild.get_member(msg.author.id)
-            if user is not None:
-                if not user.guild_permissions.manage_messages:
+                user = msg.guild.get_member(msg.author.id)
+                if user is not None:
+                    if not user.guild_permissions.manage_messages:
 
-                    for word in blacklist:
-                        if word.lower() in msg.content.lower():
-                            await msg.delete()
-                            try:
-                                await msg.author.send(f"Hey! That word is not allowed in this server")
-                            except discord.Forbidden:
-                                pass
-                            break
+                        for word in blacklist:
+                            if word.lower() in msg.content.lower():
+                                await msg.delete()
+                                try:
+                                    await msg.author.send(f"Hey! That word is not allowed in this server")
+                                except discord.Forbidden:
+                                    pass
+                                break
 
-        # Prefix
-        if msg.guild.id not in fixed_prefix:
-            prefix = checks.get_server_prefix(msg)
-            fixed_prefix.append(msg.guild.id)
+            # Prefix
+            if msg.guild.id not in fixed_prefix:
+                prefix = checks.get_server_prefix(msg)
+                fixed_prefix.append(msg.guild.id)
 
-        if msg.content == f"<@!{self.bot.user.id}>" or msg.content == f"<@{self.bot.user.id}>":
-            prefix = checks.get_server_prefix(msg)
-            em = discord.Embed(
-                title=f"My prefix for this server is `{prefix}`",
-                color=colors.l_green
-            )
-            await msg.channel.send(embed=em)
+            if msg.content == f"<@!{self.bot.user.id}>" or msg.content == f"<@{self.bot.user.id}>":
+                prefix = checks.get_server_prefix(msg)
+                em = discord.Embed(
+                    title=f"My prefix for this server is `{prefix}`",
+                    color=colors.l_green
+                )
+                await msg.channel.send(embed=em)
+
 
 
     @Cog.listener()
