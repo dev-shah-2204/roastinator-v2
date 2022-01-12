@@ -18,12 +18,19 @@ def check_ban(user):
     with open('./cache/banned.json', 'r') as f:
         banned_people = json.load(f)
 
-    if user in banned_people['modban']:
-        return True
+    try:
+        if user in banned_people['modban']:
+            return True
+    except KeyError:
+        banned_people['modban'] = []
+
+        with open('./cache/banned.json', 'w') as f:
+            json.dump(banned_people, f)
 
     db.execute(f"SELECT user_id FROM ModBan WHERE user_id = '{user}'")
+
     if db.fetchone() is not None:
-        banned_people.append(user)
+        banned_people['modban'].append(user)
         return True
     else:
         return False
