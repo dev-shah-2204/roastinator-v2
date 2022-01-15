@@ -438,7 +438,7 @@ class Utility(commands.Cog):
             msg = await ctx.reply("Enter your Steam Profile URL. This message is active for 2 minutes", mention_author=False)
             await ctx.reply("To find your profile link, open steam in a browser, and go to your profile. Then copy the link and paste it here.", mention_author=False)
             try:
-                message = await self.client.wait_for('message', timeout=2 * 60, check=check)
+                message = await self.bot.wait_for('message', timeout=2 * 60, check=check)
                 url = message.content.lower()
             except asyncio.TimeoutError:
                 await msg.edit('This message is now inactive because you took too long to respond')
@@ -674,7 +674,7 @@ class Utility(commands.Cog):
 
         await ctx.send("What channel do you want the embed to be in? You have 30 seconds to respond")
         try:
-            channel_name = await self.client.wait_for('message', timeout=30, check=check)
+            channel_name = await self.bot.wait_for('message', timeout=30, check=check)
 
             mode = ''  # the mode we will use to search for the channel, name or id
             channel_name = channel_name.content
@@ -709,22 +709,28 @@ class Utility(commands.Cog):
             await ctx.send("You ran out of time")
 
         await ctx.send("What should be the title of the embed (Keep it less than 256 characters)? You have 30 seconds to respond.")
+
         try:
-            embed_title = await self.client.wait_for('message', timeout=30, check=check)
+            embed_title = await self.bot.wait_for('message', timeout=30, check=check)
             embed_title = embed_title.content
+
             if len(embed_title) > 256:
                 await ctx.send("The title cannot be longer than 256 characters, re-run the command.")
                 return
+
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
 
         await ctx.send("What should be the description of the embed (Keep it less than 2048 characters.)? You have 5 minutes to respond.")
+
         try:
-            embed_desc = await self.client.wait_for('message', timeout=300, check=check)
+            embed_desc = await self.bot.wait_for('message', timeout=300, check=check)
             embed_desc = embed_desc.content
+
             if len(embed_title) > 2048:
                 await ctx.send("The description cannot be longer than 2048 characters, re-run the command.")
                 return
+
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
 
@@ -733,34 +739,40 @@ class Utility(commands.Cog):
     `l_red` (light red)
     `green`
     `l_green` (paler green)
-    `d_green` (dark green)
     `yellow`
     `l_yellow` (light yellow)
     `blue`
     `l_blue` (light blue)
     `cyan`
-    """)  # The options are the colors in hex_colors
-        valid_color_choices = ['red', 'l_red', 'green', 'l_green', 'd_green', 'yellow', 'l_yellow', 'blue', 'l_blue', 'cyan']
+    `orange`
+    """)
+
+        valid_color_choices = ('red', 'l_red', 'green', 'l_green', 'yellow', 'l_yellow', 'blue', 'l_blue', 'cyan', 'orange')
         try:
-            embed_color = await self.client.wait_for('message', timeout=60, check=check)
+            embed_color = await self.bot.wait_for('message', timeout=60, check=check)
             if embed_color.content.lower() not in valid_color_choices:
                 await ctx.send("That choice is invalid")
                 return
 
             else:
-                embed_color = embed_color.content.lower()  # this line doesn't matter much
+                embed_color = embed_color.content.lower()
 
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
+            return
 
-        em = discord.Embed(title=embed_title, description=embed_desc, color=hex_colors.get_color(embed_color))  # if you didn't write that 'else' line before, write: color = embed_color.content.lower(). If the command still doesn't work, download the new hex_colors file (i added a function)
+        em = discord.Embed(
+            title=embed_title,
+            description=embed_desc,
+            color=colors.get_color(embed_color)
+        )
 
         # If you don't want the bot to send the embed as the author, don't create the webhook
         webhooks = await channel.webhooks()
-        webhook = discord.utils.get(webhooks, name='roastinator')  # Enter your bot's name here
+        webhook = discord.utils.get(webhooks, name=self.bot.user.name)
 
         if webhook is None:
-            webhook = await channel.create_webhook(name='roastinator')
+            webhook = await channel.create_webhook(name=self.bot.user.name)
 
         await webhook.send(embed=em, username=ctx.author.display_name, avatar_url=ctx.author.avatar_url)
 
