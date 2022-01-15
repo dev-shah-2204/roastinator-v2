@@ -62,6 +62,9 @@ def get_blacklist(guild):
 
 
 def get_server_prefix(msg):
+    if isinstance(msg.channel, discord.DMChannel):
+        return '-'
+
     with open('./cache/prefix.json', 'r') as f:
         cache = json.load(f)
 
