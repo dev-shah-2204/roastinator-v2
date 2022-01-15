@@ -74,20 +74,19 @@ class Events(Cog):
                     await msg.channel.send("You have been banned from using ModMail. For further details, contact StatTrakDiamondSword#5493 or join the server discord.gg/GG647gySEy")
                     return
 
+                mod_channel = os.getenv('modmail_channel')
+                em = discord.Embed(
+                    title="Mod-mail is here",
+                    description=msg.content,
+                    color=colors.l_red,
+                    timestamp=datetime.now()
+                )
+                em.set_footer(text=f"Sent by {msg.author} | {msg.author.id}")
+                mod_channel.send(f"<@!{self.bot.owner.id}>,", embed=em)
 
-                    mod_channel = os.getenv('modmail_channel')
-                    em = discord.Embed(
-                        title="Mod-mail is here",
-                        description=msg.content,
-                        color=colors.l_red,
-                        timestamp=datetime.now()
-                    )
-                    em.set_footer(text=f"Sent by {msg.author} | {msg.author.id}")
-                    mod_channel.send(f"<@!{self.bot.owner.id}>,", embed=em)
-
-                    people_on_cooldown.append(msg.author.id)
-                    await asyncio.sleep(60)
-                    people_on_cooldown.remove(msg.author.id)
+                people_on_cooldown.append(msg.author.id)
+                await asyncio.sleep(60)
+                people_on_cooldown.remove(msg.author.id)
 
             else:
                 await msg.channel.send("You're on cooldown")
