@@ -74,7 +74,8 @@ class Events(Cog):
                     await msg.channel.send("You have been banned from using ModMail. For further details, contact StatTrakDiamondSword#5493 or join the server discord.gg/GG647gySEy")
                     return
 
-                mod_channel = os.getenv('modmail_channel')
+                mod_channel = self.bot.get_channel(os.getenv('modmail_channel'))
+
                 em = discord.Embed(
                     title="Mod-mail is here",
                     description=msg.content,
