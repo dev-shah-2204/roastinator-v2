@@ -101,9 +101,14 @@ class Events(Cog):
                 user = msg.guild.get_member(msg.author.id)
                 if user is not None:
                     if not user.guild_permissions.manage_messages:
+                        sentence = ""
 
-                        for word in blacklist:
-                            if word.lower() in msg.content.lower():
+
+                        for word in msg.content.lower():
+                            sentence += word
+
+                        for bad_word in blacklist:
+                            if bad_word.lower() in sentence:
                                 await msg.delete()
                                 try:
                                     await msg.author.send(f"Hey! That word is not allowed in this server")
