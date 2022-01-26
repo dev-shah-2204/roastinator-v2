@@ -6,12 +6,13 @@ import os
 import asyncio
 import pytz
 
-from datetime import datetime 
+from dotenv import load_dotenv
+from datetime import datetime
 from discord.ext import commands
 from discord.ext.commands import command, cooldown, BucketType, has_permissions, bot_has_permissions
 from utils import colors, checks
 
-
+load_dotenv()
 del_msg = {}
 edit_msg = {}
 
@@ -19,6 +20,7 @@ edit_msg = {}
 class Utility(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
+
 
     @command(name='avatar', aliases=['av'], help="Shows a user's avatar in full size")
     @cooldown(1, 5, BucketType.user)
@@ -75,8 +77,8 @@ class Utility(commands.Cog):
         em.set_thumbnail(url=user.avatar_url)
         em.add_field(name="ID", value=f"`{user.id}`", inline=False)
         em.add_field(name="Account Created on", value=created, inline=False)
-        em.add_field(name="Joined Server on",  value=joined,  inline=False)
-        em.add_field(name="Roles in this Server",  value=roles, inline=False)
+        em.add_field(name="Joined Server on", value=joined, inline=False)
+        em.add_field(name="Roles in this Server", value=roles, inline=False)
         em.set_footer(text=f"Requested by {ctx.author.nick}", icon_url=ctx.author.avatar_url)
 
         await ctx.reply(embed=em, mention_author=False)
@@ -89,13 +91,13 @@ class Utility(commands.Cog):
 
         # Many of these variables aren't necessary but since the embed has many fields, I didn't want the code to be messy
         created = guild.created_at.strftime("%d %B %Y at %I %p")
-        emojis = guild.emojis
+        emojis = len(guild.emojis)
         members = guild.member_count
         owner = guild.owner
-        level = guild.verification_level
+        level = str(guild.verification_level).capitalize()
         boost_level = guild.premium_tier
         large = guild.large
-        subs = guild.premium_subscribers
+        subs = len(guild.premium_subscribers)
         roles = len(ctx.guild.roles)
 
         em = discord.Embed(title=f"Here's the information I found on {ctx.guild.name}", color=colors.l_green)
@@ -106,9 +108,9 @@ class Utility(commands.Cog):
         em.add_field(name='Is this server considered a big server?', value=checks.bool_str(large), inline=False)
         em.add_field(name='Member Count', value=members)
         em.add_field(name='Number of roles', value=roles - 1, inline=False)  # To ignore @everyone role
-        em.add_field(name='Emojis', value=len(emojis), inline=False)
-        em.add_field(name='Security Level', value=str(level).capitalize(), inline=False)
-        em.add_field(name='Server Boosters', value=len(subs), inline=False)
+        em.add_field(name='Emojis', value=emojis, inline=False)
+        em.add_field(name='Security Level', value=level, inline=False)
+        em.add_field(name='Server Boosters', value=subs, inline=False)
         em.add_field(name='Server level', value=boost_level, inline=False)
         em.set_footer(text=f'Requested by {ctx.author.display_name}', icon_url=ctx.author.avatar_url)
 
@@ -151,10 +153,10 @@ class Utility(commands.Cog):
         await ctx.reply(embed=em, mention_author=False)
 
 
-    @command(name="steal", aliases=['stealemoji'], help="Steal an emoji")
-    @cooldown(1, 5, BucketType.user)
-    @has_permissions(manage_emojis=True)
-    @bot_has_permissions(manage_emojis=True)
+    # @command(name="steal", aliases=['stealemoji'], help="Steal an emoji")
+    # @cooldown(1, 5, BucketType.user)
+    # @has_permissions(manage_emojis=True)
+    # @bot_has_permissions(manage_emojis=True)
     async def steal(self, ctx, emoji_name, custom_emoji_name=None):
         """
         I'm not sure how most of this part works. I took this from a friend.
@@ -319,7 +321,6 @@ class Utility(commands.Cog):
             if post["code"] == 404:
                 await ctx.reply("This subreddit has no posts or doesn't exist.", mention_author=False)
                 return
-
 
     @command(name='csgo', aliases=['csgostats'], help="Get CSGO Stats of a Steam Account")
     @cooldown(1, 5, BucketType.user)
@@ -639,7 +640,6 @@ class Utility(commands.Cog):
         edit_msg[str(before.channel.id)]['author'] = before.author
         edit_msg[str(before.channel.id)]['time'] = datetime.now(pytz.utc)  # This will be used for the timestamp
 
-
     @command(name='editsnipe', aliases=['es'], help='Check the last edited message in the channel')
     async def editsnipe(self, ctx):
         try:
@@ -668,47 +668,12 @@ class Utility(commands.Cog):
 
     @command(name='embed', help='Send your message as an embed')
     @has_permissions(manage_guild=True)
-    async def send_embed(self, ctx):
+    async def send_embed(self, ctx, channel: discord.TextChannel):
         def check(message: discord.Message) -> bool:
             return message.author == ctx.author and message.channel == ctx.channel
 
-        await ctx.send("What channel do you want the embed to be in? You have 30 seconds to respond")
-        try:
-            channel_name = await self.bot.wait_for('message', timeout=30, check=check)
-
-            mode = ''  # the mode we will use to search for the channel, name or id
-            channel_name = channel_name.content
-
-            if channel_name.startswith('<#') and channel_name.endswith('>'):
-                channel_name = channel_name.strip('<#>')
-                channel_name = int(channel_name)
-                mode = 'id'
-
-            else:
-                mode = 'name'
-
-            if mode == 'id':
-                channel = discord.utils.get(ctx.guild.channels, id=channel_name)  # because channel_name is a message, and we want the message's content
-                if channel:
-                    await ctx.send('Found the channel')
-
-                if not channel:
-                    await ctx.send("I couldn't find that channel in this server. Maybe I don't have the permission to view it.")
-                    return
-
-            if mode == 'name':
-                channel = discord.utils.get(ctx.guild.channels, name=channel_name)  # because channel_name is a message, and we want the message's content
-                if channel:
-                    await ctx.send('Found the channel')
-
-                if not channel:
-                    await ctx.send("I couldn't find that channel in this server. Maybe I don't have the permission to view it.")
-                    return
-
-        except asyncio.TimeoutError:
-            await ctx.send("You ran out of time")
-
         await ctx.send("What should be the title of the embed (Keep it less than 256 characters)? You have 30 seconds to respond.")
+        em = discord.Embed()
 
         try:
             embed_title = await self.bot.wait_for('message', timeout=30, check=check)
@@ -717,6 +682,9 @@ class Utility(commands.Cog):
             if len(embed_title) > 256:
                 await ctx.send("The title cannot be longer than 256 characters, re-run the command.")
                 return
+
+            if embed_title:
+                em.title = embed_title
 
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
@@ -727,9 +695,12 @@ class Utility(commands.Cog):
             embed_desc = await self.bot.wait_for('message', timeout=300, check=check)
             embed_desc = embed_desc.content
 
-            if len(embed_title) > 2048:
+            if len(embed_desc) > 2048:
                 await ctx.send("The description cannot be longer than 2048 characters, re-run the command.")
                 return
+
+            if embed_desc:
+                em.description = embed_desc
 
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
@@ -747,7 +718,7 @@ class Utility(commands.Cog):
     `orange`
     """)
 
-        valid_color_choices = ('red', 'l_red', 'green', 'l_green', 'yellow', 'l_yellow', 'blue', 'l_blue', 'cyan', 'orange')
+        valid_color_choices = ('red', 'l_red', 'green', 'l_green', 'yellow', 'l_yellow', 'blue', 'l_blue', 'cyan', 'orange', 'black')
         try:
             embed_color = await self.bot.wait_for('message', timeout=60, check=check)
             if embed_color.content.lower() not in valid_color_choices:
@@ -757,15 +728,11 @@ class Utility(commands.Cog):
             else:
                 embed_color = embed_color.content.lower()
 
+            em.colour = embed_color
+
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
             return
-
-        em = discord.Embed(
-            title=embed_title,
-            description=embed_desc,
-            color=colors.get_color(embed_color)
-        )
 
         # If you don't want the bot to send the embed as the author, don't create the webhook
         webhooks = await channel.webhooks()
@@ -774,7 +741,11 @@ class Utility(commands.Cog):
         if webhook is None:
             webhook = await channel.create_webhook(name=self.bot.user.name)
 
-        await webhook.send(embed=em, username=ctx.author.display_name, avatar_url=ctx.author.avatar_url)
+        try:
+            await webhook.send(embed=em, username=ctx.author.display_name, avatar_url=ctx.author.avatar_url)
+            await ctx.reply(f"Successfully send the embed in {channel.name}")
+        except:
+            await ctx.reply(f"Unable to send embed in {channel.name}. Maybe I don't have the permissions?")
 
 
 def setup(bot):
