@@ -728,7 +728,7 @@ class Utility(commands.Cog):
             else:
                 embed_color = embed_color.content.lower()
 
-            em.colour = embed_color
+            em.colour = colors.get_color(embed_color)
 
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
