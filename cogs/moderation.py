@@ -44,8 +44,8 @@ class Moderation(commands.Cog):
         em = discord.Embed(
             descrition=f"""**Reason**: {reason}""",
             color=colors.l_red)
-        em.set_author(name=f'{ctx.author} kicked {user} from the server', icon_url=ctx.author.avatar_url)
-        em.set_thumbnail(url=user.avatar_url)
+        em.set_author(name=f'{ctx.author} kicked {user} from the server', icon_url=ctx.author.display_avatar.url)
+        em.set_thumbnail(url=user.display_avatar.url)
 
         await user.kick(reason=f"""Kicked by {ctx.author}. Reason: {reason}""")
         await ctx.reply(embed=em, mention_author=False)
@@ -78,8 +78,8 @@ class Moderation(commands.Cog):
         em = discord.Embed(
             descrition=f"""**Reason**: {reason}""",
             color=colors.l_red)
-        em.set_author(name=f"{ctx.author} banned {user} from the server", icon_url=ctx.author.avatar_url)
-        em.set_thumbnail(url=user.avatar_url)
+        em.set_author(name=f"{ctx.author} banned {user} from the server", icon_url=ctx.author.display_avatar.url)
+        em.set_thumbnail(url=user.display_avatar.url)
 
         await user.ban(reason=f"""Banned by {ctx.author}. Reason: {reason}""")
         await ctx.reply(embed=em, mention_author=False)
@@ -113,8 +113,8 @@ class Moderation(commands.Cog):
             descrition=f"""**Reason**: {reason}""",
             color=colors.l_red
         )
-        em.set_author(name=f"{ctx.author} kicked {user} from the server", icon_url=ctx.author.avatar_url)
-        em.set_thumbnail(url=user.avatar_url)
+        em.set_author(name=f"{ctx.author} kicked {user} from the server", icon_url=ctx.author.display_avatar.url)
+        em.set_thumbnail(url=user.display_avatar.url)
 
         await user.ban(reason=f"""Softbanned by {ctx.author}. Reason: {reason}""")
         await user.unban()
@@ -248,9 +248,9 @@ class Moderation(commands.Cog):
         )
         em.set_author(
             name=f"{ctx.author.name} muted {user.name}",
-            icon_url=ctx.author.avatar_url
+            icon_url=ctx.author.display_avatar.url
         )
-        em.set_thumbnail(url=user.avatar_url)
+        em.set_thumbnail(url=user.display_avatar.url)
         await ctx.send(embed=em)
 
         if fix_perms:
@@ -286,9 +286,9 @@ class Moderation(commands.Cog):
             )
             em.set_author(
                 name=f"{ctx.author} unmuted {user}",
-                icon_url=ctx.author.avatar_url
+                icon_url=ctx.author.display_avatar.url
             )
-            em.set_thumbnail(url=user.avatar_url)
+            em.set_thumbnail(url=user.display_avatar.url)
             await ctx.send(embed=em)
 
         if fix_perms:

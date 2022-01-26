@@ -28,26 +28,26 @@ class Utility(commands.Cog):
         if user is None:
             user = ctx.author
 
-        png = user.avatar_url_as(format='png')
-        jpeg = user.avatar_url_as(format='jpeg')
-        webp = user.avatar_url_as(format='webp')
-        try:
-            gif = user.avatar_url_as(format='gif')
-        except:
-            gif = None
+        # png = user.avatar_url_as(format='png')
+        # jpeg = user.avatar_url_as(format='jpeg')
+        # webp = user.avatar_url_as(format='webp')
+        # try:
+        #     gif = user.avatar_url_as(format='gif')
+        # except:
+        #     gif = None
 
-        if gif:
-            download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [gif]({gif})"
-        else:
-            download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [webp]({webp})"
+        # if gif:
+        #     download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [gif]({gif})"
+        # else:
+        #     download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [webp]({webp})"
 
         em = discord.Embed(
             title=f"{user.name}'s avatar",
             description=download_links,
             color=user.color
         )
-        em.set_image(url=user.avatar_url)
-        em.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
+        em.set_image(url=user.display_avatar.url)
+        em.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
 
         await ctx.reply(embed=em, mention_author=False)
 
@@ -74,12 +74,12 @@ class Utility(commands.Cog):
             roles = "User has no roles in this server."
 
         em = discord.Embed(title=f"Found information for {user}", color=user.color)
-        em.set_thumbnail(url=user.avatar_url)
+        em.set_thumbnail(url=user.display_avatar.url)
         em.add_field(name="ID", value=f"`{user.id}`", inline=False)
         em.add_field(name="Account Created on", value=created, inline=False)
         em.add_field(name="Joined Server on", value=joined, inline=False)
         em.add_field(name="Roles in this Server", value=roles, inline=False)
-        em.set_footer(text=f"Requested by {ctx.author.nick}", icon_url=ctx.author.avatar_url)
+        em.set_footer(text=f"Requested by {ctx.author.nick}", icon_url=ctx.author.display_avatar.url)
 
         await ctx.reply(embed=em, mention_author=False)
 
@@ -112,7 +112,7 @@ class Utility(commands.Cog):
         em.add_field(name='Security Level', value=level, inline=False)
         em.add_field(name='Server Boosters', value=subs, inline=False)
         em.add_field(name='Server level', value=boost_level, inline=False)
-        em.set_footer(text=f'Requested by {ctx.author.display_name}', icon_url=ctx.author.avatar_url)
+        em.set_footer(text=f'Requested by {ctx.author.display_name}', icon_url=ctx.author.display_avatar.url)
 
         await ctx.reply(embed=em, mention_author=False)
 
@@ -611,7 +611,7 @@ class Utility(commands.Cog):
                 color=colors.l_green,
                 timestamp=del_msg[str(ctx.channel.id)]['time']
             )
-            em.set_author(name=f"{del_msg[str(ctx.channel.id)]['author']} said:", icon_url=del_msg[str(ctx.channel.id)]['author'].avatar_url)
+            em.set_author(name=f"{del_msg[str(ctx.channel.id)]['author']} said:", icon_url=del_msg[str(ctx.channel.id)]['author'].display_avatar.url)
 
             if del_msg[str(ctx.channel.id)]['attachment'] is not None:
                 em.description = f"{msg_content} \n\n [**Attachment**]({del_msg[str(ctx.channel.id)]['attachment']})"
@@ -649,7 +649,7 @@ class Utility(commands.Cog):
             )
             em.set_author(
                 name=f"{edit_msg[str(ctx.channel.id)]['author']} said:",
-                icon_url=edit_msg[str(ctx.channel.id)]['author'].avatar_url
+                icon_url=edit_msg[str(ctx.channel.id)]['author'].display_avatar.url
             )
             em.add_field(
                 name='Before',
@@ -748,9 +748,10 @@ class Utility(commands.Cog):
             webhook = await channel.create_webhook(name=self.bot.user.name)
 
         try:
-            await webhook.send(embed=em, username=ctx.author.display_name, avatar_url=ctx.author.avatar_url)
+            await webhook.send(embed=em, username=ctx.author.display_name, avatar_url=ctx.author.display_avatar.url)
             await ctx.reply(f"Successfully send the embed in {channel.name}")
-        except:
+        except Exception as e:
+            print(e)
             await ctx.reply(f"Unable to send embed in {channel.name}. Maybe I don't have the permissions?")
 
 

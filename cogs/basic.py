@@ -36,7 +36,7 @@ class Basic(commands.Cog):
         )
         em.set_footer(
             text=f"Bot created by {owner}",
-            icon_url=owner.avatar_url
+            icon_url=owner.display_avatar.url
         )
         await ctx.reply(embed=em)
         

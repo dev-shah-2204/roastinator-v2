@@ -179,7 +179,7 @@ class Developer(commands.Cog):
         )
         em.set_author(
             name=f"Message from {ctx.author} (My developer)",
-            icon_url=ctx.author.avatar_url
+            icon_url=ctx.author.display_avatar.url
         )
 
         try:
