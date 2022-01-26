@@ -28,22 +28,22 @@ class Utility(commands.Cog):
         if user is None:
             user = ctx.author
 
-        # png = user.avatar_url_as(format='png')
-        # jpeg = user.avatar_url_as(format='jpeg')
-        # webp = user.avatar_url_as(format='webp')
-        # try:
-        #     gif = user.avatar_url_as(format='gif')
-        # except:
-        #     gif = None
+        png = user.display_avatar.with_format('png').url
+        jpeg = user.display_avatar.with_format('jpeg').url
+        webp = user.display_avatar.with_format('webp').url
+        try:
+            gif = user.display_avatar.with_format('gif').url
+        except:
+            gif = None
 
-        # if gif:
-        #     download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [gif]({gif})"
-        # else:
-        #     download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [webp]({webp})"
+        if gif:
+            download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [gif]({gif})"
+        else:
+            download_links = f"Download as [png]({png}) | [jpeg]({jpeg}) | [webp]({webp})"
 
         em = discord.Embed(
             title=f"{user.name}'s avatar",
-            #description=download_links,
+            description=download_links,
             color=user.color
         )
         em.set_image(url=user.display_avatar.url)
