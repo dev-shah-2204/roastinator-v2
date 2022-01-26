@@ -89,6 +89,7 @@ class Events(Cog):
                 )
                 em.set_footer(text=f"Sent by {msg.author} | {msg.author.id}")
                 await mod_channel.send(f"<@!{self.bot.owner_id}>,", embed=em)
+                await msg.channel.send("Your message has been sent to my developer. He'll get back to you soon")
 
                 people_on_cooldown.append(msg.author.id)
                 await asyncio.sleep(60)
