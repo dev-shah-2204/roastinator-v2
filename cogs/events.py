@@ -3,6 +3,7 @@ import json
 import os
 import asyncio
 
+from dotenv import load_dotenv
 from pytz import timezone
 from datetime import datetime
 from discord.ext import commands
@@ -11,8 +12,12 @@ from utils import checks, colors
 from db import *
 
 
+load_dotenv()
+
+
 people_on_cooldown = []
 fixed_prefix = []  # If the bot was added when offline, prefix was probably not registered.
+
 
 def check_ban(user):
     with open('./cache/banned.json', 'r') as f:
@@ -68,7 +73,7 @@ class Events(Cog):
 
         # ModMail
         if isinstance(msg.channel, discord.DMChannel):
-            if not msg.author.id in people_on_cooldown:
+            if msg.author.id not in people_on_cooldown:
                 check = check_ban(msg.author.id)
                 if check is True:
                     await msg.channel.send("You have been banned from using ModMail. For further details, contact StatTrakDiamondSword#5493 or join the server discord.gg/GG647gySEy")

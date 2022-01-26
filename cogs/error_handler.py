@@ -1,8 +1,12 @@
 import discord
 import os
 
+from dotenv import load_dotenv
 from utils import colors
 from discord.ext import commands
+
+
+load_dotenv()
 
 
 def reset_cooldown(ctx):

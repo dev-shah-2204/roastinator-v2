@@ -1,9 +1,11 @@
 import os
 import discord
 
+from dotenv import load_dotenv
 from utils import checks
 from bot import Roastinator
 
+load_dotenv()
 
 bot = Roastinator()
 bot.remove_command('help')

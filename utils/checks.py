@@ -3,7 +3,11 @@ import json
 import requests
 import os
 
+from dotenv import load_dotenv
 from db import *
+
+
+load_dotenv()
 
 
 def get_automod_status(guild: str):
