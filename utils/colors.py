@@ -11,6 +11,9 @@ blue = 0x0000FF
 l_blue = 0x60C1E8
 cyan = 0x00FFFF
 
+black = 0x000000
+white = 0xFFFFFF
+
 colors = [
     0xFF0000,
     0xEC5858,
@@ -34,7 +37,9 @@ colors_but_dict = {
     'blue': 0x0000FF,
     'l_blue': 0x60C1E8,
     'cyan': 0x00FFFF,
-    'orange': 0xFF4500
+    'orange': 0xFF4500,
+    'black': 0x000000,
+    'white': 0xFFFFFF
 }
 
 def get_color(color: str):
