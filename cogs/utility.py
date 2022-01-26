@@ -683,7 +683,7 @@ class Utility(commands.Cog):
                 await ctx.send("The title cannot be longer than 256 characters, re-run the command.")
                 return
 
-            if embed_title:
+            if embed_title != "None":
                 em.title = embed_title
 
         except asyncio.TimeoutError:
@@ -696,7 +696,7 @@ class Utility(commands.Cog):
             embed_desc = await self.bot.wait_for('message', timeout=300, check=check)
             embed_desc = embed_desc.content
 
-            if em.title == None and embed_desc == None:
+            if em.title == "None" and embed_desc == "None":
                 await ctx.send("You cannot send an empty embed")
                 return
 
