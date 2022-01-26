@@ -704,7 +704,7 @@ class Utility(commands.Cog):
                 await ctx.send("The description cannot be longer than 2048 characters, re-run the command.")
                 return
 
-            if embed_desc:
+            if embed_desc != "None":
                 em.description = embed_desc
 
         except asyncio.TimeoutError:
