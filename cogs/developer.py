@@ -127,7 +127,7 @@ class Developer(commands.Cog):
                            color=colors.l_red)
         em.set_footer(text="Action taken by StatTrakDiamondSword#5493")
         try:
-            user.send(embed=em)
+            await user.send(embed=em)
         except:
             await ctx.send("User has closed DMs")
 
@@ -150,7 +150,7 @@ class Developer(commands.Cog):
                            color=colors.l_red)
         em.set_footer(text="Action taken by StatTrakDiamondSword#5493")
         try:
-            user.send(embed=em)
+            await user.send(embed=em)
         except:
             await ctx.send("User has closed DMs")
 
