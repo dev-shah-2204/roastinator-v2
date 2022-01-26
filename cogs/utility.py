@@ -43,7 +43,7 @@ class Utility(commands.Cog):
 
         em = discord.Embed(
             title=f"{user.name}'s avatar",
-            description=download_links,
+            #description=download_links,
             color=user.color
         )
         em.set_image(url=user.display_avatar.url)
