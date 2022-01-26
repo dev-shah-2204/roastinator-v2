@@ -688,12 +688,17 @@ class Utility(commands.Cog):
 
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
+            return
 
         await ctx.send("What should be the description of the embed (Keep it less than 2048 characters.)? You have 5 minutes to respond.")
 
         try:
             embed_desc = await self.bot.wait_for('message', timeout=300, check=check)
             embed_desc = embed_desc.content
+
+            if em.title == None and embed_desc == None:
+                await ctx.send("You cannot send an empty embed")
+                return
 
             if len(embed_desc) > 2048:
                 await ctx.send("The description cannot be longer than 2048 characters, re-run the command.")
@@ -704,6 +709,7 @@ class Utility(commands.Cog):
 
         except asyncio.TimeoutError:
             await ctx.send("You ran out of time")
+            return
 
         await ctx.send("""What should be the color of the embed? These are your options:
     `red`
