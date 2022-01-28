@@ -42,7 +42,7 @@ class Moderation(commands.Cog):
             return
 
         em = discord.Embed(
-            descrition=f"""**Reason**: {reason}""",
+            description=f"""**Reason**: {reason}""",
             color=colors.l_red)
         em.set_author(name=f'{ctx.author} kicked {user} from the server', icon_url=ctx.author.display_avatar.url)
         em.set_thumbnail(url=user.display_avatar.url)
@@ -76,7 +76,7 @@ class Moderation(commands.Cog):
             return
 
         em = discord.Embed(
-            descrition=f"""**Reason**: {reason}""",
+            description=f"""**Reason**: {reason}""",
             color=colors.l_red)
         em.set_author(name=f"{ctx.author} banned {user} from the server", icon_url=ctx.author.display_avatar.url)
         em.set_thumbnail(url=user.display_avatar.url)
@@ -110,7 +110,7 @@ class Moderation(commands.Cog):
             return
 
         em = discord.Embed(
-            descrition=f"""**Reason**: {reason}""",
+            description=f"""**Reason**: {reason}""",
             color=colors.l_red
         )
         em.set_author(name=f"{ctx.author} kicked {user} from the server", icon_url=ctx.author.display_avatar.url)
