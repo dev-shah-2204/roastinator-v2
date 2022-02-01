@@ -32,6 +32,7 @@ class Fun(commands.Cog):
 
         await ctx.send(user.mention + r['insult'])
 
+
     @command(name='meme', aliases=['mamymay'], help="Sends a post from r/memes")
     @cooldown(1, 5, BucketType.user)
     async def send_memes(self, ctx):
@@ -54,6 +55,7 @@ class Fun(commands.Cog):
 
         await ctx.send(embed=em)
 
+
     @command(name='wholesome', help="Sends a post from r/wholesomememes")
     @cooldown(1, 5, BucketType.user)
     async def wholesome_memes(self, ctx):
@@ -75,6 +77,7 @@ class Fun(commands.Cog):
         em.set_footer(text=f"👍 {r['ups']} | Author: u/{r['author']}")
 
         await ctx.send(embed=em)
+
 
     @command(name='cursed', aliases=['cursedimage'], help="Sends a post from r/cursed_images")
     @cooldown(1, 5, BucketType.user)
@@ -100,6 +103,7 @@ class Fun(commands.Cog):
         em.set_footer(text=f"👍 {r['ups']} | Author: u/{r['author']}")
 
         await ctx.send(embed=em)
+
 
     @command(name='dadjoke', aliases=['dad'], help="Sends a dadjoke")
     @cooldown(1, 5, BucketType.user)
@@ -133,6 +137,7 @@ class Fun(commands.Cog):
             except:
                 keys.remove(key)  # I host my bot on heroku and the bot restarts every 12 hours (with the original code) so the keys get back into the list.
 
+
     @command(name='bonk', help="Send em to horny jail!")
     @cooldown(1, 5, BucketType.user)
     async def bonk(self, ctx, user: discord.Member = None):
@@ -140,7 +145,7 @@ class Fun(commands.Cog):
             user = ctx.author
 
         image = Image.open('./images/bonk.jpg')
-        avatar = user.avatar_url_as(size=64)
+        avatar = user.display_avatar.with_size(64)
         data = BytesIO(await avatar.read())
 
         bonkee = Image.open(data)
@@ -150,6 +155,7 @@ class Fun(commands.Cog):
         image.save('./images/bonked.jpg')
 
         await ctx.send(f"{ctx.author.name} bonked {user.mention}", file=discord.File('./images/bonked.jpg'))
+
 
 
 def setup(bot):
