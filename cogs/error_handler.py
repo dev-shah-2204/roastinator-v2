@@ -36,7 +36,7 @@ class ErrorHandler(commands.Cog):
             reset_cooldown(ctx)
 
         elif isinstance(error, commands.MissingPermissions):
-            perm = error.missing_perms[0]
+            perm = error.missing_permissions[0]
 
             perm = perm.replace('_', ' ')
             perm = perm.replace('guild', 'server')
@@ -58,7 +58,7 @@ class ErrorHandler(commands.Cog):
             reset_cooldown(ctx)
 
         elif isinstance(error, commands.BotMissingPermissions):
-            perm = error.missing_perms[0]
+            perm = error.missing_permissions[0]
 
             perm = perm.replace('_', ' ')
             perm = perm.replace('guild', 'server')
