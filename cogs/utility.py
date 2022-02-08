@@ -101,7 +101,7 @@ class Utility(commands.Cog):
         roles = len(ctx.guild.roles)
 
         em = discord.Embed(title=f"Here's the information I found on {ctx.guild.name}", color=colors.l_green)
-        em.set_thumbnail(url=guild.icon_url)
+        em.set_thumbnail(url=guild.icon.url)
         em.add_field(name='ID', value=f"`{guild.id}`", inline=False)
         em.add_field(name='Owner', value=owner, inline=False)
         em.add_field(name='Created on', value=created, inline=False)
@@ -599,30 +599,34 @@ class Utility(commands.Cog):
         else:
             del_msg[channel]['embed'] = None
 
+
     @command(name='snipe', help='Check the last deleted message in the channel')
-    async def snipe(self, ctx):
+    async def snipe(self, ctx, channel: discord.TextChannel = None):
+        if channel is None:
+            channel = ctx.channel
+
         try:
-            msg_content = del_msg[str(ctx.channel.id)]['content']
+            msg_content = del_msg[str(channel.id)]['content']
             if msg_content == '':  # If the message had no text, it means that it had an attachment. Since the message is deleted, we can't retrieve that.
                 msg_content = "There was an image or an embed in the deleted message that couldn't be loaded, but here's the url"
 
             em = discord.Embed(
                 description=msg_content,
                 color=colors.l_green,
-                timestamp=del_msg[str(ctx.channel.id)]['time']
+                timestamp=del_msg[str(channel.id)]['time']
             )
-            em.set_author(name=f"{del_msg[str(ctx.channel.id)]['author']} said:", icon_url=del_msg[str(ctx.channel.id)]['author'].display_avatar.url)
+            em.set_author(name=f"{del_msg[str(channel.id)]['author']} said:", icon_url=del_msg[str(channel.id)]['author'].display_avatar.url)
 
-            if del_msg[str(ctx.channel.id)]['attachment'] is not None:
-                em.description = f"{msg_content} \n\n [**Attachment**]({del_msg[str(ctx.channel.id)]['attachment']})"
+            if del_msg[str(channel.id)]['attachment'] is not None:
+                em.description = f"{msg_content} \n\n [**Attachment**]({del_msg[str(channel.id)]['attachment']})"
 
-            if del_msg[str(ctx.channel.id)]['embed'] is not None:
+            if del_msg[str(channel.id)]['embed'] is not None:
                 em.description = f"{msg_content} \n\n The deleted message had this embed:"
 
             await ctx.reply(embed=em, mention_author=False)
 
-            if del_msg[str(ctx.channel.id)]['embed'] is not None:  # Yes, same check 2nd time. I needed it to send the embed after the main embed
-                await ctx.send(embed=del_msg[str(ctx.channel.id)]['embed'])
+            if del_msg[str(channel.id)]['embed'] is not None:  # Yes, same check 2nd time. I needed it to send the embed after the main embed
+                await ctx.send(embed=del_msg[str(channel.id)]['embed'])
 
         except discord.errors.Forbidden or discord.Forbidden:
             await ctx.reply("I don't have the embed links permission. I need that.", mention_author=False)
@@ -641,24 +645,27 @@ class Utility(commands.Cog):
         edit_msg[str(before.channel.id)]['time'] = datetime.now(pytz.utc)  # This will be used for the timestamp
 
     @command(name='editsnipe', aliases=['es'], help='Check the last edited message in the channel')
-    async def editsnipe(self, ctx):
+    async def editsnipe(self, ctx, channel: discord.TextChannel = None):
+        if channel is None:
+            channel = ctx.channel
+
         try:
             em = discord.Embed(
                 color=colors.l_green,
-                timestamp=edit_msg[str(ctx.channel.id)]['time']
+                timestamp=edit_msg[str(channel.id)]['time']
             )
             em.set_author(
-                name=f"{edit_msg[str(ctx.channel.id)]['author']} said:",
-                icon_url=edit_msg[str(ctx.channel.id)]['author'].display_avatar.url
+                name=f"{edit_msg[str(channel.id)]['author']} said:",
+                icon_url=edit_msg[str(channel.id)]['author'].display_avatar.url
             )
             em.add_field(
                 name='Before',
-                value=edit_msg[str(ctx.channel.id)]['before'],
+                value=edit_msg[str(channel.id)]['before'],
                 inline=False
             )  # If the embed has 2 fields, using inline=False only once is enough)
             em.add_field(
                 name='After',
-                value=edit_msg[str(ctx.channel.id)]['after']
+                value=edit_msg[str(channel.id)]['after']
             )
 
             await ctx.reply(embed=em, mention_author=False)
