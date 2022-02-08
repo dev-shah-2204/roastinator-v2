@@ -110,6 +110,7 @@ class ErrorHandler(commands.Cog):
                 value=f"```{type(error)}\n\n{error}```",
                 inline=False
             )
+
             try:
                 em.add_field(
                     name="Server:",
@@ -125,12 +126,14 @@ class ErrorHandler(commands.Cog):
                     name="User:",
                     value=f"{ctx.author} ({ctx.author.id})"
                 )
+
             except:
                 em.add_field(
                     name="DM Channel",
                     value=f"{ctx.author} ({ctx.author.id})",
                     inline=False
                 )
+
             em.add_field(
                 name="Message:",
                 value=ctx.message.content,
@@ -138,10 +141,11 @@ class ErrorHandler(commands.Cog):
             )
 
             channel = self.bot.get_channel(int(os.getenv('error_channel')))
-            if channel:
+
+            try:
                 await channel.send(embed=em)
-            else:
-                owner = self.bot.get_user(self.bot.owner_id)
+            except:
+                owner = self.bot.get_user(int(self.bot.owner_id))
                 await owner.send(embed=em)
 
 
