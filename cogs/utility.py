@@ -264,7 +264,24 @@ class Utility(commands.Cog):
             em.add_field(name='Top definition:', value=definition, inline=False)
             em.add_field(name='Example:', value=example)
 
-            await ctx.reply(embed=em, mention_author=False)
+            try:
+                await ctx.reply(embed=em, mention_author=False)
+            except discord.HTTPException as e:
+                if e.code == 400:
+                    em = discord.Embed(
+                        title="Uh oh. Error.",
+                        description=f"The definition was too long and couldn't fit in this embed. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
+                        color=colors.l_red
+                    )
+                    await ctx.reply(embed=em, mention_author=False)
+                else:
+                    em = discord.Embed(
+                        title="Uh oh. Error.",
+                        description=f"An error occured. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
+                        color=colors.l_red
+                    )
+                    await ctx.reply(embed=em, mention_author=False)
+
         except KeyError:
             try:
                 raw_dict = urbandict.define(word)  # returns a dictionary
@@ -276,7 +293,25 @@ class Utility(commands.Cog):
                 em.add_field(name='Example:', value=example)
                 em.set_footer(text="This result might not be very accurate")
 
-                await ctx.reply(embed=em, mention_author=False)
+                try:
+                    await ctx.reply(embed=em, mention_author=False)
+
+                except discord.HTTPException as e:
+                    if e.code == 400:
+                        em = discord.Embed(
+                            title="Uh oh. Error.",
+                            description=f"The definition was too long and couldn't fit in this embed. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
+                            color=colors.l_red
+                        )
+                        await ctx.reply(embed=em, mention_author=False)
+                    else:
+                        em = discord.Embed(
+                            title="Uh oh. Error.",
+                            description=f"An error occured. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
+                            color=colors.l_red
+                        )
+                        await ctx.reply(embed=em, mention_author=False)
+
             except KeyError:
                 await ctx.reply("I couldn't find the defintion for that", mention_author=False)
 
