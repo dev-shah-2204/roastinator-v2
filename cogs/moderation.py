@@ -243,7 +243,7 @@ class Moderation(commands.Cog):
         await user.add_roles(role, reason=f"Muted by {ctx.author}")
 
         em = discord.Embed(
-            desription=f"""**Reason**: {reason}""",
+            description=f"""**Reason**: {reason}""",
             color=colors.l_red
         )
         em.set_author(
