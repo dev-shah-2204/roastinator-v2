@@ -183,7 +183,7 @@ class Developer(commands.Cog):
         )
 
         try:
-            user.send(embed=em)
+            await user.send(embed=em)
             await ctx.send(f"Sent your reply to {user}")
         except discord.Forbidden:
             await ctx.send(f"{user} has closed DMs.")
