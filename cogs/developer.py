@@ -170,7 +170,7 @@ class Developer(commands.Cog):
     async def modmail_reply(self, ctx, user_id: int, *, msg):
         user = self.bot.get_user(user_id)
         if user is None:
-            await ctx.send("User not in any server with the bot/User not found")
+            await ctx.send("User not found")
             return
 
         em = discord.Embed(
@@ -187,7 +187,6 @@ class Developer(commands.Cog):
             await ctx.send(f"Sent your reply to {user}")
         except discord.Forbidden:
             await ctx.send(f"{user} has closed DMs.")
-
 
 
 def setup(bot):
