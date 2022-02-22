@@ -666,6 +666,11 @@ class Utility(commands.Cog):
         except discord.errors.Forbidden or discord.Forbidden:
             await ctx.reply("I don't have the embed links permission. I need that.", mention_author=False)
 
+        except commands.errors.CommandInvokeError as e:
+            if e.code == 400:
+                await ctx.reply("The edits were made to attachments and couldn't be loaded.", mention_author=False)
+                return
+
         except KeyError:
             await ctx.reply("There are no recently deleted messages", mention_author=False)
 
