@@ -70,7 +70,7 @@ class Utility(commands.Cog):
         for member_role in member_role_list:
             roles += f"<@&{member_role}> "
 
-        if roles is None:
+        if roles == "":
             roles = "User has no roles in this server."
 
         em = discord.Embed(title=f"Found information for {user}", color=user.color)
