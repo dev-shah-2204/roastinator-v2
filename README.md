@@ -51,7 +51,3 @@ CREATE TABLE prefix(
     prefix VARCHAR(5)
 )
 ```
-
-## NOTE
-
-This is not a tutorial on how to make a discord bot.
