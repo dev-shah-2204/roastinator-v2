@@ -1,5 +1,5 @@
 # Roastinator
-<img src="https://discord.com/widget?id=822816016614293595&theme=dark&style=shield">
+
 Roastinator is supposed to be a utility and moderation discord bot. I've tried my best to keep the bot as customisable as possible so that you can run an instance of it yourself. Refer `LICENSE` for copyright details. *Spoiler Alert*: You can copy any and everything except sensitive details like API keys (which are kept as environment tables for obvious reasons). Want to run your own Roastinator? Sure go ahead. I'd appreciate if you'd mention my name or the link to this repository in the start of your code or in your README.
 
 ## Config Vars
