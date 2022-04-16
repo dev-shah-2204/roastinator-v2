@@ -64,6 +64,7 @@ class Events(Cog):
         )
 
 
+
     @Cog.listener()
     async def on_message(self, msg):
         global people_on_cooldown
@@ -161,6 +162,7 @@ For example: {self.bot.user.mention} prefix `.` will change the prefix to `.`
                 break
 
 
+
     @Cog.listener()
     async def on_guild_remove(self, guild):
         db.execute(f"DELETE FROM Prefix WHERE guild = '{guild.id}'")
@@ -172,6 +174,13 @@ For example: {self.bot.user.mention} prefix `.` will change the prefix to `.`
             pass
 
         database.commit()
+
+
+
+    @Cog.listner()
+    async def on_member_join(self, member: discord.Member):
+        if member.guild.id == 822816016614293595:
+            await member.add_roles(self.member.guild.get_role(822816016614293595))
 
 
 
