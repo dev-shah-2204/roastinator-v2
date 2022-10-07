@@ -9,7 +9,7 @@ import pytz
 from dotenv import load_dotenv
 from datetime import datetime
 from discord.ext import commands
-from discord.ext.commands import command, cooldown, BucketType, has_permissions, bot_has_permissions
+from discord.ext.commands import command, cooldown, BucketType, has_permissions
 from utils import colors, checks
 
 load_dotenv()
@@ -264,23 +264,25 @@ class Utility(commands.Cog):
             em.add_field(name='Top definition:', value=definition, inline=False)
             em.add_field(name='Example:', value=example)
 
-            try:
-                await ctx.reply(embed=em, mention_author=False)
-            except discord.HTTPException as e:
-                if e.code == 400:
-                    em = discord.Embed(
+            def_too_long = discord.Embed(
                         title="Uh oh. Error.",
                         description=f"The definition was too long and couldn't fit in this embed. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
                         color=colors.l_red
                     )
-                    await ctx.reply(embed=em, mention_author=False)
-                else:
-                    em = discord.Embed(
+
+            unknown_error = discord.Embed(
                         title="Uh oh. Error.",
                         description=f"An error occured. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
                         color=colors.l_red
                     )
-                    await ctx.reply(embed=em, mention_author=False)
+            try:
+                await ctx.reply(embed=em, mention_author=False)
+
+            except discord.HTTPException as e:
+                if e.code == 400:
+                    await ctx.reply(embed=def_too_long, mention_author=False)
+                else:
+                    await ctx.reply(embed=unknown_error, mention_author=False)
 
         except KeyError:
             try:
@@ -288,7 +290,7 @@ class Utility(commands.Cog):
                 defintion = raw_dict[0]['def']
                 example = raw_dict[0][str('example')]
 
-                em = discord.Embed(name=word, color=colors.l_yellow)
+                em = discord.Embed(title=word, color=colors.l_yellow)
                 em.add_field(name='Top definition:', value=defintion, inline=False)
                 em.add_field(name='Example:', value=example)
                 em.set_footer(text="This result might not be very accurate")
@@ -297,20 +299,11 @@ class Utility(commands.Cog):
                     await ctx.reply(embed=em, mention_author=False)
 
                 except discord.HTTPException as e:
+
                     if e.code == 400:
-                        em = discord.Embed(
-                            title="Uh oh. Error.",
-                            description=f"The definition was too long and couldn't fit in this embed. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
-                            color=colors.l_red
-                        )
-                        await ctx.reply(embed=em, mention_author=False)
+                        await ctx.reply(embed=def_too_long, mention_author=False)
                     else:
-                        em = discord.Embed(
-                            title="Uh oh. Error.",
-                            description=f"An error occured. You can find the the meaning of that word [here](https://www.urbandictionary.com/define.php?term={word})",
-                            color=colors.l_red
-                        )
-                        await ctx.reply(embed=em, mention_author=False)
+                        await ctx.reply(embed=unknown_error, mention_author=False)
 
             except KeyError:
                 await ctx.reply("I couldn't find the defintion for that", mention_author=False)
@@ -458,6 +451,7 @@ class Utility(commands.Cog):
 """,
             color=colors.l_green)
         await ctx.reply(embed=em, mention_author=False)
+
 
     @command(name='csgodetail', aliases=['csgostatsdetail'], help='Get CSGO Stats of a Steam account')
     async def csgo_detail(self, ctx, steam_profile_link=None):
@@ -702,7 +696,7 @@ class Utility(commands.Cog):
                 name='Before',
                 value=edit_msg[str(channel.id)]['before'],
                 inline=False
-            )  # If the embed has 2 fields, using inline=False only once is enough)
+            )  # If the embed has 2 fields, using inline=False only once is enough
             em.add_field(
                 name='After',
                 value=edit_msg[str(channel.id)]['after']
